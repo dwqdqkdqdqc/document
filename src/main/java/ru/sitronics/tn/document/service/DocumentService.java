@@ -1,6 +1,6 @@
 package ru.sitronics.tn.document.service;
 
-import ru.sitronics.tn.document.model.BaseDocument;
+import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,17 +14,17 @@ import java.util.List;
 public class DocumentService {
     private final DocumentRepository repository;
 
-    public BaseDocument get(String id) {
+    public Document get(String id) {
         return repository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
     }
 
-    public List<BaseDocument> getAll() {
+    public List<Document> getAll() {
         return repository.findAll();
     }
 
-    public BaseDocument createOrUpdate(BaseDocument document) {
+    public Document createOrUpdate(Document document) {
         return repository.save(document);
     }
 
@@ -32,26 +32,30 @@ public class DocumentService {
         repository.deleteById(id);
     }
 
-    public BaseDocument getByNumber(long number){
-        return repository.findBySerialNumber(number);
+    public Document getBySerialNumber(long serialNumber){
+        return repository.findBySerialNumber(serialNumber);
     }
 
-    public List<BaseDocument> getBySerialNumberOrderByCreator(long number){
-        return repository.findBySerialNumberOrderByCreator(number);
-    }
-    public List<BaseDocument> getBySerialNumberOrderByCurators(long number){
-        return repository.findBySerialNumberOrderByCurators(number);
+    public List<Document> getSerialNumberContaining(long serialNumber) {
+        return repository.findBySerialNumberContaining(serialNumber);
     }
 
-    public List<BaseDocument> getByCreationDateBetween(LocalDateTime startDate, LocalDateTime endDate){
-       return repository.findByCreationDateBetween(startDate, endDate);
+    public List<Document> getBySerialNumberOrderByAuthor(long serialNumber){
+        return repository.findBySerialNumberOrderByAuthor(serialNumber);
+    }
+    public List<Document> getBySerialNumberOrderByCurators(long serialNumber){
+        return repository.findBySerialNumberOrderByCurators(serialNumber);
     }
 
-    public List<BaseDocument> getByCreationDateGreaterThanEqual(LocalDateTime startDate){
-        return repository.findByCreationDateGreaterThanEqual(startDate);
+    public List<Document> getByDateOfCreationBetween(LocalDateTime startDate, LocalDateTime endDate){
+       return repository.findByDateOfCreationBetween(startDate, endDate);
     }
 
-    public List<BaseDocument> getByCreationDateLessThanEqual(LocalDateTime startDate){
-        return repository.findByCreationDateLessThanEqual(startDate);
+    public List<Document> getByDateOfCreationGreaterThanEqual(LocalDateTime startDate){
+        return repository.findByDateOfCreationGreaterThanEqual(startDate);
+    }
+
+    public List<Document> getByDateOfCreationLessThanEqual(LocalDateTime startDate){
+        return repository.findByDateOfCreationLessThanEqual(startDate);
     }
 }

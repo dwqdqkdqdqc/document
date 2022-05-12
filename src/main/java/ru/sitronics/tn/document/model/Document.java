@@ -12,11 +12,6 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.sitronics.tn.document.model.foreignservice.ConstructionObject;
-import ru.sitronics.tn.document.model.foreignservice.Contract;
-import ru.sitronics.tn.document.model.foreignservice.DocumentHistoryBpm;
-import ru.sitronics.tn.document.model.foreignservice.User;
-import ru.sitronics.tn.document.model.formalizedDocument.Specification;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,6 +21,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,14 +31,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)  // https://stackoverflow.com/a/6084701/548473
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type_doc", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "documents")
-public class BaseDocument extends BaseEntity implements Serializable {
+public class Document extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @NotNull(message = "Specify document type.")
-    @Column(name = "type_doc", insertable = false, updatable = false)
+    @Column(name = "type", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private DocumentType type;
 
@@ -54,24 +50,23 @@ public class BaseDocument extends BaseEntity implements Serializable {
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "create_date", updatable = false)
-    private LocalDateTime creationDate;
+    @Column(name = "date_of_creation", updatable = false)
+    private LocalDateTime dateOfCreation;
 
     @CreatedBy
     @NotNull
     @ManyToOne(optional = false)
     @JsonManagedReference
-    @JoinColumn(name = "create_user", nullable = false, updatable = false)
-    private User creator;
-
+    @JoinColumn(updatable = false)
+    private User author;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_curators",
-            joinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "curator_id", referencedColumnName = "id", nullable = false, updatable = false),
+            joinColumns = @JoinColumn(name = "document_id", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "curator_id", nullable = false, updatable = false),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "curator_id"}, name = "documents_curators_uc")}
     )
     @OrderBy("lastName")
@@ -82,7 +77,7 @@ public class BaseDocument extends BaseEntity implements Serializable {
     private byte[] content;
 
     @NotNull(message = "Specify the status of the document.")
-    @Column(name = "status")
+    @Column(name = "status", updatable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -94,6 +89,13 @@ public class BaseDocument extends BaseEntity implements Serializable {
     @Column(name = "comment")
     private String comment;
 
+    @NotNull(message = "Specify a link to the current document's related contract.")
+    @ManyToOne(optional = false)
+    private Contract contract;
+
+    @ManyToOne
+    private Specification specification;
+
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference
@@ -103,46 +105,32 @@ public class BaseDocument extends BaseEntity implements Serializable {
 
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy("date DESC")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonManagedReference
+    @BatchSize(size = 100)
+    @OrderBy("serialNumber")
     private List<DocumentHistoryBpm> documentHistoryBpm;
 
-    @NotNull(message = "Specify a link to the current document's related contract.")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "contract")
-    private Contract contract;
-
-    @ManyToOne
-    @JoinColumn(name = "specification")
-    private Specification specification;
-
-    @ManyToMany()
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_construction_objects",
-            joinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "construction_object_id", referencedColumnName = "id", nullable = false, updatable = false),
+            joinColumns = @JoinColumn(name = "document_id", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "construction_object_id", nullable = false, updatable = false),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "construction_object_id"}, name = "documents_construction_objects_uc")}
     )
     @OrderBy("name")
-    @JoinColumn(name = "construction_object")
     private List<ConstructionObject> constructionObjects;
 
-    @CollectionTable(name = "pids", joinColumns = @JoinColumn(name = "document_id"))
-    @ElementCollection
+    @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
     @OrderBy("pid")
-    // @JoinColumn(name = "document_id")  //https://stackoverflow.com/a/62848296/548473
-    @Column(name = "pid")
-    private List<String> pids;
+    private List<NciPid> pids;
 
-    @CollectionTable(name = "factory_numbers", joinColumns = @JoinColumn(name = "document_id"))
-    @ElementCollection
+    @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy("factory_number")
-    @Column(name = "factory_number")
-    private List<String> factoryNumber;
+    @OrderBy("factoryNumber")
+    private List<NciFactoryNumber> factoryNumber;
 
     @Column(name = "barcode")
     private String barcode;
@@ -152,4 +140,25 @@ public class BaseDocument extends BaseEntity implements Serializable {
 
     @Column(name = "lus_document_number")
     private String lusDocumentNumber;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference
+    @BatchSize(size = 100)
+    @JoinTable(name = "documents_attachments",
+            joinColumns = @JoinColumn(name = "document_id", updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "attachment_id", updatable = false),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
+    private List<Attachment> attachments = new java.util.ArrayList<>();
+
+    @Column(name = "customer", updatable = false)
+    @Enumerated(EnumType.STRING)
+    private Customer customer;
+
+    @Column(name = "supplier", updatable = false)
+    @Enumerated(EnumType.STRING)
+    private Supplier supplier;
+
+    @Column(name = "amount")
+    private BigDecimal amount;
 }

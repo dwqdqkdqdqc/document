@@ -1,10 +1,9 @@
-package ru.sitronics.tn.document.model.foreignservice;
+package ru.sitronics.tn.document.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.sitronics.tn.document.model.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

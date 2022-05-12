@@ -2,25 +2,25 @@ package ru.sitronics.tn.document.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.sitronics.tn.document.model.BaseDocument;
+import ru.sitronics.tn.document.model.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface DocumentRepository extends JpaRepository<BaseDocument, String> {
+public interface DocumentRepository extends JpaRepository<Document, String> {
 
-    BaseDocument findBySerialNumber(long number);
+    Document findBySerialNumber(long number);
 
-    List<BaseDocument> findBySerialNumberContaining(long number);
+    List<Document> findBySerialNumberContaining(long serialNumber);
 
-    List<BaseDocument> findBySerialNumberOrderByCreator(long number);
+    List<Document> findBySerialNumberOrderByAuthor(long serialNumber);
 
-    List<BaseDocument> findBySerialNumberOrderByCurators(long number);
+    List<Document> findBySerialNumberOrderByCurators(long serialNumber);
 
-    List<BaseDocument> findByCreationDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Document> findByDateOfCreationBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-    List<BaseDocument> findByCreationDateGreaterThanEqual(LocalDateTime startDate);
+    List<Document> findByDateOfCreationGreaterThanEqual(LocalDateTime startDate);
 
-    List<BaseDocument> findByCreationDateLessThanEqual(LocalDateTime startDate);
+    List<Document> findByDateOfCreationLessThanEqual(LocalDateTime startDate);
 }

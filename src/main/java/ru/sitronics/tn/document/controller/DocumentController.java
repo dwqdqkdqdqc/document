@@ -1,7 +1,7 @@
 package ru.sitronics.tn.document.controller;
 
 import com.beust.jcommander.internal.Nullable;
-import ru.sitronics.tn.document.model.BaseDocument;
+import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.service.DocumentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.sitronics.tn.document.util.DateTimeUtil.parseLocalDateTime;
@@ -27,20 +26,20 @@ public class DocumentController {
     private DocumentService service;
 
     @GetMapping("/{id}")
-    public BaseDocument get(@PathVariable String id) {
+    public Document get(@PathVariable String id) {
         log.info("get {} for user ", id);
         return service.get(id);
     }
 
     @GetMapping
-    public List<BaseDocument> getAll() {
+    public List<Document> getAll() {
         log.info("getAll documents for user ");
         return service.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public BaseDocument createOrUpdate(BaseDocument document) {
+    public Document createOrUpdate(Document document) {
         log.info("create {} for user", document);
         return service.createOrUpdate(document);
     }
@@ -52,33 +51,38 @@ public class DocumentController {
         service.delete(id);
     }
 
-    @GetMapping("/number")
-    public BaseDocument getByName(long number){
-        return service.getByNumber(number);
+    @GetMapping("/serialNumber")
+    public Document getBySerialNumber(long serialNumber) {
+        return service.getBySerialNumber(serialNumber);
     }
 
-    @GetMapping("/filter/serialNumberOrderByCreator")
-    public List<BaseDocument> getBySerialNumberOrderByCreator(long number){
-        return service.getBySerialNumberOrderByCreator(number);
+    @GetMapping("/serialNumberContaining")
+    public List<Document> getSerialNumberContaining(long serialNumber) {
+        return service.getSerialNumberContaining(serialNumber);
+    }
+
+    @GetMapping("/filter/serialNumberOrderByAuthor")
+    public List<Document> getBySerialNumberOrderByAuthor(long serialNumber) {
+        return service.getBySerialNumberOrderByAuthor(serialNumber);
     }
 
     @GetMapping("/filter/serialNumberOrderByCurators")
-    public List<BaseDocument> getBySerialNumberOrderByCurators(long number){
-        return service.getBySerialNumberOrderByCurators(number);
+    public List<Document> getBySerialNumberOrderByCurators(long serialNumber) {
+        return service.getBySerialNumberOrderByCurators(serialNumber);
     }
 
-    @GetMapping("/filter/creationDateBetween")
-    public List<BaseDocument> getByCreationDateBetween(@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate){
-        return service.getByCreationDateBetween(parseLocalDateTime(startDate), parseLocalDateTime(endDate));
+    @GetMapping("/filter/dateOfCreationBetween")
+    public List<Document> getByCreatDateBetween(@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate) {
+        return service.getByDateOfCreationBetween(parseLocalDateTime(startDate), parseLocalDateTime(endDate));
     }
 
-    @GetMapping("/filter/creationDateGreaterThanEqual")
-    public List<BaseDocument> getByCreationDateGreaterThanEqual(@RequestParam @Nullable String startDate){
-        return service.getByCreationDateGreaterThanEqual(parseLocalDateTime(startDate));
+    @GetMapping("/filter/dateOfCreationGreaterThanEqual")
+    public List<Document> getByCreatDateGreaterThanEqual(@RequestParam @Nullable String startDate) {
+        return service.getByDateOfCreationGreaterThanEqual(parseLocalDateTime(startDate));
     }
 
-    @GetMapping("/filter/creationDateLessThanEqual")
-    public List<BaseDocument> getByCreationDateLessThanEqual(@RequestParam @Nullable String startDate){
-        return service.getByCreationDateLessThanEqual(parseLocalDateTime(startDate));
+    @GetMapping("/filter/dateOfCreationLessThanEqual")
+    public List<Document> getByCreatDateLessThanEqual(@RequestParam @Nullable String startDate) {
+        return service.getByDateOfCreationLessThanEqual(parseLocalDateTime(startDate));
     }
 }

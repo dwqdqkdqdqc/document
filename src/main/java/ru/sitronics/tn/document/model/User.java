@@ -1,9 +1,7 @@
-package ru.sitronics.tn.document.model.foreignservice;
+package ru.sitronics.tn.document.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import ru.sitronics.tn.document.model.BaseEntity;
-import ru.sitronics.tn.document.model.BaseDocument;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) //Конструктор без параметров нужен только hibernate, поэтому protected
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@ToString(callSuper = true, exclude = {"password"})
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -55,9 +53,9 @@ public class User extends BaseEntity {
     private Boolean workPermission;
     @Column(name = "user_tasks")
     private String userTasks;
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "author")
     @JsonBackReference
-    private List<BaseDocument> createdDocuments = new java.util.ArrayList<>();
+    private List<Document> createdDocuments = new java.util.ArrayList<>();
 }
 
 

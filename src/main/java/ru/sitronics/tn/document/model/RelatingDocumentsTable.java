@@ -1,16 +1,14 @@
 package ru.sitronics.tn.document.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "documents_relating_documents")
 public class RelatingDocumentsTable {
     @EmbeddedId
@@ -20,13 +18,13 @@ public class RelatingDocumentsTable {
     @JsonBackReference
     @MapsId("documentId")
     @JoinColumn(name = "document_id")
-    BaseDocument documentId;
+    Document documentId;
 
     @ManyToOne
     @JsonBackReference
     @MapsId("relatingDocumentId")
     @JoinColumn(name = "relating_document_id")
-    BaseDocument relatingDocument;
+    Document relatingDocument;
 
     @ManyToOne
     @JsonBackReference

@@ -1,6 +1,7 @@
 package ru.sitronics.tn.document.model;
 
 public enum DocumentType {
+    CONTRACT,
     MTR_SUPPLY_CONTRACT,  //Договор на поставку МТР (включая дополнительные соглашения)
     SPECIFICATION_TO_THE_MTR_CONTRACT, //Спецификация к договору МТР
     INFORMATION_ON_THE_SUPPLIERS_CHAIN_OF_OWNERSHIP, //Сведения о цепочке собственников Поставщика
