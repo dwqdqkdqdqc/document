@@ -39,12 +39,13 @@ public class Document extends BaseEntity implements Serializable {
 
     @NotNull(message = "Specify document type.")
     @Column(name = "type", insertable = false, updatable = false)
-    @Enumerated(EnumType.STRING)
-    private DocumentType type;
+  //  @Enumerated(EnumType.STRING)
+  //  private DocumentType type;
+    private String type;
 
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
     @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
-    private long serialNumber;
+    private Long serialNumber;
 
     @CreatedDate
     @NotNull
@@ -78,19 +79,22 @@ public class Document extends BaseEntity implements Serializable {
 
     @NotNull(message = "Specify the status of the document.")
     @Column(name = "status", updatable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
+   // @Enumerated(EnumType.STRING)
+    // private Status status;
+    private String status;
 
     @Column(name = "access")
-    @Enumerated(EnumType.STRING)
-    private AccessLimitation access;
+  //  @Enumerated(EnumType.STRING)
+  //  private AccessLimitation access;
+    private String access;
 
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
     private String comment;
 
     @NotNull(message = "Specify a link to the current document's related contract.")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false) //рабозбрать, почему именно тут не работает eager
+    @JoinColumn(nullable = false)
     private Contract contract;
 
     @ManyToOne
@@ -152,12 +156,14 @@ public class Document extends BaseEntity implements Serializable {
     private List<Attachment> attachments = new java.util.ArrayList<>();
 
     @Column(name = "customer", updatable = false)
-    @Enumerated(EnumType.STRING)
-    private Customer customer;
+  //  @Enumerated(EnumType.STRING)
+   // private Customer customer;
+    private String customer;
 
     @Column(name = "supplier", updatable = false)
-    @Enumerated(EnumType.STRING)
-    private Supplier supplier;
+  //  @Enumerated(EnumType.STRING)
+  //  private Supplier supplier;
+    private String supplier;
 
     @Column(name = "amount")
     private BigDecimal amount;

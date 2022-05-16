@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.service;
 
+import org.springframework.data.jpa.domain.Specification;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
@@ -32,10 +33,18 @@ public class DocumentService {
         repository.deleteById(id);
     }
 
-    public Document getBySerialNumber(long serialNumber){
+    public List<Document> getByQuery(Specification<Document> spec) {
+        return repository.findAll(spec);
+    }
+
+    public List<Document> getSerialNumber(Long serialNumber) {
         return repository.findBySerialNumber(serialNumber);
     }
 
+/*    public Document getByRsql(long serialNumber){
+        return repository.findByRsql(serialNumber);
+    }*/
+/*
     public List<Document> getSerialNumberContaining(long serialNumber) {
         return repository.findBySerialNumberContaining(serialNumber);
     }
@@ -57,5 +66,5 @@ public class DocumentService {
 
     public List<Document> getByDateOfCreationLessThanEqual(LocalDateTime startDate){
         return repository.findByDateOfCreationLessThanEqual(startDate);
-    }
+    }*/
 }

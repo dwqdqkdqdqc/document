@@ -1,6 +1,9 @@
 package ru.sitronics.tn.document.controller;
 
 import com.beust.jcommander.internal.Nullable;
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
+import org.springframework.data.jpa.domain.Specification;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.service.DocumentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ru.sitronics.tn.rsql.CustomRsqlVisitor;
 
 import java.util.List;
 
@@ -51,11 +55,24 @@ public class DocumentController {
         service.delete(id);
     }
 
-    @GetMapping("/serialNumber")
-    public Document getBySerialNumber(long serialNumber) {
-        return service.getBySerialNumber(serialNumber);
+    @GetMapping("/query")
+    @ResponseBody
+    public List<Document> getByQuery(@RequestParam(value = "where") String search) {
+        Node rootNode = new RSQLParser().parse(search);
+        Specification<Document> spec = rootNode.accept(new CustomRsqlVisitor<Document>());
+        return service.getByQuery(spec);
     }
 
+    @GetMapping("/serialNumber")
+    public List<Document> getSerialNumber(Long serialNumber) {
+        return service.getSerialNumber(serialNumber);
+    }
+
+/*    @GetMapping("/serialNumber")
+    public Document getBySerialNumber(long serialNumber) {
+        return service.getByRsql(serialNumber);
+    }*/
+/*
     @GetMapping("/serialNumberContaining")
     public List<Document> getSerialNumberContaining(long serialNumber) {
         return service.getSerialNumberContaining(serialNumber);
@@ -84,5 +101,5 @@ public class DocumentController {
     @GetMapping("/filter/dateOfCreationLessThanEqual")
     public List<Document> getByCreatDateLessThanEqual(@RequestParam @Nullable String startDate) {
         return service.getByDateOfCreationLessThanEqual(parseLocalDateTime(startDate));
-    }
+    }*/
 }

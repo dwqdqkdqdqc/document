@@ -29,7 +29,7 @@ spring:
 logging:
   level:
     root: WARN
-    ru.javaops.bootjava: DEBUG
+    ru.sitronics.tn: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
 
 server.servlet:

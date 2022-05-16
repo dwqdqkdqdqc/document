@@ -1,7 +1,9 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.4'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'java-library'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'ru.sitronics.tn'
@@ -9,47 +11,75 @@ version = '0.1.0'
 sourceCompatibility = '17'
 
 bootRun {
-	jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n"]
+    jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n"]
 }
 
 ext {
-	springBootVersion = "2.6.4"
-	emailNotification = "build@master.org"
+    springBootVersion = "2.6.7"
+    emailNotification = "build@master.org"
+    queryDslVersion = '5.0.0'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	// https://mvnrepository.com/artifact/org.junit/com.springsource.org.junit
-	//testImplementation 'org.junit:com.springsource.org.junit:4.11.0'
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
+    // QueryDSL
+    implementation("com.querydsl:querydsl-jpa:${queryDslVersion}",
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa",
+            "com.querydsl:querydsl-core:${queryDslVersion}")
+    //implementation 'cz.jirutka.rsql:rsql-parser:2.1.0'
+    implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
+    implementation 'io.github.perplexhub:rsql-jpa-spring-boot-starter:5.0.19'
 
-	// https://mvnrepository.com/artifact/org.jsoup/jsoup
-	implementation 'org.jsoup:jsoup:1.14.3'
-	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
-	// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5
-	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.2'
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.jsoup:jsoup:1.14.3'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.2'
     implementation 'org.testng:testng:7.1.0'
-	implementation 'org.testng:testng:7.1.0'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2:2.1.210'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
-	implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2:2.1.210'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
+
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = "build/generated/sources/annotationProcessor/java/main" //queryDslSourceDirectory
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "build/generated/sources/annotationProcessor/java/main"  //queryDslSourceDirectory
+        }
+    }
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+

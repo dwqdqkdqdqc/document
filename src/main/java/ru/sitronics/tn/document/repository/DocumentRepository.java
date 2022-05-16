@@ -1,18 +1,22 @@
 package ru.sitronics.tn.document.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import ru.sitronics.tn.document.model.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
-public interface DocumentRepository extends JpaRepository<Document, String> {
+@Repository                                                                //JpaSpecificationExecutor
+public interface DocumentRepository extends JpaRepository<Document, String>, JpaSpecificationExecutor<Document>/*, QuerydslPredicateExecutor<Document> */{
 
-    Document findBySerialNumber(long number);
+  //  Document findByRsql(long number);
 
-    List<Document> findBySerialNumberContaining(long serialNumber);
+  List<Document> findBySerialNumber(Long serialNumber);
+
+/*    List<Document> findBySerialNumberContaining(long serialNumber);
 
     List<Document> findBySerialNumberOrderByAuthor(long serialNumber);
 
@@ -22,5 +26,5 @@ public interface DocumentRepository extends JpaRepository<Document, String> {
 
     List<Document> findByDateOfCreationGreaterThanEqual(LocalDateTime startDate);
 
-    List<Document> findByDateOfCreationLessThanEqual(LocalDateTime startDate);
+    List<Document> findByDateOfCreationLessThanEqual(LocalDateTime startDate);*/
 }
