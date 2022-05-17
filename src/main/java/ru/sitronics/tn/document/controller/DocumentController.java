@@ -3,7 +3,10 @@ package ru.sitronics.tn.document.controller;
 import com.beust.jcommander.internal.Nullable;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.service.DocumentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sitronics.tn.rsql.CustomRsqlVisitor;
 
 import java.util.List;
+import java.util.Map;
 
 import static ru.sitronics.tn.document.util.DateTimeUtil.parseLocalDateTime;
 
@@ -35,11 +39,11 @@ public class DocumentController {
         return service.get(id);
     }
 
-    @GetMapping
-    public List<Document> getAll() {
-        log.info("getAll documents for user ");
-        return service.getAll();
-    }
+//    @GetMapping
+//    public List<Document> getAll() {
+//        log.info("getAll documents for user ");
+//        return service.getAll();
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -66,6 +70,20 @@ public class DocumentController {
     @GetMapping("/serialNumber")
     public List<Document> getSerialNumber(Long serialNumber) {
         return service.getSerialNumber(serialNumber);
+    }
+
+
+    @Operation(summary = "Get all documents")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
+                                                       @RequestParam(value = "page", required = false) Integer page,
+                                                       @RequestParam(value = "size", required = false) Integer size,
+                                                       @RequestParam(value = "sort", required = false) String sort) {
+        try {
+            return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
+        }
     }
 
 /*    @GetMapping("/serialNumber")
