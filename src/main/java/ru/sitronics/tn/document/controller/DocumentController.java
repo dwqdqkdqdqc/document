@@ -6,6 +6,12 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.model.Document;
+import ru.sitronics.tn.document.service.DocumentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +28,7 @@ import ru.sitronics.tn.rsql.CustomRsqlVisitor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Document controller")
 @RestController
@@ -40,11 +47,11 @@ public class DocumentController {
         return service.get(id);
     }
 
-    @GetMapping
-    public List<Document> getAll() {
-        log.info("getAll documents for user ");
-        return service.getAll();
-    }
+//    @GetMapping
+//    public List<Document> getAll() {
+//        log.info("getAll documents for user ");
+//        return service.getAll();
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -93,6 +100,19 @@ public class DocumentController {
     private Document applyPatchToDocument(JsonPatch patch, Document targetDocument) throws JsonPatchException, JsonProcessingException {
         JsonNode patched = patch.apply(objectMapper.convertValue(targetDocument, JsonNode.class));
         return objectMapper.treeToValue(patched, Document.class);
+    }
+
+    @Operation(summary = "Get all documents")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
+                                                       @RequestParam(value = "page", required = false) Integer page,
+                                                       @RequestParam(value = "size", required = false) Integer size,
+                                                       @RequestParam(value = "sort", required = false) String sort) {
+        try {
+            return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
+        }
     }
 
 /*    @GetMapping("/serialNumber")
