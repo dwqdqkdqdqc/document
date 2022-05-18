@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'java-library'
+    //  id 'java-library'
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
@@ -31,13 +31,15 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.github.java-json-tools/json-patch
+    implementation 'com.github.java-json-tools:json-patch:1.13'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
     // QueryDSL
     implementation("com.querydsl:querydsl-jpa:${queryDslVersion}",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jpa",
             "com.querydsl:querydsl-core:${queryDslVersion}")
     //implementation 'cz.jirutka.rsql:rsql-parser:2.1.0'
-    implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
+  //  implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
     implementation 'io.github.perplexhub:rsql-jpa-spring-boot-starter:5.0.19'
 
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
@@ -50,7 +52,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2:2.1.210'
     runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok' //для dsl поискать
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"

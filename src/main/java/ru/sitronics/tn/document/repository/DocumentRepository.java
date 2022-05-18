@@ -5,12 +5,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import ru.sitronics.tn.document.model.Document;
+import ru.sitronics.tn.document.model.QDocument;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository                                                                //JpaSpecificationExecutor
-public interface DocumentRepository extends JpaRepository<Document, String>, JpaSpecificationExecutor<Document>/*, QuerydslPredicateExecutor<Document> */{
+@Repository
+public interface DocumentRepository extends JpaRepository<Document, String>,
+        JpaSpecificationExecutor<Document>, QuerydslPredicateExecutor<QDocument> {
 
   //  Document findByRsql(long number);
 

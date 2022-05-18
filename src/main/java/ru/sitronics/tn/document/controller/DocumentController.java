@@ -1,23 +1,27 @@
 package ru.sitronics.tn.document.controller;
 
-import com.beust.jcommander.internal.Nullable;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
-import org.springframework.data.jpa.domain.Specification;
-import ru.sitronics.tn.document.model.Document;
-import ru.sitronics.tn.document.service.DocumentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.sitronics.tn.document.model.Document;
+import ru.sitronics.tn.document.service.DocumentService;
+import ru.sitronics.tn.document.util.exception.NotFoundException;
 import ru.sitronics.tn.rsql.CustomRsqlVisitor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
-
-import static ru.sitronics.tn.document.util.DateTimeUtil.parseLocalDateTime;
 
 @Tag(name = "Document controller")
 @RestController
@@ -25,6 +29,7 @@ import static ru.sitronics.tn.document.util.DateTimeUtil.parseLocalDateTime;
 public class DocumentController {
     static final String REST_URL = "/documents";
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private DocumentService service;
@@ -57,8 +62,9 @@ public class DocumentController {
 
     @GetMapping("/query")
     @ResponseBody
-    public List<Document> getByQuery(@RequestParam(value = "where") String search) {
-        Node rootNode = new RSQLParser().parse(search);
+    public List<Document> getByQuery(@RequestParam(value = "where") String where) {
+        log.info("completion of a selection of documents on request {}", where);
+        Node rootNode = new RSQLParser().parse(where);
         Specification<Document> spec = rootNode.accept(new CustomRsqlVisitor<Document>());
         return service.getByQuery(spec);
     }
@@ -66,6 +72,27 @@ public class DocumentController {
     @GetMapping("/serialNumber")
     public List<Document> getSerialNumber(Long serialNumber) {
         return service.getSerialNumber(serialNumber);
+    }
+
+    @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<Document> updateDocument(@PathVariable String id, @RequestBody JsonPatch patch) {
+        log.info("update document {}, patch {}", id, patch);
+        try {
+            Document document = service.get(id);
+            Document documentPatched = applyPatchToDocument(patch, document);
+            service.createOrUpdate(documentPatched);
+            return ResponseEntity.ok(documentPatched);
+
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (JsonPatchException | JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    private Document applyPatchToDocument(JsonPatch patch, Document targetDocument) throws JsonPatchException, JsonProcessingException {
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetDocument, JsonNode.class));
+        return objectMapper.treeToValue(patched, Document.class);
     }
 
 /*    @GetMapping("/serialNumber")

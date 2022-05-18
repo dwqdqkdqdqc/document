@@ -1,13 +1,12 @@
 package ru.sitronics.tn.document.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -39,6 +38,12 @@ public class DocumentService {
 
     public List<Document> getSerialNumber(Long serialNumber) {
         return repository.findBySerialNumber(serialNumber);
+    }
+
+    public void updateType(String id, String type) {
+        Document document = get(id);
+        document.setType(type);
+        repository.save(document);
     }
 
 /*    public Document getByRsql(long serialNumber){
