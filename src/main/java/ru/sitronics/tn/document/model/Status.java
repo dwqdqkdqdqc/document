@@ -2,12 +2,15 @@ package ru.sitronics.tn.document.model;
 
 public enum Status {
     NO_VIEWED, //не просмотрено
+    DRAFT, //черновик
+    APPROVAL_IN_PROGRESS, //на согласовании
+    APPROVED, //согласован
     VIEWED, //просмотрено
     ACTIVE, //действует
     PROVIDED, //предоставлен
-    RECEIVED, //принят
-    IN_WORK, //в работе
-    REJECTED,  //отклонен
+    ACCEPTED, //принят
+    WORK_IN_PROGRESS, //в работе
+    DECLINED,  //отклонен
     REQUIRES_TO_SIGN, //требуется подписать
     REQUIRES_A_RESPONSE_SIGNATURE, //требуется ответная подпись
     REQUIRES_APPROVAL, //требует утверждение
