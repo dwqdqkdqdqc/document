@@ -1,8 +1,8 @@
 package ru.sitronics.tn.document.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.rsql.CustomRsqlVisitor;
 
 import java.beans.FeatureDescriptor;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Tag(name = "Document controller")
@@ -38,11 +41,11 @@ public class DocumentController {
         return service.get(id);
     }
 
-    @GetMapping
+/*    @GetMapping
     public List<Document> getAll() {
         log.info("getAll documents for user ");
         return service.getAll();
-    }
+    }*/
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -65,6 +68,19 @@ public class DocumentController {
         Node rootNode = new RSQLParser().parse(where);
         Specification<Document> spec = rootNode.accept(new CustomRsqlVisitor<>());
         return service.getByQuery(spec);
+    }
+
+    @Operation(summary = "Get all documents")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
+                                                      @RequestParam(value = "page", required = false) Integer page,
+                                                      @RequestParam(value = "size", required = false) Integer size,
+                                                      @RequestParam(value = "sort", required = false) String sort) {
+        try {
+            return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
+        }
     }
 
     @GetMapping("/serialNumber")
