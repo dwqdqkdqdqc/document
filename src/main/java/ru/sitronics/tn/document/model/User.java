@@ -2,6 +2,7 @@ package ru.sitronics.tn.document.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,7 +43,7 @@ public class User extends BaseEntity {
     private String workPhoneNumber;
     @Column(name = "mail")
     private String mail;
-    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(name = "photo")
     private byte[] photo;
     @Column(name = "ip_address")
@@ -54,7 +55,7 @@ public class User extends BaseEntity {
     @Column(name = "user_tasks")
     private String userTasks;
     @OneToMany(mappedBy = "author")
-    @JsonBackReference
+    @JsonBackReference(value = "author")
     private List<Document> createdDocuments = new java.util.ArrayList<>();
 }
 

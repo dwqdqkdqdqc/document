@@ -15,13 +15,13 @@ public class RelatingDocumentsTable {
     RelatingDocumentId id;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "document_id")
     @MapsId("documentId")
     @JoinColumn(name = "document_id")
     Document documentId;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "relating_document_id")
     @MapsId("relatingDocumentId")
     @JoinColumn(name = "relating_document_id")
     Document relatingDocument;

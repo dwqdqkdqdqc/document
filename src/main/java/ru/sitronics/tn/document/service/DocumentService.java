@@ -39,37 +39,4 @@ public class DocumentService {
     public List<Document> getSerialNumber(Long serialNumber) {
         return repository.findBySerialNumber(serialNumber);
     }
-
-    public void updateType(String id, String type) {
-        Document document = get(id);
-        document.setType(type);
-        repository.save(document);
-    }
-
-/*    public Document getByRsql(long serialNumber){
-        return repository.findByRsql(serialNumber);
-    }*/
-/*
-    public List<Document> getSerialNumberContaining(long serialNumber) {
-        return repository.findBySerialNumberContaining(serialNumber);
-    }
-
-    public List<Document> getBySerialNumberOrderByAuthor(long serialNumber){
-        return repository.findBySerialNumberOrderByAuthor(serialNumber);
-    }
-    public List<Document> getBySerialNumberOrderByCurators(long serialNumber){
-        return repository.findBySerialNumberOrderByCurators(serialNumber);
-    }
-
-    public List<Document> getByDateOfCreationBetween(LocalDateTime startDate, LocalDateTime endDate){
-       return repository.findByDateOfCreationBetween(startDate, endDate);
-    }
-
-    public List<Document> getByDateOfCreationGreaterThanEqual(LocalDateTime startDate){
-        return repository.findByDateOfCreationGreaterThanEqual(startDate);
-    }
-
-    public List<Document> getByDateOfCreationLessThanEqual(LocalDateTime startDate){
-        return repository.findByDateOfCreationLessThanEqual(startDate);
-    }*/
 }

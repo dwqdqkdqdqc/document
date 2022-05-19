@@ -3,11 +3,11 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     //  id 'java-library'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    //  id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'ru.sitronics.tn'
-version = '0.1.0'
+//version = '0.1.0'
 sourceCompatibility = '17'
 
 bootRun {
@@ -31,15 +31,19 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+
+
     // https://mvnrepository.com/artifact/com.github.java-json-tools/json-patch
     implementation 'com.github.java-json-tools:json-patch:1.13'
-    compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
+    //    compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
     // QueryDSL
-    implementation("com.querydsl:querydsl-jpa:${queryDslVersion}",
+/*    implementation("com.querydsl:querydsl-jpa:${queryDslVersion}",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jpa",
-            "com.querydsl:querydsl-core:${queryDslVersion}")
+            "com.querydsl:querydsl-core:${queryDslVersion}")*/
     //implementation 'cz.jirutka.rsql:rsql-parser:2.1.0'
-  //  implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
+    //  implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
     implementation 'io.github.perplexhub:rsql-jpa-spring-boot-starter:5.0.19'
 
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
@@ -64,6 +68,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+jar {
+    enabled = false
+}
+
+/*
 
 querydsl {
     jpa = true
@@ -84,4 +93,5 @@ compileQuerydsl {
 configurations {
     querydsl.extendsFrom compileClasspath
 }
+*/
 
