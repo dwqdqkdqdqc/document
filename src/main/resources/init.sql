@@ -15,12 +15,14 @@ DROP TABLE IF EXISTS nci_factory_numbers;
 DROP TABLE IF EXISTS attachments;
 DROP TABLE IF EXISTS documents_attachments;
 DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
 
 
 CREATE TABLE documents
 (                                                          --Base fields
     id                           VARCHAR PRIMARY KEY NOT NULL,
-    type                         VARCHAR             NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                        VARCHAR             NULL,
     serial_number                BIGINT              NULL,
     date_of_creation             TIMESTAMP           NULL,
     author_id                    VARCHAR             NULL,
@@ -35,8 +37,8 @@ CREATE TABLE documents
     barcode                      VARCHAR             NULL,
     lkk_document_number          VARCHAR             NULL,
     lus_document_number          VARCHAR             NULL,
-    customer                     VARCHAR             NULL,
-    supplier                     VARCHAR             NULL,
+    customer_id                  VARCHAR             NULL,
+    supplier_id                  VARCHAR             NULL,
     amount                       numeric default 0   NULL,
 
 --Fields of other classes
@@ -152,6 +154,13 @@ CREATE TABLE documents_attachments
 );
 
 CREATE TABLE nci_contractors
+(
+    id       VARCHAR NULL,
+    name     VARCHAR NULL,
+    name_rus VARCHAR NULL
+);
+
+CREATE TABLE nci_document_types
 (
     id       VARCHAR NULL,
     name     VARCHAR NULL,

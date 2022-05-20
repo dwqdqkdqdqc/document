@@ -13,12 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.sitronics.tn.document.model.Contractor;
+import ru.sitronics.tn.document.model.NciContractor;
 import ru.sitronics.tn.document.model.Document;
-import ru.sitronics.tn.document.model.DocumentType;
+import ru.sitronics.tn.document.model.NciDocumentType;
 import ru.sitronics.tn.document.service.DocumentService;
 
 import java.beans.FeatureDescriptor;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -92,13 +94,27 @@ public class DocumentController {
 
     @GetMapping("/types")
     public List<String> getDocumentTypes() {
-        return Stream.of(DocumentType.values())
-                .map(DocumentType::name).toList();
+        return Stream.of(NciDocumentType.values())
+                .map(NciDocumentType::name).toList();
     }
 
     @GetMapping("/contractors")
     public List<String> getContractors() {
-        return Stream.of(Contractor.values())
-                .map(Contractor::name).toList();
+        return Stream.of(NciContractor.values())
+                .map(NciContractor::name).toList();
+    }
+
+    @GetMapping("/typesWithTranslate")
+    public Map<NciDocumentType, String> getDocumentTypesWithTranslate() {
+        Map<NciDocumentType, String> map = new EnumMap<>(NciDocumentType.class);
+        Arrays.asList(NciDocumentType.values()).forEach(value -> map.put(value, value.getTranslate()));
+        return map;
+    }
+
+    @GetMapping("/contractorsWithTranslate")
+    public Map<NciContractor, String> getContractorsWithTranslate() {
+        Map<NciContractor, String> map = new EnumMap<>(NciContractor.class);
+        Arrays.asList(NciContractor.values()).forEach(value -> map.put(value, value.getTranslate()));
+        return map;
     }
 }
