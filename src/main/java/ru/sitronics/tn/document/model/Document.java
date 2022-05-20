@@ -33,28 +33,28 @@ public class Document extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull(message = "Specify document type.")
+    //  @NotNull(message = "Specify document type.")
     @Column(name = "type", insertable = false, updatable = false)
     //  @Enumerated(EnumType.STRING)
     //  private DocumentType type;
     private String type;
 
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
-    @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
+    @Column(name = "serial_number", unique = true/*, nullable = false, insertable = false, updatable = false*/)
     private Long serialNumber;
 
     @CreatedDate
-    @NotNull
+  //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "date_of_creation", updatable = false)
+    @Column(name = "date_of_creation"/*, updatable = false*/)
     private LocalDateTime dateOfCreation;
 
     @CreatedBy
-    @NotNull
-    @ManyToOne(optional = false)
+  //  @NotNull
+    @ManyToOne(/*optional = false*/)
     //   @JsonManagedReference(value = "User")
-    @JoinColumn(updatable = false)
+    @JoinColumn(/*updatable = false*/)
     private User author;
 
     @ManyToMany
@@ -62,8 +62,8 @@ public class Document extends BaseEntity implements Serializable {
     //@JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_curators",
-            joinColumns = @JoinColumn(name = "document_id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "curator_id", nullable = false, updatable = false),
+            joinColumns = @JoinColumn(name = "document_id"/*, nullable = false, updatable = false*/),
+            inverseJoinColumns = @JoinColumn(name = "curator_id"/*, nullable = false, updatable = false*/),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "curator_id"}, name = "documents_curators_uc")}
     )
     @OrderBy("lastName")
@@ -73,8 +73,8 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "content")
     private byte[] content;
 
-    @NotNull(message = "Specify the status of the document.")
-    @Column(name = "status", updatable = false)
+  // @NotNull(message = "Specify the status of the document.")
+    @Column(name = "status")
     // @Enumerated(EnumType.STRING)
     // private Status status;
     private String status;
@@ -88,8 +88,8 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false) //рабозбрать, почему именно тут не работает eager
-    @JoinColumn(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY/*, optional = false*/) //рабозбрать, почему именно тут не работает eager
+    @JoinColumn(/*nullable = false*/)
     private Contract contract;
 
     @ManyToOne
@@ -114,8 +114,8 @@ public class Document extends BaseEntity implements Serializable {
     // @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_construction_objects",
-            joinColumns = @JoinColumn(name = "document_id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "construction_object_id", nullable = false, updatable = false),
+            joinColumns = @JoinColumn(name = "document_id"/*, nullable = false, updatable = false*/),
+            inverseJoinColumns = @JoinColumn(name = "construction_object_id"/*, nullable = false, updatable = false*/),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "construction_object_id"}, name = "documents_construction_objects_uc")}
     )
     @OrderBy("name")
@@ -145,17 +145,17 @@ public class Document extends BaseEntity implements Serializable {
     //  @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_attachments",
-            joinColumns = @JoinColumn(name = "document_id", updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "attachment_id", updatable = false),
+            joinColumns = @JoinColumn(name = "document_id"/*, updatable = false*/),
+            inverseJoinColumns = @JoinColumn(name = "attachment_id"/*, updatable = false*/),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
     private List<Attachment> attachments = new java.util.ArrayList<>();
 
-    @Column(name = "customer", updatable = false)
+    @Column(name = "customer"/*, updatable = false*/)
     //  @Enumerated(EnumType.STRING)
     // private Customer customer;
     private String customer;
 
-    @Column(name = "supplier", updatable = false)
+    @Column(name = "supplier"/*, updatable = false*/)
     //  @Enumerated(EnumType.STRING)
     //  private Supplier supplier;
     private String supplier;

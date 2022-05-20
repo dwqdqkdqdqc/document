@@ -18,24 +18,24 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("CONTRACT")
 public class Contract extends Document {
-    @NotNull
+    //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "date_of_signing", updatable = false)
+    @Column(name = "date_of_signing"/*, updatable = false*/)
     private LocalDateTime dateOfSigning;
 
-    @NotNull
-    @Column(name = "document_registration_number", updatable = false)
+   // @NotNull
+    @Column(name = "document_registration_number"/*, updatable = false*/)
     private String documentRegistrationNumber;
 
-    @NotNull
+  //  @NotNull
     @OneToOne
-    @JoinColumn(updatable = false)
+    @JoinColumn(/*updatable = false*/)
     private NciOst nciOst;
 
-    @OneToMany(mappedBy = "contract")
-    private List<Document> documents;
+  /*  @OneToMany(mappedBy = "contract")
+    private List<Document> documents;*/
 
-    @ManyToOne
+    @ManyToOne()
     @JsonBackReference
     @JoinColumn(name = "specification_id")
     private Specification specification;
