@@ -1,18 +1,15 @@
 package ru.sitronics.tn.document.model;
 
-import cz.jirutka.rsql.parser.ast.ComparisonOperator;
-import ru.sitronics.tn.rsql.RsqlSearchOperation;
-
-import java.util.Arrays;
-
-public enum Customer {
-    ORGANIZATION_1("Организация_1"),
-    ORGANIZATION_2("Организация_2"),
-    ORGANIZATION_3("Организация_3");
+public enum Contractor {
+    Contractor_1("Организация_1"),
+    Contractor_2("Организация_2"),
+    Contractor_3("Организация_3"),
+    Contractor_4("Организация_4"),
+    Contractor_5("Организация_5");
 
     private final String translate;
 
-    Customer(final String translate) {
+    Contractor(final String translate) {
         this.translate = translate;
     }
 

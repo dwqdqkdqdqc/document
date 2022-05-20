@@ -1,25 +1,5 @@
 package ru.sitronics.tn.document.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.sitronics.tn.document.HasId;
-import ru.sitronics.tn.document.model.Customer;
-import ru.sitronics.tn.document.model.Status;
-import ru.sitronics.tn.document.model.Supplier;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-
 
 /*@Data
 @NoArgsConstructor

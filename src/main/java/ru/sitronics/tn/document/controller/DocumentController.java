@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.model.Contractor;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.model.DocumentType;
 import ru.sitronics.tn.document.service.DocumentService;
@@ -93,5 +94,11 @@ public class DocumentController {
     public List<String> getDocumentTypes() {
         return Stream.of(DocumentType.values())
                 .map(DocumentType::name).toList();
+    }
+
+    @GetMapping("/contractors")
+    public List<String> getContractors() {
+        return Stream.of(Contractor.values())
+                .map(Contractor::name).toList();
     }
 }
