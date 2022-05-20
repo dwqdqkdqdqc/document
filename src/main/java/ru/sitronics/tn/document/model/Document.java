@@ -88,7 +88,6 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "comment")
     private String comment;
 
-    @NotNull(message = "Specify a link to the current document's related contract.")
     @ManyToOne(fetch = FetchType.LAZY, optional = false) //рабозбрать, почему именно тут не работает eager
     @JoinColumn(nullable = false)
     private Contract contract;

@@ -47,15 +47,6 @@ public class DocumentService {
         repository.deleteById(id);
     }
 
-    public List<Document> getByQuery(Specification<Document> spec) {
-        return repository.findAll(spec);
-    }
-
-    public List<Document> getSerialNumber(Long serialNumber) {
-        return repository.findBySerialNumber(serialNumber);
-    }
-
-
     public Map<String, Object> findAll(String filter, Integer page, Integer size, String sort) {
         Map<String, Object> responseEntity = new HashMap<>();
         Page<Document> documentPage;

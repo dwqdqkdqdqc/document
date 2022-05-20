@@ -27,22 +27,21 @@ DELETE
 FROM documents_attachments;
 */
 
-
 INSERT INTO documents (id, type, date_of_creation, author_id, status, access, contract_id, lot,
-                       specification_id, date_of_signing, nci_ost_id, customer, supplier, amount)
+                       specification_id, customer, supplier, amount, date_of_signing, document_registration_number, nci_ost_id)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'CONTRACT', '2020-01-20 10:00:00',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', null, null,
-        '123e4567-e89b-12d3-a456-300000000000', '2020-01-21 10:00:00',
-        '123e4567-e89b-12d3-a456-000000001000', 'ORGANIZATION_1', 'FACTORY_1', '1000.01'),
+        '123e4567-e89b-12d3-a456-300000000000', 'ORGANIZATION_1', 'FACTORY_1', '1000.01', '2020-01-21 10:00:00', 'registration_number_1',
+        '123e4567-e89b-12d3-a456-000000001000'),
        ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', '2020-01-21 10:00:00',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', '123e4567-e89b-12d3-a456-100000000000', null,
-        '123e4567-e89b-12d3-a456-400000000000', null, null, 'ORGANIZATION_2', 'FACTORY_2', '5000.00'),
+        '123e4567-e89b-12d3-a456-400000000000', 'ORGANIZATION_2', 'FACTORY_2', '5000.00', null, null, null),
        ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', '2020-01-22 10:00:00',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', '123e4567-e89b-12d3-a456-100000000000', 'lot_1',
-        '123e4567-e89b-12d3-a456-400000000000', null, null, 'ORGANIZATION_3', 'FACTORY_3', '3000.0002'),
+        '123e4567-e89b-12d3-a456-400000000000', 'ORGANIZATION_3', 'FACTORY_3', '3000.0002', null, null, null),
        ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION', '2020-02-23 10:00:00',
         '123e4567-e89b-12d3-a456-040000000000', 'REQUIRES_CLARIFICATION', 'FOR_INTERNAL_USE',
-        null, 'lot_1', null, null, null, 'ORGANIZATION_1', 'FACTORY_1', '2000');
+        null, 'lot_1', null, 'ORGANIZATION_1', 'FACTORY_1', '2000', null, null, null);
 
 
 INSERT INTO users (id, login, password, name, last_name, role, mail)
