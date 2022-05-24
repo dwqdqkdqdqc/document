@@ -13,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,23 +25,21 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Access(javax.persistence.AccessType.FIELD)  // https://stackoverflow.com/a/6084701/548473
+@Access(javax.persistence.AccessType.FIELD)  //https://stackoverflow.com/a/6084701/548473
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "d_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "d_type")
 @DiscriminatorValue("DOCUMENT")
 @Table(name = "documents")
 public class Document extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    //  @NotNull(message = "Specify document type.")
+    @NotNull(message = "Specify document type.")
     @Column(name = "type_id"/*, insertable = false, updatable = false*/)
-    // @Enumerated(EnumType.STRING)
     private String type;
 
     //  @NotNull(message = "Specify document type.")
     @Column(name = "d_type", insertable = false, updatable = false)
-  //  @Enumerated(EnumType.STRING)
     private String dType;
 
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
@@ -51,7 +50,7 @@ public class Document extends BaseEntity implements Serializable {
     //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "date_of_creation"/*, updatable = false*/)
+    @Column(name = "date_of_creation", insertable = false, updatable = false)
     private LocalDateTime dateOfCreation;
 
     @CreatedBy
@@ -95,7 +94,7 @@ public class Document extends BaseEntity implements Serializable {
     private Contract contract;
 
     @ManyToOne
-    private Specification specification;
+    private Specification  specification;
 
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -165,4 +164,43 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
+
+    ////=========================================== Contract
+    //  @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "date_of_signing"/*, updatable = false*/)
+    private LocalDateTime dateOfSigning;
+
+    // @NotNull
+    @Column(name = "document_registration_number"/*, updatable = false*/)
+    private String documentRegistrationNumber;
+
+    //  @NotNull
+    @OneToOne
+    @JoinColumn(/*updatable = false*/)
+    private NciOst nciOst;
+
+    @Column(name = "contract_subject")
+    private String contractSubject;
+
+    @Column(name = "reg_number")
+    private String regNumber;
+
+    @Column(name = "inn")
+    private String inn;
+
+    @Column(name = "contractor_id")
+    private String contractor;
+
+    @Column(name = "contract_class")
+    private String contractClass;
+
+    @Column(name = "typical_form")
+    private String typicalForm;
+
+    @Column(name = "contract_view")
+    private String contractView;
+
+    @Column(name = "frame_contract")
+    private Boolean frameContract;
 }

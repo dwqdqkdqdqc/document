@@ -24,12 +24,13 @@ CREATE TABLE documents
     type_id                      VARCHAR             NULL,
     d_type                        VARCHAR             NULL,
     serial_number                BIGINT              NULL,
-    date_of_creation             TIMESTAMP           NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
     author_id                    VARCHAR             NULL,
     content                      bytea               NULL,
     status                       VARCHAR             NULL,
     access                       VARCHAR             NULL,
-    comment                      VARCHAR             NULL,
+    comment
+                                 VARCHAR             NULL,
     contract_id                  VARCHAR             NULL,
     specification_id             VARCHAR             NULL,
     construction_object_id       VARCHAR             NULL,
@@ -39,13 +40,21 @@ CREATE TABLE documents
     lus_document_number          VARCHAR             NULL,
     customer_id                  VARCHAR             NULL,
     supplier_id                  VARCHAR             NULL,
-    amount                       numeric default 0   NULL,
+    amount                       numeric   default 0 NULL,
 
 --Fields of other classes
     lot                          VARCHAR             NULL, --Specification
     date_of_signing              TIMESTAMP           NULL, --contract
     document_registration_number VARCHAR             NULL, --contract
-    nci_ost_id                   VARCHAR             NULL  --contract
+    nci_ost_id                   VARCHAR             NULL, --contract
+    contract_subject             VARCHAR             NULL, --contract
+    reg_number                   VARCHAR             NULL, --contract
+    inn                          VARCHAR             NULL, --contract
+    contractor_id                VARCHAR             NULL, --contract
+    contract_class               VARCHAR             NULL, --contract
+    typical_form                 VARCHAR             NULL, --contract
+    contract_view                VARCHAR             NULL, --contract
+    frame_contract               VARCHAR             NULL  --contract
 
     --  FOREIGN KEY (create_user) REFERENCES users (id)
 );
@@ -155,14 +164,12 @@ CREATE TABLE documents_attachments
 
 CREATE TABLE nci_contractors
 (
-    id       VARCHAR NULL,
     name     VARCHAR NULL,
     name_rus VARCHAR NULL
 );
 
 CREATE TABLE nci_document_types
 (
-    id       VARCHAR NULL,
     name     VARCHAR NULL,
     name_rus VARCHAR NULL
 );

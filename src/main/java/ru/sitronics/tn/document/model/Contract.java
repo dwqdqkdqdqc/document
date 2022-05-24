@@ -19,18 +19,18 @@ import java.util.List;
 @DiscriminatorValue("CONTRACT")
 public class Contract extends Document {
     //  @NotNull
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "date_of_signing"/*, updatable = false*/)
+  /*  @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "date_of_signing"*//*, updatable = false*//*)
     private LocalDateTime dateOfSigning;
 
    // @NotNull
-    @Column(name = "document_registration_number"/*, updatable = false*/)
+    @Column(name = "document_registration_number"*//*, updatable = false*//*)
     private String documentRegistrationNumber;
 
   //  @NotNull
     @OneToOne
-    @JoinColumn(/*updatable = false*/)
-    private NciOst nciOst;
+    @JoinColumn(*//*updatable = false*//*)
+    private NciOst nciOst;*/
 
   /*  @OneToMany(mappedBy = "contract")
     private List<Document> documents;*/

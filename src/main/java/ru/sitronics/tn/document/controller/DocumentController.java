@@ -13,9 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.sitronics.tn.document.model.NciContractor;
-import ru.sitronics.tn.document.model.Document;
-import ru.sitronics.tn.document.model.NciDocumentType;
+import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
 
 import java.beans.FeatureDescriptor;
@@ -42,7 +40,8 @@ public class DocumentController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public Document createOrUpdate(Document document) {
         log.info("create {} for document", document);
         return service.createOrUpdate(document);
@@ -97,6 +96,12 @@ public class DocumentController {
         return Stream.of(NciDocumentType.values())
                 .map(NciDocumentType::name).toList();
     }
+
+ /*   @GetMapping("/types")
+    public List<String> getAll() {
+        log.info("getAll documents for user ");
+        return service.getAll();
+    }*/
 
     @GetMapping("/contractors")
     public List<String> getContractors() {
