@@ -96,25 +96,22 @@ public class DocumentController {
     @GetMapping("/types")
     public List<String> getDocumentTypes() {
         return Stream.of(NciDocumentType.NciDocumentTypeEnum.values())
-                .map(NciDocumentType.NciDocumentTypeEnum::getTranslate).toList();
+                .map(NciDocumentType.NciDocumentTypeEnum::name).toList();
     }
 
     @GetMapping("/contractors")
     public List<String> getContractors() {
-        return Stream.of(NciContractor.values())
-                .map(NciContractor::getTranslate).toList();
+        return Stream.of(NciContractor.values()).map(NciContractor::name).toList();
     }
 
     @GetMapping("/statuses")
     public List<String> getStatuses() {
-        return Stream.of(NciStatus.values())
-                .map(NciStatus::getTranslate).toList();
+        return Stream.of(NciStatus.values()).map(NciStatus::name).toList();
     }
 
     @GetMapping("/accessLimitations")
     public List<String> getAccessLimitations() {
-        return Stream.of(NciAccessLimitation.values())
-                .map(NciAccessLimitation::getTranslate).toList();
+        return Stream.of(NciAccessLimitation.values()).map(NciAccessLimitation::name).toList();
     }
 
     @GetMapping("/typesWithTranslate")
