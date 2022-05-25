@@ -17,6 +17,7 @@ import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
 
+import javax.print.Doc;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -42,12 +43,10 @@ public class DocumentController {
         return service.get(id);
     }
 
-    @PostMapping
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
-    @ResponseStatus(HttpStatus.OK)
-    public Document createOrUpdate(Document document) {
-        log.info("create {} for document", document);
-        return service.createOrUpdate(document);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Document> create(@RequestBody Document document) {
+        log.info("creating document: {}", document.toString());
+        return new ResponseEntity<>(service.createOrUpdate(document), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

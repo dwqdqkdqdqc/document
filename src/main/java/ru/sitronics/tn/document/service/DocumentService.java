@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.model.NciDocumentType;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +46,11 @@ public class DocumentService {
     }
 
     public Document createOrUpdate(Document document) {
-        return repository.save(document);
+        String id = repository.save(document).getId();
+        if (id == null || id.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "returned id from DB is null");
+        }
+        return  repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + id));
     }
 
     public void delete(String id) {
