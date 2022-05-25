@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
+import ru.sitronics.tn.document.service.NciDocumentTypeService;
 
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
@@ -32,6 +33,8 @@ public class DocumentController {
 
     @Autowired
     private DocumentService service;
+    @Autowired
+    private NciDocumentTypeService documentTypeService;
 
     @GetMapping("/{id}")
     public Document get(@PathVariable String id) {
@@ -93,26 +96,32 @@ public class DocumentController {
 
     @GetMapping("/types")
     public List<String> getDocumentTypes() {
-        return Stream.of(NciDocumentType.values())
-                .map(NciDocumentType::name).toList();
+        return Stream.of(NciDocumentType.NciDocumentTypeEnum.values())
+                .map(NciDocumentType.NciDocumentTypeEnum::getTranslate).toList();
     }
-
- /*   @GetMapping("/types")
-    public List<String> getAll() {
-        log.info("getAll documents for user ");
-        return service.getAll();
-    }*/
 
     @GetMapping("/contractors")
     public List<String> getContractors() {
         return Stream.of(NciContractor.values())
-                .map(NciContractor::name).toList();
+                .map(NciContractor::getTranslate).toList();
+    }
+
+    @GetMapping("/statuses")
+    public List<String> getStatuses() {
+        return Stream.of(NciStatus.values())
+                .map(NciStatus::getTranslate).toList();
+    }
+
+    @GetMapping("/accessLimitations")
+    public List<String> getAccessLimitations() {
+        return Stream.of(NciAccessLimitation.values())
+                .map(NciAccessLimitation::getTranslate).toList();
     }
 
     @GetMapping("/typesWithTranslate")
-    public Map<NciDocumentType, String> getDocumentTypesWithTranslate() {
-        Map<NciDocumentType, String> map = new EnumMap<>(NciDocumentType.class);
-        Arrays.asList(NciDocumentType.values()).forEach(value -> map.put(value, value.getTranslate()));
+    public Map<NciDocumentType.NciDocumentTypeEnum, String> getDocumentTypesWithTranslate() {
+        Map<NciDocumentType.NciDocumentTypeEnum, String> map = new EnumMap<>(NciDocumentType.NciDocumentTypeEnum.class);
+        Arrays.asList(NciDocumentType.NciDocumentTypeEnum.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
     }
 

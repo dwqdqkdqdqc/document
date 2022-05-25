@@ -2,10 +2,7 @@ package ru.sitronics.tn.document.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
@@ -13,6 +10,10 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
@@ -79,11 +80,11 @@ public class Document extends BaseEntity implements Serializable {
     // @NotNull(message = "Specify the status of the document.")
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private NciStatus status;
 
     @Column(name = "access")
     @Enumerated(EnumType.STRING)
-    private AccessLimitation access;
+    private NciAccessLimitation access;
 
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
@@ -163,6 +164,14 @@ public class Document extends BaseEntity implements Serializable {
 
     @Column(name = "amount")
     private BigDecimal amount;
+
+    @OneToMany
+    @JoinColumn(name = "name_rus")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @OrderBy("nameRus")
+    private List<NciDocumentType> nciDocumentTypes;
+
 
 
     ////=========================================== Contract

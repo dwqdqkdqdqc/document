@@ -26,7 +26,6 @@ public enum NciContractor {
         return map;
     }
 
-
     public String getTranslate() {
         return translate;
     }

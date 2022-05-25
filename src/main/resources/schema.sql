@@ -25,6 +25,10 @@ DELETE
 FROM attachments;
 DELETE
 FROM documents_attachments;
+DELETE
+FROM nci_contractors;
+DELETE
+FROM nci_document_types;
 */
 /*
 INSERT INTO documents (id, type, date_of_creation, author_id, status, access, contract_id, lot,
@@ -49,21 +53,21 @@ INSERT INTO documents (id, type_id, d_type, author_id, status, access, contract_
                        document_registration_number, nci_ost_id)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'Договор', 'CONTRACT',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', null, null,
-        '123e4567-e89b-12d3-a456-300000000000', '123e4567-e89b-12d3-a456-110000000000',
-        '123e4567-e89b-12d3-a456-120000000000', '1000.01', '2020-01-21 10:00:00',
+        '123e4567-e89b-12d3-a456-300000000000', 'Организация_1',
+        'Организация_2', '1000.01', '2020-01-21 10:00:00',
         'registration_number_1',
         '123e4567-e89b-12d3-a456-000000001000'),
        ('123e4567-e89b-12d3-a456-200000000000', 'Транспортная накладная', 'WAYBILL',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', '123e4567-e89b-12d3-a456-100000000000', null,
-        '123e4567-e89b-12d3-a456-400000000000', '123e4567-e89b-12d3-a456-130000000000',
-        '123e4567-e89b-12d3-a456-140000000000', '5000.00', null, null, null),
+        '123e4567-e89b-12d3-a456-400000000000', 'Организация_3',
+        'Организация_4', '5000.00', null, null, null),
        ('123e4567-e89b-12d3-a456-300000000000', 'Спецификация',  'SPECIFICATION',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', '123e4567-e89b-12d3-a456-100000000000', 'lot_1',
-        '123e4567-e89b-12d3-a456-400000000000', '123e4567-e89b-12d3-a456-150000000000',
-        '123e4567-e89b-12d3-a456-160000000000', '3000.0002', null, null, null),
+        '123e4567-e89b-12d3-a456-400000000000', 'Организация_5',
+        'Организация_6', '3000.0002', null, null, null),
        ('123e4567-e89b-12d3-a456-400000000000', 'Спецификация',  'SPECIFICATION',
         '123e4567-e89b-12d3-a456-040000000000', 'REQUIRES_CLARIFICATION', 'FOR_INTERNAL_USE',
-        null, 'lot_1', null, '123e4567-e89b-12d3-a456-170000000000', '123e4567-e89b-12d3-a456-180000000000', '2000',
+        null, 'lot_1', null, 'Организация_7', 'Организация_8', '2000',
         null, null, null);
 
 
@@ -168,34 +172,34 @@ VALUES ('Contractor_1', 'Организация_1'),
 -- select * from users;
 
 
-INSERT INTO nci_document_types (name, name_rus)
-values ('DOCUMENT', 'Документ'),
-       ('CONTRACT', 'Договор'),
-       ('MTR_SUPPLY_CONTRACT', 'Договор на поставку МТР (включая дополнительные соглашения)'),
-       ('SPECIFICATION_TO_THE_MTR_CONTRACT', 'Спецификация к договору МТР'),
-       ('INFORMATION_ON_THE_SUPPLIERS_CHAIN_OF_OWNERSHIP', 'Сведения о цепочке собственников Поставщика'),
-       ('MTP_INSURANCE_POLICY', 'Полис страхования МТР'),
-       ('MTR_PRODUCTION_AND_SHIPMENT_PLAN', 'План изготовления и отгрузки МТР'),
-       ('INFORMATION_ON_THE_PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR,',
+INSERT INTO nci_document_types (id, name, name_rus)
+values ('123e4567-e89b-12d3-a456-111000000000', 'DOCUMENT', 'Документ'),
+       ('123e4567-e89b-12d3-a456-112000000000', 'CONTRACT', 'Договор'),
+       ('123e4567-e89b-12d3-a456-113000000000', 'MTR_SUPPLY_CONTRACT', 'Договор на поставку МТР (включая дополнительные соглашения)'),
+       ('123e4567-e89b-12d3-a456-114000000000', 'SPECIFICATION_TO_THE_MTR_CONTRACT', 'Спецификация к договору МТР'),
+       ('123e4567-e89b-12d3-a456-115000000000', 'INFORMATION_ON_THE_SUPPLIERS_CHAIN_OF_OWNERSHIP', 'Сведения о цепочке собственников Поставщика'),
+       ('123e4567-e89b-12d3-a456-116000000000', 'MTP_INSURANCE_POLICY', 'Полис страхования МТР'),
+       ('123e4567-e89b-12d3-a456-117000000000', 'MTR_PRODUCTION_AND_SHIPMENT_PLAN', 'План изготовления и отгрузки МТР'),
+       ('123e4567-e89b-12d3-a456-118000000000', 'INFORMATION_ON_THE_PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR,',
         'Информация о ходе изготовления и подготовке к отгрузке МТР'),
-       ('DESIGN_DOCUMENTS_FOR_THE_SUPPLIER', 'Конструкторская документация (для поставщика)'),
-       ('KMD_WORKING_DOCUMENTATION', 'Рабочая документация по КМД'),
-       ('ACT_OR_DOCUMENT_ON_KMD_APPROVAL', 'Акт/документ о согласовании КМД'),
-       ('ACTS_OF_DETECTED_DEFECTS_OR_PRODUCT_FAILURES_WITHIN_THE_SCOPE_OF_THE_WARRANTY_CASE',
+       ('123e4567-e89b-12d3-a456-119000000000', 'DESIGN_DOCUMENTS_FOR_THE_SUPPLIER', 'Конструкторская документация (для поставщика)'),
+       ('123e4567-e89b-12d3-a456-120000000000', 'KMD_WORKING_DOCUMENTATION', 'Рабочая документация по КМД'),
+       ('123e4567-e89b-12d3-a456-121000000000', 'ACT_OR_DOCUMENT_ON_KMD_APPROVAL', 'Акт/документ о согласовании КМД'),
+       ('123e4567-e89b-12d3-a456-122000000000', 'ACTS_OF_DETECTED_DEFECTS_OR_PRODUCT_FAILURES_WITHIN_THE_SCOPE_OF_THE_WARRANTY_CASE',
         'Акты о выявленных дефектах либо отказах продукции в рамках гарантийного случая'),
-       ('ACTS_OF_DEFECTS_OR_PRODUCT_FAILURES_WITHIN_THE_WARRANTY_PERIOD',
+       ('123e4567-e89b-12d3-a456-123000000000', 'ACTS_OF_DEFECTS_OR_PRODUCT_FAILURES_WITHIN_THE_WARRANTY_PERIOD',
         'Акты о выявленных дефектах либо отказах продукции в рамках гарантийного случая(более 2 лет)'),
-       ('ACT_OF_INSPECTION_OF_PRODUCT_MANUFACTURING', 'Акт проверки изготовления продукции'),
-       ('PROTOCOL_FOR_ACCEPTANCE_TESTS_OF_PRODUCTS', 'Протокол приемо-сдаточных испытаний продукции'),
-       ('INFORMING_ABOUT_HAZARDOUS_SUBSTANCES', 'Информирование об опасных веществах'),
-       ('NOTIFICATION_OF_CHANGE_OF_SHIPPING_DETAILS', 'Уведомление о смене отгрузочных реквизитов'),
-       ('AGREEMENT_ON_THE_SUPPLY_OF_PRODUCTS_IN_ACCOUNT_OF_WHICH_ADVANCE_PAYMENT',
+       ('123e4567-e89b-12d3-a456-124000000000', 'ACT_OF_INSPECTION_OF_PRODUCT_MANUFACTURING', 'Акт проверки изготовления продукции'),
+       ('123e4567-e89b-12d3-a456-125000000000', 'PROTOCOL_FOR_ACCEPTANCE_TESTS_OF_PRODUCTS', 'Протокол приемо-сдаточных испытаний продукции'),
+       ('123e4567-e89b-12d3-a456-126000000000', 'INFORMING_ABOUT_HAZARDOUS_SUBSTANCES', 'Информирование об опасных веществах'),
+       ('123e4567-e89b-12d3-a456-127000000000', 'NOTIFICATION_OF_CHANGE_OF_SHIPPING_DETAILS', 'Уведомление о смене отгрузочных реквизитов'),
+       ('123e4567-e89b-12d3-a456-128000000000', 'AGREEMENT_ON_THE_SUPPLY_OF_PRODUCTS_IN_ACCOUNT_OF_WHICH_ADVANCE_PAYMENT',
         'Соглашение о поставке продукции, в счет которой уплачен аванс (пр. 6 к договору на поставку МТР)'),
-       ('RECONCILIATION_ACT_ON_THE_PART_OF_THE_SUPPLIER', 'Акт сверки со стороны Поставщика'),
-       ('RECONCILIATION_ACT_ON_THE_PART_OF_OST', 'Акт сверки со стороны ОСТ'),
-       ('CARGO_CUSTOMS_DECLARATION', 'Грузовая таможенная декларация'),
-       ('WAYBILL', 'Транспортная накладная'),
-       ('SPECIFICATION', 'Спецификация');
+       ('123e4567-e89b-12d3-a456-129000000000', 'RECONCILIATION_ACT_ON_THE_PART_OF_THE_SUPPLIER', 'Акт сверки со стороны Поставщика'),
+       ('123e4567-e89b-12d3-a456-130000000000', 'RECONCILIATION_ACT_ON_THE_PART_OF_OST', 'Акт сверки со стороны ОСТ'),
+       ('123e4567-e89b-12d3-a456-131000000000', 'CARGO_CUSTOMS_DECLARATION', 'Грузовая таможенная декларация'),
+       ('123e4567-e89b-12d3-a456-132000000000', 'WAYBILL', 'Транспортная накладная'),
+       ('123e4567-e89b-12d3-a456-133000000000', 'SPECIFICATION', 'Спецификация');
 
 /*
     RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза

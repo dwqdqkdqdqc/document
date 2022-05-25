@@ -22,7 +22,7 @@ CREATE TABLE documents
 (                                                          --Base fields
     id                           VARCHAR PRIMARY KEY NOT NULL,
     type_id                      VARCHAR             NULL,
-    d_type                        VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
     serial_number                BIGINT              NULL,
     date_of_creation             TIMESTAMP DEFAULT now(),
     author_id                    VARCHAR             NULL,
@@ -170,6 +170,7 @@ CREATE TABLE nci_contractors
 
 CREATE TABLE nci_document_types
 (
+    id       VARCHAR NOT NULL,
     name     VARCHAR NULL,
     name_rus VARCHAR NULL
 );

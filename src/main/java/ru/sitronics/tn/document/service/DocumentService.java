@@ -8,14 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.sitronics.tn.document.model.Doc;
 import ru.sitronics.tn.document.model.Document;
+import ru.sitronics.tn.document.model.NciDocumentType;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -90,6 +91,13 @@ public class DocumentService {
         responseEntity.put("entity", documentPage.stream().toList());
 
         return responseEntity;
+    }
+
+    public List<String> getAllTypes() {
+        List<Document> documents = repository.findAll();
+        List<NciDocumentType> nciDocumentTypes = documents.get(0).getNciDocumentTypes(); //documents.stream().map(e -> e.getNciDocumentTypes());
+        List<String> documentType = nciDocumentTypes.stream().map(NciDocumentType::getNameRus).toList();
+        return documentType;
     }
 
 }
