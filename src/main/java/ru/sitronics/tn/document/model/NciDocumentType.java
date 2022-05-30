@@ -54,7 +54,8 @@ public class NciDocumentType extends BaseEntity  implements Serializable {
         RECONCILIATION_ACT_ON_THE_PART_OF_OST("Акт сверки со стороны ОСТ"), //
         CARGO_CUSTOMS_DECLARATION("Грузовая таможенная декларация"), //
         WAYBILL("Транспортная накладная"),
-        SPECIFICATION("Спецификация"); //;
+        SPECIFICATION("Спецификация"),
+        QUALITY_DOCUMENTS("Документы о качестве(проставление отметки ТН)");  //Документы о качестве(проставление отметки ТН); //;
         /*  RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза
           AIR_WAYBILL, //Авиа-накладная
           RECEIPT_OF_POSTAL_ITEMS, //Квитанция о приеме почтовых отправлений
@@ -76,7 +77,6 @@ public class NciDocumentType extends BaseEntity  implements Serializable {
           ACT_ON_THE_RECOGNITION_OF_PRODUCTS_AS_DEFECTIVE,  //Акт о признании продукции дефектной (о признании продукции не соответствующей количеству и/или комплектности и/или марке)
           TN_SURVEILLANCE_CONTRACT,  //Договор ТН-Надзор
           OST_APPLICATION,  //Заявка ОСТ (план поставок, спецификация на поднадзорную продукцию, указанная в плане поставок)
-          QUALITY_DOCUMENTS,  //Документы о качестве(проставление отметки ТН)
           REPORT_ON_SUPERVISED_PRODUCTS_THAT_HAVE_UNDERGONE_TECHNICAL_SUPERVISION_AT_MANUFACTURING_ENTERPRISES,  //Отчет по поднадзорной продукции, прошедшей технический надзор на предприятиях-изготовителях
           TECHNICAL_ACT,  //Технический акт
           ACT_OF_ACCEPTANCE_OF_SERVICES_RENDERED,  //Акт сдачи-приёмки оказанных услуг

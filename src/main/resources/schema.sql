@@ -51,23 +51,23 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', 'CONTRACT', '2020-01-20 10:00:00
 INSERT INTO documents (id, type_id, d_type, author_id, status, access, contract_id, lot,
                        specification_id, customer_id, supplier_id, amount, date_of_signing,
                        document_registration_number, nci_ost_id)
-VALUES ('123e4567-e89b-12d3-a456-100000000000', 'Договор', 'CONTRACT',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', null, null,
-        '123e4567-e89b-12d3-a456-300000000000', 'Организация_1',
-        'Организация_2', '1000.01', '2020-01-21 10:00:00',
+VALUES ('123e4567-e89b-12d3-a456-100000000000', 'CONTRACT', 'CONTRACT',
+        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', null, null,
+        '123e4567-e89b-12d3-a456-300000000000', 'Contractor_1',
+        'Contractor_2', '1000.01', '2020-01-21 10:00:00',
         'registration_number_1',
         '123e4567-e89b-12d3-a456-000000001000'),
-       ('123e4567-e89b-12d3-a456-200000000000', 'Транспортная накладная', 'WAYBILL',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', '123e4567-e89b-12d3-a456-100000000000', null,
-        '123e4567-e89b-12d3-a456-400000000000', 'Организация_3',
-        'Организация_4', '5000.00', null, null, null),
-       ('123e4567-e89b-12d3-a456-300000000000', 'Спецификация',  'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'COMMON', '123e4567-e89b-12d3-a456-100000000000', 'lot_1',
-        '123e4567-e89b-12d3-a456-400000000000', 'Организация_5',
-        'Организация_6', '3000.0002', null, null, null),
-       ('123e4567-e89b-12d3-a456-400000000000', 'Спецификация',  'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-040000000000', 'REQUIRES_CLARIFICATION', 'FOR_INTERNAL_USE',
-        null, 'lot_1', null, 'Организация_7', 'Организация_8', '2000',
+       ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', 'WAYBILL',
+        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000', null,
+        '123e4567-e89b-12d3-a456-400000000000', 'Contractor_3',
+        'Contractor_4', '5000.00', null, null, null),
+       ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION',  'SPECIFICATION',
+        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000', 'lot_1',
+        '123e4567-e89b-12d3-a456-400000000000', 'Contractor_5',
+        'Contractor_6', '3000.0002', null, null, null),
+       ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION',  'SPECIFICATION',
+        '123e4567-e89b-12d3-a456-040000000000', 'REQUIRES_CLARIFICATION', 'CONFIDENTIALLY',
+        null, 'lot_1', null, 'Contractor_7', 'Contractor_8', '2000',
         null, null, null);
 
 
@@ -199,7 +199,8 @@ values ('123e4567-e89b-12d3-a456-111000000000', 'DOCUMENT', 'Документ'),
        ('123e4567-e89b-12d3-a456-130000000000', 'RECONCILIATION_ACT_ON_THE_PART_OF_OST', 'Акт сверки со стороны ОСТ'),
        ('123e4567-e89b-12d3-a456-131000000000', 'CARGO_CUSTOMS_DECLARATION', 'Грузовая таможенная декларация'),
        ('123e4567-e89b-12d3-a456-132000000000', 'WAYBILL', 'Транспортная накладная'),
-       ('123e4567-e89b-12d3-a456-133000000000', 'SPECIFICATION', 'Спецификация');
+       ('123e4567-e89b-12d3-a456-133000000000', 'SPECIFICATION', 'Спецификация'),
+       ('123e4567-e89b-12d3-a456-134000000000', 'QUALITY_DOCUMENTS', 'Документы о качестве(проставление отметки ТН)');
 
 /*
     RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза
@@ -223,7 +224,6 @@ values ('123e4567-e89b-12d3-a456-111000000000', 'DOCUMENT', 'Документ'),
             ACT_ON_THE_RECOGNITION_OF_PRODUCTS_AS_DEFECTIVE,  //Акт о признании продукции дефектной (о признании продукции не соответствующей количеству и/или комплектности и/или марке)
     TN_SURVEILLANCE_CONTRACT,  //Договор ТН-Надзор
     OST_APPLICATION,  //Заявка ОСТ (план поставок, спецификация на поднадзорную продукцию, указанная в плане поставок)
-    QUALITY_DOCUMENTS,  //Документы о качестве(проставление отметки ТН)
     REPORT_ON_SUPERVISED_PRODUCTS_THAT_HAVE_UNDERGONE_TECHNICAL_SUPERVISION_AT_MANUFACTURING_ENTERPRISES,  //Отчет по поднадзорной продукции, прошедшей технический надзор на предприятиях-изготовителях
     TECHNICAL_ACT,  //Технический акт
     ACT_OF_ACCEPTANCE_OF_SERVICES_RENDERED,  //Акт сдачи-приёмки оказанных услуг
