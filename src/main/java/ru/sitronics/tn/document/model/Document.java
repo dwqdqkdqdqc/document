@@ -188,7 +188,7 @@ public class Document extends BaseEntity implements Serializable {
     @OneToOne
     @JoinColumn(/*updatable = false*/)
     private NciOst nciOst;
-/*
+
     @Column(name = "contract_subject")
     private String contractSubject;
 
@@ -212,5 +212,5 @@ public class Document extends BaseEntity implements Serializable {
 
     @Column(name = "frame_contract")
     private Boolean frameContract;
-    */
+
 }
