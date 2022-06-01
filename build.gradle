@@ -31,10 +31,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.monitorjbl:json-view:1.1.0'
     // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
-
-
     // https://mvnrepository.com/artifact/com.github.java-json-tools/json-patch
     implementation 'com.github.java-json-tools:json-patch:1.13'
     //    compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'

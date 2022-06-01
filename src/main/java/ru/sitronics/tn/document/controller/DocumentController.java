@@ -61,9 +61,14 @@ public class DocumentController {
     public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
                                                       @RequestParam(value = "page", required = false) Integer page,
                                                       @RequestParam(value = "size", required = false) Integer size,
-                                                      @RequestParam(value = "sort", required = false) String sort) {
+                                                      @RequestParam(value = "sort", required = false) String sort,
+                                                      @RequestParam(value = "fields", required = false) String fields) {
         try {
-            return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+            if (fields == null || fields.isBlank()) {
+                return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(service.findAllFields(filter, page, size, sort, fields), HttpStatus.OK);
+            }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
         }

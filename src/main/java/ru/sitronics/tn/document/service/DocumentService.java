@@ -1,5 +1,12 @@
 package ru.sitronics.tn.document.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,16 +18,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.model.Contract;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.model.NciDocumentType;
+import ru.sitronics.tn.document.model.Waybill;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
+import com.monitorjbl.json.JsonView;
+import com.monitorjbl.json.JsonViewModule;
+import com.monitorjbl.json.Match;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -101,11 +114,90 @@ public class DocumentService {
         return responseEntity;
     }
 
+
+    public Map<String, Object> findAllFields(String filter, Integer page, Integer size, String sort, String fields) {
+        String[] selectedFields = fields.split(", ");
+
+        Map<String, List<String>> nameClassesWithSelectedFields = Arrays.stream(selectedFields)
+                .filter(field -> Arrays.stream(NciDocumentType.NciDocumentTypeEnum.values())
+                        .map(en -> en.name().toLowerCase()).toList()
+                        .contains(field.split("\\.")[0]))
+                .collect(Collectors.groupingBy(field -> field.split("\\.")[0],
+                        mapping(field -> field.replaceFirst(field.split("\\.")[0] + "\\.", ""), toList())));
+
+        Map<String, Object> response = findAll(filter, page, size, sort);
+        List<Object> entities = new ArrayList<>();
+
+        if (response.get("entity") instanceof List<?> list) {
+            entities = list.stream().map(obj -> {
+                if (obj instanceof Document doc) {
+                    return doc;
+                } else return null;
+            }).filter(Objects::nonNull).collect(toList());
+        }
+
+        JavaTimeModule module = new JavaTimeModule();
+        module.addSerializer(LocalDateTimeSerializer.INSTANCE);
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JsonViewModule());
+        mapper.registerModule(module);
+        mapper.setDateFormat(new StdDateFormat().withColonInTimeZone(true));
+
+        try {
+            // https://github.com/monitorjbl/json-view
+            String json = "";
+            List<Document> entitiesList = entities.stream().map(Document.class::cast).toList();
+            List<String> entityTypes = entitiesList.stream().map(Document::getType).toList();
+
+            for (String type : entityTypes) {
+                switch (type) {
+                    case "WAYBILL" -> json = mapper.writeValueAsString((JsonView.with(entities)
+                            .onClass(Waybill.class, Match.match().exclude("*").include(selectedFields))
+                            .onClass(Contract.class, Match.match().exclude("*")
+                                    .include(nameClassesWithSelectedFields.entrySet().stream()
+                                            .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                            .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                    .include(nameClassesWithSelectedFields.entrySet().stream()
+                                            .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))));
+                    case "CONTRACT" -> json = mapper.writeValueAsString((JsonView.with(entities)
+                            .onClass(Contract.class, Match.match().exclude("*").include(selectedFields))
+                            .onClass(Waybill.class, Match.match().exclude("*")
+                                    .include(nameClassesWithSelectedFields.entrySet().stream()
+                                            .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                            .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                    .include(nameClassesWithSelectedFields.entrySet().stream()
+                                            .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))));
+                    case "SPECIFICATION" -> json = mapper.writeValueAsString((JsonView.with(entities)
+                            .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*").include(selectedFields))
+                            .onClass(Waybill.class, Match.match().exclude("*")
+                                    .include(nameClassesWithSelectedFields.entrySet().stream()
+                                            .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                            .onClass(Contract.class, Match.match().exclude("*")
+                                    .include(nameClassesWithSelectedFields.entrySet().stream()
+                                            .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))));
+
+                    default -> System.out.println("Ok");
+                }
+            }
+
+            JsonNode node = mapper.readTree(json);
+            response.put("entity", node);
+
+            return response;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<String> getAllTypes() {
         List<Document> documents = repository.findAll();
         List<NciDocumentType> nciDocumentTypes = documents.get(0).getNciDocumentTypes(); //documents.stream().map(e -> e.getNciDocumentTypes());
-        List<String> documentType = nciDocumentTypes.stream().map(NciDocumentType::getNameRus).toList();
-        return documentType;
+        return nciDocumentTypes.stream().map(NciDocumentType::getNameRus).toList();
     }
 
 }
