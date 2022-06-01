@@ -92,7 +92,7 @@ public class DocumentService {
         responseEntity.put("filter", filter);
         responseEntity.put("sort", sort);
         responseEntity.put("page", page+1);
-        responseEntity.put("elements on page", size);
+        responseEntity.put("elementsOnPage", size);
 
         if (filter == null || filter.isBlank()) {
             responseEntity.put("filter", null);
@@ -107,7 +107,7 @@ public class DocumentService {
                     .findAll((Specification<Document>) specification, PageRequest.of(page, size));
             documentPage = temp;
         }
-        responseEntity.put("total amount", documentPage.getTotalElements());
+        responseEntity.put("totalAmount", documentPage.getTotalElements());
         responseEntity.put("pages", documentPage.getTotalPages());
         responseEntity.put("entity", documentPage.stream().toList());
 
