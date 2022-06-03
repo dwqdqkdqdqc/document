@@ -53,7 +53,7 @@ public class Document extends BaseEntity implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_of_creation", insertable = false, updatable = false)
-    private LocalDate dateOfCreation;
+    private LocalDateTime dateOfCreation;
 
     @CreatedBy
     //  @NotNull
@@ -179,7 +179,7 @@ public class Document extends BaseEntity implements Serializable {
     //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing"/*, updatable = false*/)
-    private LocalDate dateOfSigning;
+    private LocalDateTime dateOfSigning;
 
     // @NotNull
     @Column(name = "document_registration_number"/*, updatable = false*/)
