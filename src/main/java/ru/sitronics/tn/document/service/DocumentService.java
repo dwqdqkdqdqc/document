@@ -63,7 +63,7 @@ public class DocumentService {
         if (id == null || id.isBlank()) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "returned id from DB is null");
         }
-        return  repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + id));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + id));
     }
 
     public void delete(String id) {
@@ -91,7 +91,7 @@ public class DocumentService {
 
         responseEntity.put("filter", filter);
         responseEntity.put("sort", sort);
-        responseEntity.put("page", page+1);
+        responseEntity.put("page", page + 1);
         responseEntity.put("elementsOnPage", size);
 
         if (filter == null || filter.isBlank()) {
@@ -144,13 +144,22 @@ public class DocumentService {
 
         try {
             // https://github.com/monitorjbl/json-view
-            String json = "";
+            StringBuilder json = new StringBuilder();
             List<Document> entitiesList = entities.stream().map(Document.class::cast).toList();
             List<String> entityTypes = entitiesList.stream().map(Document::getType).toList();
+            int counter = 0;
+
+   /*         String json = mapper.writeValueAsString((JsonView.with(entities))
+                    .onClass(Waybill.class, Match.match().exclude("*")
+                            .include(selectedFields))
+                    .onClass(Contract.class, Match.match().exclude("*")
+                            .include(String.valueOf(nameClassesWithSelectedFields.get("contract"))))
+                    .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                            .include(String.valueOf(nameClassesWithSelectedFields.get("specification")))));*/
 
             for (String type : entityTypes) {
                 switch (type) {
-                    case "WAYBILL" -> json = mapper.writeValueAsString((JsonView.with(entities)
+                    case "WAYBILL" -> json.append(mapper.writeValueAsString((JsonView.with(entities)
                             .onClass(Waybill.class, Match.match().exclude("*").include(selectedFields))
                             .onClass(Contract.class, Match.match().exclude("*")
                                     .include(nameClassesWithSelectedFields.entrySet().stream()
@@ -159,8 +168,15 @@ public class DocumentService {
                             .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
                                     .include(nameClassesWithSelectedFields.entrySet().stream()
                                             .filter(f -> f.getKey().equalsIgnoreCase("specification"))
-                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))));
-                    case "CONTRACT" -> json = mapper.writeValueAsString((JsonView.with(entities)
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0]))))))
+            /*                .replaceFirst("(^\\[\\{\".*,\\{\")", "\\{\"")
+                            .replaceFirst("(null}.*]$)", "null},")
+                            .replaceFirst("(\"}}.*]$)", "\"}},")
+                            .replaceFirst("(\"}.*]$)", "\"},")
+                            .replaceFirst("(\\[.*\\{\")", "\\{\"")*/
+                    ;
+
+                    case "CONTRACT" -> json.append(mapper.writeValueAsString((JsonView.with(entities)
                             .onClass(Contract.class, Match.match().exclude("*").include(selectedFields))
                             .onClass(Waybill.class, Match.match().exclude("*")
                                     .include(nameClassesWithSelectedFields.entrySet().stream()
@@ -169,8 +185,15 @@ public class DocumentService {
                             .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
                                     .include(nameClassesWithSelectedFields.entrySet().stream()
                                             .filter(f -> f.getKey().equalsIgnoreCase("specification"))
-                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))));
-                    case "SPECIFICATION" -> json = mapper.writeValueAsString((JsonView.with(entities)
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0]))))))
+                 /*           .replaceFirst("(^\\[\\{\".*,\\{\")", "\\{\"")
+                           .replaceFirst("(null}.*]$)", "null},")
+                            .replaceFirst("(\"}}.*]$)", "\"}},")
+                            .replaceFirst("(\"}.*]$)", "\"},")
+                            .replaceFirst("(\\[.*\\{\")", "\\{\"")*/
+                    ;
+
+                    case "SPECIFICATION" -> json.append(mapper.writeValueAsString((JsonView.with(entities)
                             .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*").include(selectedFields))
                             .onClass(Waybill.class, Match.match().exclude("*")
                                     .include(nameClassesWithSelectedFields.entrySet().stream()
@@ -179,13 +202,32 @@ public class DocumentService {
                             .onClass(Contract.class, Match.match().exclude("*")
                                     .include(nameClassesWithSelectedFields.entrySet().stream()
                                             .filter(f -> f.getKey().equalsIgnoreCase("contract"))
-                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))));
+                                            .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0]))))))
+                     //       .replaceFirst("(^\\[\\{\".*?,\\{\")", "\\{\"")
+                //            .replaceFirst("(null}.*]$)", "null},")
+                      //      .replaceFirst("(\"}}.*]$)", "\"}},")
+                      //      .replaceFirst("(\"}.*]$)", "\"},")
+                      //      .replaceFirst("(\\[.*\\{\")", "\\{\"")
+                    ;
 
                     default -> System.out.println("Ok");
                 }
             }
+//[{"type":"SPECIFICATION","dateOfCreation":"2020-01-21T10:00:00","contract":null},{"type":"SPECIFICATION","dateOfCreation":"2020-01-25T10:00:00","contract":{"serialNumber":1}},{"serialNumber":1},{}]
 
-            JsonNode node = mapper.readTree(json);
+ /*           String str1 = "{\"type\":\"CONTRACT\",\"dateOfCreation\":\"2022-05-30T12:26:58.48305\",\"contract\":null},[{\"dType\":\"CONTRACT\"},{\"type\":\"WAYBILL\",\"dateOfCreation\":\"2022-05-30T12:26:58.48305\",\"contract\":{\"dType\":\"CONTRACT\"}},{},{}]";
+            //  String str2 = str1.replaceFirst("(\"}.*]$)", "\"},");
+            String str2 = str1.replaceFirst("(^\\[\\{\".*,\\{\")", "\\{\"");
+            str2 = str2.replaceFirst("(\"}}.*]$)", "\"}},");
+            //     String str4 = str3.replaceFirst("(\"}}}.*]$)", "\"}}},");
+            //    String str5 = str4.replaceFirst("(\"}}}}.*]$)", "\"}}}},");
+            str2 = str2.replaceFirst("(\\[.*\\{\")", "\\{\"");
+            str2 = str2.replaceFirst("(null}.*]$)", "null},");
+            System.out.println(str2);*/
+
+         //   json = json.replaceFirst("(null},$)", "null}]");
+       //     json = "[" +  json.replaceFirst("(},$)", "}]");
+            JsonNode node = mapper.readTree(json.toString());
             response.put("entity", node);
 
             return response;
