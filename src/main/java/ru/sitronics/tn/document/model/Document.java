@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class Document extends BaseEntity implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_of_creation", insertable = false, updatable = false)
-    private LocalDateTime dateOfCreation;
+    private LocalDate dateOfCreation;
 
     @CreatedBy
     //  @NotNull
@@ -178,7 +179,7 @@ public class Document extends BaseEntity implements Serializable {
     //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing"/*, updatable = false*/)
-    private LocalDateTime dateOfSigning;
+    private LocalDate dateOfSigning;
 
     // @NotNull
     @Column(name = "document_registration_number"/*, updatable = false*/)
