@@ -3,15 +3,12 @@ package ru.sitronics.tn.document.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-
-import com.github.tennaito.rsql.jpa.JpaCriteriaQueryVisitor;
-import cz.jirutka.rsql.parser.RSQLParser;
-import cz.jirutka.rsql.parser.ast.Node;
-import cz.jirutka.rsql.parser.ast.RSQLVisitor;
+import com.monitorjbl.json.JsonView;
+import com.monitorjbl.json.JsonViewModule;
+import com.monitorjbl.json.Match;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.Contract;
 import ru.sitronics.tn.document.model.Document;
@@ -30,13 +26,9 @@ import ru.sitronics.tn.document.model.NciDocumentType;
 import ru.sitronics.tn.document.model.Waybill;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
-import com.monitorjbl.json.JsonView;
-import com.monitorjbl.json.JsonViewModule;
-import com.monitorjbl.json.Match;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,28 +72,6 @@ public class DocumentService {
         repository.deleteById(id);
     }
 
-/*
-    public List<Document> rsqlSelect(String fields) {
-// Create the JPA Visitor
-      //  CriteriaQuery<String> query = manager.createQuery(String.class);
-   //     Root<Order> order = q.from(Order.class);
-        RSQLVisitor<CriteriaQuery<String>, EntityManager> visitor = new JpaCriteriaQueryVisitor<>();
-
-// Parse a RSQL into a Node
-        Node rootNode = new RSQLParser().parse("id==1");
-
-// Visit the node to retrieve CriteriaQuery
-        CriteriaQuery<String> query = rootNode.accept(visitor, manager);
-
-// Do all sort of operations you want with the criteria query
-        //  query.orderBy();
-        query.select();
-
-// Execute and get results
-        List<Document> courses = manager.createQuery(query).getResultList();
-        return null;
-    }
-*/
 
     public Map<String, Object> findAll(String filter, Integer page, Integer size, String sort) {
         Map<String, Object> responseEntity = new HashMap<>();
@@ -178,96 +148,71 @@ public class DocumentService {
         try {
             // https://github.com/monitorjbl/json-view
             StringBuilder json = new StringBuilder();
-            List<Document> entitiesList = entities.stream().map(Document.class::cast).toList();
+            List<Document> entitiesList = new ArrayList<>(entities.stream().map(Document.class::cast).toList());  //?
             List<String> entityTypes = entitiesList.stream().map(Document::getType).toList();
-            int counter = 0;
-
-
-/*         String json = mapper.writeValueAsString((JsonView.with(entities))
-                    .onClass(Waybill.class, Match.match().exclude("*")
-                            .include(selectedFields))
-                    .onClass(Contract.class, Match.match().exclude("*")
-                            .include(String.valueOf(nameClassesWithSelectedFields.get("contract"))))
-                    .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
-                            .include(String.valueOf(nameClassesWithSelectedFields.get("specification")))));*/
-
+            Optional<Integer> optionalInteger;
+            int index = -1;
 
             for (String type : entityTypes) {
                 switch (type) {
-                    case "WAYBILL" -> json.append(mapper.writeValueAsString((JsonView.with(entities)
-                                    .onClass(Waybill.class, Match.match().exclude("*").include(selectedFields))
-                                    .onClass(Contract.class, Match.match().exclude("*")
-                                            .include(nameClassesWithSelectedFields.entrySet().stream()
-                                                    .filter(f -> f.getKey().equalsIgnoreCase("contract"))
-                                                    .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
-                                    .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
-                                            .include(nameClassesWithSelectedFields.entrySet().stream()
-                                                    .filter(f -> f.getKey().equalsIgnoreCase("specification"))
-                                                    .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).toString()
+                    case "WAYBILL" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "WAYBILL".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
 
-                 /*           .replaceFirst("(^\\[\\{\".*,\\{\")", "\\{\"")
-                            .replaceFirst("(null}.*]$)", "null},")
-                            .replaceFirst("(\"}}.*]$)", "\"}},")
-                            .replaceFirst("(\"}.*]$)", "\"},")
-                            .replaceFirst("(\\[.*\\{\")", "\\{\"")*/
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(Waybill.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Contract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
 
-                    ;
+                    case "CONTRACT" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "CONTRACT".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
 
-                    case "CONTRACT" -> json.append(mapper.writeValueAsString((JsonView.with(entities)
-                                    .onClass(Contract.class, Match.match().exclude("*").include(selectedFields))
-                                    .onClass(Waybill.class, Match.match().exclude("*")
-                                            .include(nameClassesWithSelectedFields.entrySet().stream()
-                                                    .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
-                                                    .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
-                                    .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
-                                            .include(nameClassesWithSelectedFields.entrySet().stream()
-                                                    .filter(f -> f.getKey().equalsIgnoreCase("specification"))
-                                                    .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).toString()
-                   /*         .replaceFirst("(^\\[\\{\".*,\\{\")", "\\{\"")
-                            .replaceFirst("(null}.*]$)", "null},")
-                            .replaceFirst("(\"}}.*]$)", "\"}},")
-                            .replaceFirst("(\"}.*]$)", "\"},")
-                            .replaceFirst("(\\[.*\\{\")", "\\{\"")*/
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(Contract.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
+                    case "SPECIFICATION" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "SPECIFICATION".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
 
-                    ;
-
-                    case "SPECIFICATION" -> json.append(mapper.writeValueAsString((JsonView.with(entities)
-                                    .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*").include(selectedFields))
-                                    .onClass(Waybill.class, Match.match().exclude("*")
-                                            .include(nameClassesWithSelectedFields.entrySet().stream()
-                                                    .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
-                                                    .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
-                                    .onClass(Contract.class, Match.match().exclude("*")
-                                            .include(nameClassesWithSelectedFields.entrySet().stream()
-                                                    .filter(f -> f.getKey().equalsIgnoreCase("contract"))
-                                                    .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).toString()
-                   /*        .replaceFirst("(^\\[\\{\".*?,\\{\")", "\\{\"")
-                            .replaceFirst("(null}.*]$)", "null},")
-                            .replaceFirst("(\"}}.*]$)", "\"}},")
-                            .replaceFirst("(\"}.*]$)", "\"},")
-                            .replaceFirst("(\\[.*\\{\")", "\\{\"")*/
-                    ;
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Contract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
 
                     default -> System.out.println("Ok");
                 }
             }
 
-// [{"type":"SPECIFICATION","dateOfCreation":"2020-01-21T10:00:00","contract":null},{"type":"SPECIFICATION","dateOfCreation":"2020-01-25T10:00:00","contract":{"serialNumber":1}},{"serialNumber":1},{}]
-
-
-/*           String str1 = "{\"type\":\"CONTRACT\",\"dateOfCreation\":\"2022-05-30T12:26:58.48305\",\"contract\":null},[{\"dType\":\"CONTRACT\"},{\"type\":\"WAYBILL\",\"dateOfCreation\":\"2022-05-30T12:26:58.48305\",\"contract\":{\"dType\":\"CONTRACT\"}},{},{}]";
-            //  String str2 = str1.replaceFirst("(\"}.*]$)", "\"},");
-            String str2 = str1.replaceFirst("(^\\[\\{\".*,\\{\")", "\\{\"");
-            str2 = str2.replaceFirst("(\"}}.*]$)", "\"}},");
-            //     String str4 = str3.replaceFirst("(\"}}}.*]$)", "\"}}},");
-            //    String str5 = str4.replaceFirst("(\"}}}}.*]$)", "\"}}}},");
-            str2 = str2.replaceFirst("(\\[.*\\{\")", "\\{\"");
-            str2 = str2.replaceFirst("(null}.*]$)", "null},");
-            System.out.println(str2);*/
-
-
-            //   json = json.replaceFirst("(null},$)", "null}]");
-            //     json = "[" +  json.replaceFirst("(},$)", "}]");
+            json = new StringBuilder("[" + json.toString().replaceFirst("},$", "}]\""));
             JsonNode node = mapper.readTree(json.toString());
             response.put("entity", node);
 
@@ -275,12 +220,5 @@ public class DocumentService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    public List<String> getAllTypes() {
-        List<Document> documents = repository.findAll();
-        List<NciDocumentType> nciDocumentTypes = documents.get(0).getNciDocumentTypes(); //documents.stream().map(e -> e.getNciDocumentTypes());
-        return nciDocumentTypes.stream().map(NciDocumentType::getNameRus).toList();
     }
 }

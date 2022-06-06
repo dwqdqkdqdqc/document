@@ -1,17 +1,15 @@
 package ru.sitronics.tn.document.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -21,7 +19,7 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)
 @Table(name = "nci_document_types")
-public class NciDocumentType extends BaseEntity  implements Serializable {
+public class NciDocumentType extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

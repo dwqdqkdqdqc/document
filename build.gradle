@@ -7,8 +7,6 @@ plugins {
 }
 
 group = 'ru.sitronics.tn'
-//version = '0.1.0'
-sourceCompatibility = '17'
 
 bootRun {
     jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n"]
@@ -44,7 +42,7 @@ dependencies {
     //implementation 'cz.jirutka.rsql:rsql-parser:2.1.0'
     //  implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
     implementation 'io.github.perplexhub:rsql-jpa-spring-boot-starter:5.0.19'
-    implementation 'com.github.tennaito:rsql-jpa:2.0.2'
+  //  implementation 'com.github.tennaito:rsql-jpa:2.0.2'
 
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation 'org.jsoup:jsoup:1.14.3'
