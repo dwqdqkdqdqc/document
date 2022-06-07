@@ -69,7 +69,11 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', 'CONTRACT', 'CONTRACT',
        ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION', 'SPECIFICATION',
         '123e4567-e89b-12d3-a456-040000000000', 'REQUIRES_CLARIFICATION', 'CONFIDENTIALLY',
         null, 'lot_1', null, 'Contractor_7', 'Contractor_8', '2000',
-        null, null, null, '2020-01-21 10:00:00', '4');
+        null, null, null, '2020-01-21 10:00:00', '4'),
+       ('123e4567-e89b-12d3-a456-500000000000', 'QUALITY_DOCUMENTS', 'QUALITY_DOCUMENTS',
+        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        null, '123e4567-e89b-12d3-a456-400000000000', 'Contractor_3',
+        'Contractor_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '5');
 
 
 INSERT INTO nci_users (id, login, password, name, last_name, role, mail)

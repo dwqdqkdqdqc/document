@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@ToString(callSuper = true, exclude = {"password"})
-@Table(name = "users")
+@Table(name = "nci_users")
 public class NciUser extends BaseEntity {
     @Column(name = "login")
     private String login;
