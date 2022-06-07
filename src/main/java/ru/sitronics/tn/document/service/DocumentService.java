@@ -148,7 +148,7 @@ public class DocumentService {
         try {
             // https://github.com/monitorjbl/json-view
             StringBuilder json = new StringBuilder();
-            List<Document> entitiesList = new ArrayList<>(entities.stream().map(Document.class::cast).toList());  //?
+            List<Document> entitiesList = new ArrayList<>(entities.stream().map(Document.class::cast).toList());
             List<String> entityTypes = entitiesList.stream().map(Document::getType).toList();
             Optional<Integer> optionalInteger;
             int index = -1;
@@ -166,6 +166,10 @@ public class DocumentService {
                                 .onClass(Contract.class, Match.match().exclude("*")
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
                                                 .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("qualityDocument"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
                                 .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
@@ -185,6 +189,10 @@ public class DocumentService {
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
                                                 .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("qualityDocument"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
                                 .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
                                                 .filter(f -> f.getKey().equalsIgnoreCase("specification"))
@@ -201,6 +209,31 @@ public class DocumentService {
                                 .onClass(Waybill.class, Match.match().exclude("*")
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
                                                 .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("qualityDocument"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Contract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
+                    case "QUALITY_DOCUMENTS" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "QUALITY_DOCUMENTS".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
+
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
                                 .onClass(Contract.class, Match.match().exclude("*")
                                         .include(nameClassesWithSelectedFields.entrySet().stream()

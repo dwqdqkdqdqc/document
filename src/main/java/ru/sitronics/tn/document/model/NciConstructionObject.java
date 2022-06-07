@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "construction_objects")
+@Table(name = "nci_construction_objects")
 public class NciConstructionObject extends BaseEntity {
     @Column(name = "name")
     private String name;
