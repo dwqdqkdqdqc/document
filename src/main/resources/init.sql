@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS nci_users;
 DROP TABLE IF EXISTS documents;
 DROP TABLE IF EXISTS documents_curators;
 DROP INDEX IF EXISTS document_id_curators_id_idx;
@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS type_relation;
 DROP TABLE IF EXISTS documents_relating_documents;
 DROP TABLE IF EXISTS document_history_bpm;
 DROP TABLE IF EXISTS contracts;
-DROP TABLE IF EXISTS construction_objects;
+DROP TABLE IF EXISTS nci_construction_objects;
 DROP TABLE IF EXISTS documents_construction_objects;
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_pids;
@@ -33,7 +33,7 @@ CREATE TABLE documents
                                  VARCHAR             NULL,
     contract_id                  VARCHAR             NULL,
     specification_id             VARCHAR             NULL,
-    construction_object_id       VARCHAR             NULL,
+    nci_construction_object_id   VARCHAR             NULL,
     factory_number               VARCHAR             NULL,
     barcode                      VARCHAR             NULL,
     lkk_document_number          VARCHAR             NULL,
@@ -61,7 +61,7 @@ CREATE TABLE documents
 create unique index documents_serial_number_uindex on documents (serial_number);
 
 
-CREATE TABLE users
+CREATE TABLE nci_users
 (
     id                    VARCHAR PRIMARY KEY NOT NULL,
     login                 VARCHAR             NULL,
@@ -112,7 +112,7 @@ CREATE TABLE document_history_bpm
     type_relation        varchar null
 );
 
-CREATE TABLE construction_objects
+CREATE TABLE nci_construction_objects
 (
     id           VARCHAR NULL,
     name         VARCHAR NULL,
@@ -164,8 +164,14 @@ CREATE TABLE documents_attachments
 
 CREATE TABLE nci_contractors
 (
-    name     VARCHAR NULL,
-    name_rus VARCHAR NULL
+    name                 VARCHAR NULL,
+    name_rus             VARCHAR NULL,
+    role                 VARCHAR NULL,
+    fio                  VARCHAR NULL,
+    inn                  VARCHAR NULL,
+    ogrn_ogrni           VARCHAR NULL,
+    registration_address VARCHAR NULL,
+    contractor_manager   VARCHAR NULL
 );
 
 CREATE TABLE nci_document_types

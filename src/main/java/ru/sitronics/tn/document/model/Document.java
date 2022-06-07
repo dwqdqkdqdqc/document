@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -60,7 +59,7 @@ public class Document extends BaseEntity implements Serializable {
     @ManyToOne(/*optional = false*/)
     //   @JsonManagedReference(value = "User")
     @JoinColumn(/*updatable = false*/)
-    private User author;
+    private NciUser author;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -72,7 +71,7 @@ public class Document extends BaseEntity implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "curator_id"}, name = "documents_curators_uc")}
     )
     @OrderBy("lastName")
-    private List<User> curators;
+    private List<NciUser> curators;
 
     @Type(type = "org.hibernate.type.BinaryType")
     @Column(name = "content")
@@ -122,7 +121,7 @@ public class Document extends BaseEntity implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "construction_object_id"}, name = "documents_construction_objects_uc")}
     )
     @OrderBy("name")
-    private List<ConstructionObject> constructionObjects;
+    private List<NciConstructionObject> nciConstructionObjects;
 
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)

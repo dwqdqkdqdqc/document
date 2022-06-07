@@ -2,7 +2,7 @@
 DELETE
 FROM documents;
 DELETE
-FROM users;
+FROM nci_users;
 DELETE
 FROM documents_curators;
 DELETE
@@ -12,7 +12,7 @@ FROM documents_relating_documents;
 DELETE
 FROM document_history_bpm;
 DELETE
-FROM construction_objects;
+FROM nci_construction_objects;
 DELETE
 FROM documents_construction_objects;
 DELETE
@@ -72,7 +72,7 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', 'CONTRACT', 'CONTRACT',
         null, null, null, '2020-01-21 10:00:00', '4');
 
 
-INSERT INTO users (id, login, password, name, last_name, role, mail)
+INSERT INTO nci_users (id, login, password, name, last_name, role, mail)
 VALUES ('123e4567-e89b-12d3-a456-010000000000', 'user_1', '12345', 'user', 'A', 'user', 'user@gmail.com'),
        ('123e4567-e89b-12d3-a456-020000000000', 'user_2', '12345', 'user', 'B', 'user', 'user@gmail.com'),
        ('123e4567-e89b-12d3-a456-030000000000', 'user_3', '12345', 'user', 'C', 'user', 'user@gmail.com'),
@@ -110,7 +110,7 @@ VALUES ('123e4567-e89b-12d3-a456-000100000000', '1', '123e4567-e89b-12d3-a456-20
        ('123e4567-e89b-12d3-a456-000300000000', '3', '123e4567-e89b-12d3-a456-200000000000',
         '123e4567-e89b-12d3-a456-400000000000', 'MANDATORY');
 
-INSERT INTO construction_objects (id, name, address, organization)
+INSERT INTO nci_construction_objects (id, name, address, organization)
 VALUES ('123e4567-e89b-12d3-a456-000001000000', 'construction_object_1', 'address_1', 'organization_1'),
        ('123e4567-e89b-12d3-a456-000002000000', 'construction_object_2', 'address_2', 'organization_2'),
        ('123e4567-e89b-12d3-a456-000003000000', 'construction_object_3', 'address_3', 'organization_3'),
@@ -170,7 +170,7 @@ VALUES ('Contractor_1', 'Организация_1'),
        ('Contractor_8', 'Организация_8');
 
 -- select * from documents;
--- select * from users;
+-- select * from nci_users;
 
 
 INSERT INTO nci_document_types (id, name, name_rus)
