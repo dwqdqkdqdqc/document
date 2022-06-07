@@ -16,6 +16,11 @@ DROP TABLE IF EXISTS attachments;
 DROP TABLE IF EXISTS documents_attachments;
 DROP TABLE IF EXISTS nci_contractors;
 DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_deliveries;
+DROP TABLE IF EXISTS nci_units_of_measurement;
+DROP TABLE IF EXISTS nci_countries;
+DROP TABLE IF EXISTS nci_types_of_transport;
+DROP TABLE IF EXISTS mtrs;
 
 
 CREATE TABLE documents
@@ -174,4 +179,55 @@ CREATE TABLE nci_document_types
     name     VARCHAR NULL,
     name_rus VARCHAR NULL
 );
+
+CREATE TABLE nci_deliveries
+(
+    id            VARCHAR      NULL,
+    display_value VARCHAR(150) NULL, --Наименование способа доставки
+    internal_id   integer      NULL  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE nci_units_of_measurement
+(
+    id            VARCHAR      NULL,
+    display_value VARCHAR(150) NULL, --Наименование ЕИ по ОКЕИ
+    internal_id   integer      NULL --Внутренний номер записи SAP MDM
+);
+
+CREATE TABLE nci_countries
+(
+    id            VARCHAR      NULL,
+    display_value VARCHAR(150) NULL,
+    internal_id   integer      NULL
+);
+
+CREATE TABLE nci_types_of_transport
+(
+    id            VARCHAR      NULL,
+    display_value VARCHAR(150) NULL,
+    internal_id   integer      NULL
+);
+
+CREATE TABLE mtrs
+(
+    id                          VARCHAR PRIMARY KEY     NOT NULL,
+    pid                         VARCHAR                 NULL,
+    position_number             BIGINT                  NULL,
+    customer_id                 VARCHAR                 NULL,
+    nci_delivery_id             VARCHAR                 NULL,
+    position_code               BIGINT                  NULL,
+    product_name                VARCHAR                 NULL,
+    nci_unit_of_measurement_id  VARCHAR                 NULL,
+    price_no_vat                NUMERIC DEFAULT 0       NULL,
+    sum_no_vat                  NUMERIC DEFAULT 0       NULL,
+    vat                         NUMERIC DEFAULT 0       NULL,
+    sum_vat                     NUMERIC DEFAULT 0       NULL,
+    amount_with_vat             NUMERIC DEFAULT 0       NULL,
+    contractor_id               VARCHAR                 NULL,
+    nci_country_id              VARCHAR                 NULL,
+    delivery_date               TIMESTAMP               NULL,
+    shipping_details            VARCHAR                 NULL,
+    nci_type_of_transport_id    VARCHAR                 NULL,
+    belonging_to_the_dsi        VARCHAR                 NULL
+)
 
