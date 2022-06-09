@@ -27,7 +27,9 @@ public enum NciStatus {
     RECEIPT_NOTICE_IS_EXPECTED("ожидается извещение о получении"), //
     SIGNATURE_IS_EXPECTED("ожидается ответная подпись"), //
     REQUIRES_CLARIFICATION("требует уточнения"), //
-    IN_WORK("в работе"); //
+    ARCHIVAL("архивный"), //
+    FILLED("заполнен"), //
+    FORMED("сформирован");
 
     private final String translate;
 

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "construction_objects")
-public class ConstructionObject extends BaseEntity {
+public class NciConstructionObject extends BaseEntity {
     @Column(name = "name")
     private String name;
     @Column(name = "address")

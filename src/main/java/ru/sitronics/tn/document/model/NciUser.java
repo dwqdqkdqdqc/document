@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@ToString(callSuper = true, exclude = {"password"})
 @Table(name = "users")
-public class User extends BaseEntity {
+public class NciUser extends BaseEntity {
     @Column(name = "login")
     private String login;
     @Column(name = "password")
