@@ -19,8 +19,8 @@ import java.util.List;
 @Table(name = "nci_countries")
 public class NciCountry extends BaseEntity {
 
-    @Column(name = "display_value")
-    private String displayValue;
+    @Column(name = "country_name")
+    private String countryName;
 
     @Column(name = "internal_id")
     private int internalId;

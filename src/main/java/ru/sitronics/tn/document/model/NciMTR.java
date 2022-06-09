@@ -19,20 +19,14 @@ import java.util.List;
 @Table(name = "nci_mtrs")
 public class NciMTR extends BaseEntity {
 
-    @Column(name = "display_value")
-    private String displayValue;
-
     @Column(name = "name")
     private String name;
-
-    @Column(name = "type")
-    private String type;
 
     @Column(name = "internal_id")
     private int internalId;
 
-    @Column(name = "value")
-    private String value;
+    @Column(name = "control_prod")
+    private boolean controlProd;
 
     @OneToMany(mappedBy = "nciMTR")
     @JsonIgnore

@@ -205,20 +205,20 @@ values ('123e4567-e89b-12d3-a456-111000000000', 'DOCUMENT', 'Документ'),
        ('123e4567-e89b-12d3-a456-132000000000', 'WAYBILL', 'Транспортная накладная'),
        ('123e4567-e89b-12d3-a456-133000000000', 'SPECIFICATION', 'Спецификация');
 
-INSERT INTO nci_countries (id, display_value, internal_id)
+INSERT INTO nci_countries (id, country_name, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-000000001000', 'Абхазия', 1),
        ('123e4567-e89b-12d3-a456-000000002000', 'Австралия', 2),
        ('123e4567-e89b-12d3-a456-000000003000', 'Бангладеш', 3),
        ('123e4567-e89b-12d3-a456-000000004000', 'Беларусь', 4),
        ('123e4567-e89b-12d3-a456-000000005000', 'Вьетнам', 5);
 
-INSERT INTO nci_types_of_transport (id, display_value, internal_id)
+INSERT INTO nci_types_of_transport (id, type_of_transport, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-000000010000', 'автомобильная грузоперевозка', 1),
        ('123e4567-e89b-12d3-a456-000000020000', 'железнодорожная грузоперевозка', 2),
        ('123e4567-e89b-12d3-a456-000000030000', 'морская грузоперевозка', 3),
        ('123e4567-e89b-12d3-a456-000000040000', 'авиаперевозка', 4);
 
-INSERT INTO nci_units_of_measurement (id, display_value, internal_id)
+INSERT INTO nci_units_of_measurement (id, name, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
        ('123e4567-e89b-12d3-a456-000000200000', 'т', 2),
        ('123e4567-e89b-12d3-a456-000000300000', 'мм', 3),
@@ -227,12 +227,12 @@ VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
        ('123e4567-e89b-12d3-a456-000000600000', 'км', 6),
        ('123e4567-e89b-12d3-a456-000000700000', 'шт', 7);
 
-INSERT INTO nci_mtrs (id, display_value, name, type, internal_id, value)
-VALUES ('123e4567-e89b-12d3-a456-000001000000', 'some value', 'гайка', 'some type', 1, 'some value'),
-       ('123e4567-e89b-12d3-a456-000002000000', 'some value', 'болт', 'some type', 2, 'some value'),
-       ('123e4567-e89b-12d3-a456-000003000000', 'some value', 'шайба', 'some type', 3, 'some value'),
-       ('123e4567-e89b-12d3-a456-000004000000', 'some value', 'шайба пружинная', 'some type', 4, 'some value'),
-       ('123e4567-e89b-12d3-a456-000005000000', 'some value', 'винт', 'some type', 5, 'some value');
+INSERT INTO nci_mtrs (id, name, internal_id, control_prod)
+VALUES ('123e4567-e89b-12d3-a456-000001000000', 'гайка', 1, TRUE),
+       ('123e4567-e89b-12d3-a456-000002000000', 'болт', 2, TRUE),
+       ('123e4567-e89b-12d3-a456-000003000000', 'шайба', 3, TRUE),
+       ('123e4567-e89b-12d3-a456-000004000000', 'шайба пружинная', 4, TRUE),
+       ('123e4567-e89b-12d3-a456-000005000000', 'винт', 5, TRUE);
 
 INSERT INTO nci_consignees (id, bukrs, sortl, name_1, name_2, name_3, name_4,
                             zzsrm_stcd_1, zzsrm_stcd_2, zzsrm_stcd_3, zzsrm_rw_code_1, zzsrm_rw_freight_yard_1,

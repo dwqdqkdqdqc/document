@@ -19,8 +19,8 @@ import java.util.List;
 @Table(name = "nci_types_of_transport")
 public class NciTypeOfTransport extends BaseEntity {
 
-    @Column(name = "display_value")
-    private String displayValue;
+    @Column(name = "type_of_transport")
+    private String typeOfTransport;
 
     @Column(name = "internal_id")
     private int internalId;

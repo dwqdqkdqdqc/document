@@ -19,8 +19,8 @@ import java.util.List;
 @Table(name = "nci_units_of_measurement")
 public class NciUnitsOfMeasurement extends BaseEntity {
 
-    @Column(name = "display_value")
-    private String displayValue;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "internal_id")
     private int internalId;

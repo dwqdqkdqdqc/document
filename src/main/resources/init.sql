@@ -192,32 +192,30 @@ CREATE TABLE nci_document_types
 CREATE TABLE nci_units_of_measurement
 (
     id            VARCHAR      NULL,
-    display_value VARCHAR(150) NULL, --Наименование ЕИ по ОКЕИ
-    internal_id   integer      NULL --Внутренний номер записи SAP MDM
+    name          VARCHAR(150) NULL,
+    internal_id   integer      NULL
 );
 
 CREATE TABLE nci_countries
 (
     id            VARCHAR      NULL,
-    display_value VARCHAR(150) NULL,
+    country_name  VARCHAR(150) NULL,
     internal_id   integer      NULL
 );
 
 CREATE TABLE nci_types_of_transport
 (
-    id            VARCHAR      NULL,
-    display_value VARCHAR(150) NULL,
-    internal_id   integer      NULL
+    id                VARCHAR      NULL,
+    type_of_transport VARCHAR(150) NULL,
+    internal_id       integer      NULL
 );
 
 CREATE TABLE nci_mtrs
 (
     id                      VARCHAR      NULL,
-    display_value           VARCHAR      NULL,
     name                    VARCHAR      NULL,
-    type                    VARCHAR      NULL,
     internal_id             integer      NULL,
-    value                   VARCHAR      NULL
+    control_prod            BOOLEAN      DEFAULT FALSE
 );
 
 CREATE TABLE nci_consignees
