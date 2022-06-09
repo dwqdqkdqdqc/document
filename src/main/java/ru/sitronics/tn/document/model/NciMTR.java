@@ -16,16 +16,25 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_units_of_measurement")
-public class NciUnitsOfMeasurement extends BaseEntity {
+@Table(name = "nci_mtrs")
+public class NciMTR extends BaseEntity {
 
     @Column(name = "display_value")
     private String displayValue;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "internal_id")
     private int internalId;
 
-    @OneToMany(mappedBy = "nciUnitsOfMeasurement")
+    @Column(name = "value")
+    private String value;
+
+    @OneToMany(mappedBy = "nciMTR")
     @JsonIgnore
     private List<SpecificationsTablesEntity> specificationsTablesEntityList;
 }

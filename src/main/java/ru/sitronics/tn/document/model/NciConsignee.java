@@ -12,12 +12,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_units_of_measurement")
-public class NciUnitsOfMeasurement extends BaseEntity {
+@Table(name = "nci_consignees")
+public class NciConsignee extends BaseEntity {
 
     @Column(name = "display_value")
     private String displayValue;
@@ -25,7 +26,7 @@ public class NciUnitsOfMeasurement extends BaseEntity {
     @Column(name = "internal_id")
     private int internalId;
 
-    @OneToMany(mappedBy = "nciUnitsOfMeasurement")
+    @OneToMany(mappedBy = "nciConsignee")
     @JsonIgnore
-    private List<SpecificationsTablesEntity> specificationsTablesEntityList;
+    private List<Specification> specifications;
 }

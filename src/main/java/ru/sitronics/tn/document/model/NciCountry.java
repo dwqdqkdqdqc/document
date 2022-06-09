@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class NciCountry extends BaseEntity {
     private int internalId;
 
     @OneToMany(mappedBy = "nciCountry")
-    private List<MTR> mtrList;
+    @JsonIgnore
+    private List<SpecificationsTablesEntity> specificationsTablesEntityList;
 }

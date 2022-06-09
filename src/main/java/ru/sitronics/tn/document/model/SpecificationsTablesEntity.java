@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "mtrs")
-public class MTR extends BaseEntity implements Serializable {
+@Table(name = "specifications_tables_entities")
+public class SpecificationsTablesEntity extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -25,22 +26,28 @@ public class MTR extends BaseEntity implements Serializable {
     @Column(name = "position_number")
     private Long positionNumber;
 
-    @Column(name = "customer_id")
-    private String customer;
-
-    @ManyToOne
-    @JoinColumn(name = "nci_delivery_id")
-    private NciDelivery nciDelivery;
+    @Column(name = "delivery_method")
+    private boolean deliveryMethod;
 
     @Column(name = "position_code")
     private Long positionCode;
 
-    @Column(name = "product_name")
-    private String productName;
+    @ManyToOne
+    @JoinColumn(name = "nci_mtr_id")
+    private NciMTR nciMTR;
+
+    @Column(name = "gost_ost_tu")
+    private String gostOstTu;
+
+    @Column(name = "code")
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "nci_unit_of_measurement_id")
     private NciUnitsOfMeasurement nciUnitsOfMeasurement;
+
+    @Column(name = "quantity")
+    private Long quantity;
 
     @Column(name = "price_no_vat")
     private BigDecimal priceNoVat;
@@ -68,13 +75,18 @@ public class MTR extends BaseEntity implements Serializable {
     @Column(name = "delivery_date")
     private LocalDateTime deliveryDate;
 
-    @Column(name = "shipping_details")
-    private String shippingDetails;
-
     @ManyToOne
     @JoinColumn(name = "nci_type_of_transport_id")
     private NciTypeOfTransport nciTypeOfTransport;
 
     @Column(name = "belonging_to_the_dsi")
     private String belongingToTheDSI;
+
+    @Column(name = "note")
+    private String note;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "specification_id")
+    @JsonBackReference
+    private Specification specification;
 }
