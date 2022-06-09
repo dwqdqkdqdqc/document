@@ -150,7 +150,7 @@ public class Document extends BaseEntity implements Serializable {
             joinColumns = @JoinColumn(name = "document_id"/*, updatable = false*/),
             inverseJoinColumns = @JoinColumn(name = "attachment_id"/*, updatable = false*/),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
-    private List<Attachment> attachments = new java.util.ArrayList<>();
+    private List<NciAttachment> nciAttachments = new java.util.ArrayList<>();
 
     @Column(name = "customer_id"/*, updatable = false*/)
     //  @Enumerated(EnumType.STRING)

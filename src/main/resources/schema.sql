@@ -73,8 +73,15 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', 'CONTRACT', 'CONTRACT',
        ('123e4567-e89b-12d3-a456-500000000000', 'QUALITY_DOCUMENTS', 'QUALITY_DOCUMENTS',
         '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'Contractor_3',
-        'Contractor_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '5');
-
+        'Contractor_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '5'),
+       ('123e4567-e89b-12d3-a456-600000000000', 'MTR_INSURANCE_POLICY', 'MTR_INSURANCE_POLICY',
+        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        null, '123e4567-e89b-12d3-a456-400000000000', 'Contractor_3',
+        'Contractor_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '7'),
+       ('123e4567-e89b-12d3-a456-700000000000', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
+        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        null, '123e4567-e89b-12d3-a456-400000000000', 'Contractor_3',
+        'Contractor_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '6');
 
 INSERT INTO nci_users (id, login, password, name, last_name, role, mail)
 VALUES ('123e4567-e89b-12d3-a456-010000000000', 'user_1', '12345', 'user', 'A', 'user', 'user@gmail.com'),
@@ -172,6 +179,27 @@ VALUES ('Contractor_1', 'Организация_1'),
        ('Contractor_6', 'Организация_6'),
        ('Contractor_7', 'Организация_7'),
        ('Contractor_8', 'Организация_8');
+
+INSERT INTO nci_mtr_groups (id, name, name_rus)
+VALUES ('123e4567-e89b-12d3-a456-210000000000', 'mtr_group_1',  'мтр_группа_1'),
+       ('123e4567-e89b-12d3-a456-220000000000', 'mtr_group_2',  'мтр_группа_2'),
+       ('123e4567-e89b-12d3-a456-230000000000', 'mtr_group_3',  'мтр_группа_3'),
+       ('123e4567-e89b-12d3-a456-240000000000', 'mtr_group_4',  'мтр_группа_4'),
+       ('123e4567-e89b-12d3-a456-250000000000', 'mtr_group_5',  'мтр_группа_5');
+
+INSERT INTO nci_mtrs (id, name, name_rus)
+VALUES ('123e4567-e89b-12d3-a456-310000000000', 'mtr_1',  'мтр_1'),
+       ('123e4567-e89b-12d3-a456-320000000000', 'mtr_2',  'мтр_2'),
+       ('123e4567-e89b-12d3-a456-330000000000', 'mtr_3',  'мтр_3'),
+       ('123e4567-e89b-12d3-a456-340000000000', 'mtr_4',  'мтр_4'),
+       ('123e4567-e89b-12d3-a456-350000000000', 'mtr_5',  'мтр_5');
+
+INSERT INTO nci_phases (id, name, name_rus)
+VALUES ('123e4567-e89b-12d3-a456-410000000000', 'phase_1',  'этап_1'),
+       ('123e4567-e89b-12d3-a456-420000000000', 'phase_2',  'этап_2'),
+       ('123e4567-e89b-12d3-a456-430000000000', 'phase_3',  'этап_3'),
+       ('123e4567-e89b-12d3-a456-440000000000', 'phase_4',  'этап_4'),
+       ('123e4567-e89b-12d3-a456-450000000000', 'phase_5',  'этап_5');
 
 -- select * from documents;
 -- select * from nci_users;

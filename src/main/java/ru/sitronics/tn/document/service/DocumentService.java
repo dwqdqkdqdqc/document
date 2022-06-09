@@ -237,6 +237,48 @@ public class DocumentService {
                                                 .filter(f -> f.getKey().equalsIgnoreCase("contract"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
                     }
+                    case "MTR_INSURANCE_POLICY" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "MTR_INSURANCE_POLICY".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
+
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(MtrInsurancePolicy.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Contract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
+                    case "PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
+
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(ProgressOfProductionForShipmentOfMtr.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(Contract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
 
                     default -> System.out.println("Ok");
                 }

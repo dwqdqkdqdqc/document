@@ -12,10 +12,13 @@ DROP TABLE IF EXISTS documents_construction_objects;
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_pids;
 DROP TABLE IF EXISTS nci_factory_numbers;
-DROP TABLE IF EXISTS attachments;
+DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
 DROP TABLE IF EXISTS nci_contractors;
 DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
 
 
 CREATE TABLE documents
@@ -54,9 +57,21 @@ CREATE TABLE documents
     contract_class               VARCHAR             NULL, --contract
     typical_form                 VARCHAR             NULL, --contract
     contract_view                VARCHAR             NULL, --contract
-    frame_contract               VARCHAR             NULL  --contract
-
-    --  FOREIGN KEY (create_user) REFERENCES users (id)
+    frame_contract               VARCHAR             NULL, --contract
+    sum_no_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
+    sum_vat                      numeric   default 0 NULL, --MtrInsurancePolicy
+    total_including_vat          numeric   default 0 NULL, --MtrInsurancePolicy
+    commencement_date            TIMESTAMP           null, --MtrInsurancePolicy
+    expiration_date              TIMESTAMP           null, --MtrInsurancePolicy
+    number_policy                VARCHAR             NULL, --MtrInsurancePolicy
+    data_policy                  TIMESTAMP           null, --MtrInsurancePolicy
+    nci_mtr_group_id             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    nci_mtr_id                   VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    phase_number                 VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    nci_phase_id                 VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    plan_date                    TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
+    fact_date                    TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
+    verify_document              VARCHAR             NULL  --ProgressOfProductionForShipmentOfMtr
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
 
@@ -149,7 +164,7 @@ CREATE TABLE nci_factory_numbers
     document_id    VARCHAR NULL
 );
 
-CREATE TABLE attachments
+CREATE TABLE nci_attachments
 (
     id            VARCHAR NULL,
     serial_number bigint  null,
@@ -181,3 +196,23 @@ CREATE TABLE nci_document_types
     name_rus VARCHAR NULL
 );
 
+CREATE TABLE nci_mtr_groups
+(
+    id       VARCHAR NOT NULL,
+    name     VARCHAR NOT NULL,
+    name_rus VARCHAR NULL
+);
+
+CREATE TABLE nci_mtrs
+(
+    id       VARCHAR NOT NULL,
+    name     VARCHAR NOT NULL,
+    name_rus VARCHAR NULL
+);
+
+CREATE TABLE nci_phases
+(
+    id       VARCHAR NOT NULL,
+    name     VARCHAR NOT NULL,
+    name_rus VARCHAR NULL
+);
