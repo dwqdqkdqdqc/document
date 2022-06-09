@@ -234,10 +234,28 @@ VALUES ('123e4567-e89b-12d3-a456-000001000000', 'some value', 'гайка', 'som
        ('123e4567-e89b-12d3-a456-000004000000', 'some value', 'шайба пружинная', 'some type', 4, 'some value'),
        ('123e4567-e89b-12d3-a456-000005000000', 'some value', 'винт', 'some type', 5, 'some value');
 
-INSERT INTO nci_consignees (id, display_value, internal_id)
-VALUES ('123e4567-e89b-12d3-a456-000000100000', 'consignee 1', 1),
-       ('123e4567-e89b-12d3-a456-000000200000', 'consignee 2', 2),
-       ('123e4567-e89b-12d3-a456-000000300000', 'consignee 3', 3);
+INSERT INTO nci_consignees (id, bukrs, sortl, name_1, name_2, name_3, name_4,
+                            zzsrm_stcd_1, zzsrm_stcd_2, zzsrm_stcd_3, zzsrm_rw_code_1, zzsrm_rw_freight_yard_1,
+                            zzsrm_rw_station_code_1, zzsrm_rw_cuscode_1, zzsrm_rw_code_2, zzsrm_rw_station_code_2,
+                            zzsrm_rw_freight_yard_2, zzsrm_rw_cuscode_2, zzsrm_rw_code_3, zzsrm_rw_station_code_3,
+                            zzsrm_rw_cuscode_3, zzsrm_rw_code_4, zzsrm_rw_station_code_4, zzsrm_rw_cuscode_4,
+                            zzsrm_rw_code_5, zzsrm_rw_station_code_5, zzsrm_rw_cuscode_5, zzsrm_post_code, zzsrm_country,
+                            zzsrm_region, zzsrm_city, zzsrm_street, zzsrm_str_suppl, zzsrm_house_num, zzsrm_house_num2,
+                            zzsrm_post_code2, zzsrm_country2, zzsrm_region2, zzsrm_city2, zzsrm_street2, zzsrm_str_suppl2,
+                            zzsrm_house_num_2, zzsrm_house_num2_2, zzsrm_rw_code_6, zzsrm_rw_station_code_6,
+                            zzsrm_rw_cuscode_6, department, function, name_last, name_first, tel_number, tel_extens,
+                            fax_number, fax_extens, zzsrm_country_4, zzsrm_region_4, zzsrm_district_4, zzsrm_city_4)
+VALUES ('123e4567-e89b-12d3-a456-000000100000', 'БЕ', 'Внешний номер грузополучателя', 'имя 1', 'имя 2', 'имя 3',
+        'имя 4', 'Налоговый номер 1 (ИНН)', 'Налоговый номер 3 (КПП)', 'Налоговый номер 2 (ОКПО)', 'Код железной дороги',
+        'Грузовой двор/путь', 'Код станции', 'Код грузополучателя', 'Код железной дороги', 'Код станции',
+        'Грузовой двор/путь', 'Код грузополучателя', 'Код железной дороги', 'Код станции',
+        'Код грузополучателя', 'Код железной дороги', 'Код станции', 'Код грузополучателя',
+        'Код железной дороги', 'Код станции', 'Код грузополучателя', 'Почтовый индекс', 'Страна',
+        'Регион', 'город', 'улица', 'улица 2', 'номер дома', 'дополнение к номеру дома',
+        'Почтовый индекс', 'Страна', 'Регион', 'город', 'улица', 'улица 2',
+        'номер дома', 'дополнение к номеру дома', 'Код железной дороги', 'Код станции',
+        'Код грузополучателя', 'Департамент', 'Должность', 'Фамилия', 'Имя', 'телефон', 'доп. к тел.',
+        'факс', 'доп. к номеру факса', 'код страны', 'регион', 'район', 'город');
 
 INSERT INTO documents (id, type_id, d_type, serial_number,
                        contract_id, dop_contract_id,
