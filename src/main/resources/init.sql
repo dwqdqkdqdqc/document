@@ -16,11 +16,12 @@ DROP TABLE IF EXISTS attachments;
 DROP TABLE IF EXISTS documents_attachments;
 DROP TABLE IF EXISTS nci_contractors;
 DROP TABLE IF EXISTS nci_document_types;
-DROP TABLE IF EXISTS nci_deliveries;
 DROP TABLE IF EXISTS nci_units_of_measurement;
 DROP TABLE IF EXISTS nci_countries;
 DROP TABLE IF EXISTS nci_types_of_transport;
-DROP TABLE IF EXISTS mtrs;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_consignees;
+DROP TABLE IF EXISTS specifications_tables_entities;
 
 
 CREATE TABLE documents
@@ -49,9 +50,17 @@ CREATE TABLE documents
 
 --Fields of other classes
     lot                          VARCHAR             NULL, --Specification
+    total_sum_no_vat             NUMERIC DEFAULT 0   NULL, --Specification
+    total_vat                    NUMERIC DEFAULT 0   NULL, --Specification
+    total_sum_vat                NUMERIC DEFAULT 0   NULL, --Specification
+    contract_status              VARCHAR             NULL, --Specification
+    dop_contract_id              VARCHAR             NULL, --Specification
+    supervised_products          BOOLEAN DEFAULT FALSE,    --Specification
+    nci_consignee_id             VARCHAR             NULL, --Specification
+    shipping_details             VARCHAR             NULL, --Specification
     date_of_signing              TIMESTAMP           NULL, --contract
     document_registration_number VARCHAR             NULL, --contract
-    nci_ost_id                   VARCHAR             NULL, --contract
+    nci_ost_id                   VARCHAR             NULL, --contract, Specification
     contract_subject             VARCHAR             NULL, --contract
     reg_number                   VARCHAR             NULL, --contract
     inn                          VARCHAR             NULL, --contract
@@ -180,13 +189,6 @@ CREATE TABLE nci_document_types
     name_rus VARCHAR NULL
 );
 
-CREATE TABLE nci_deliveries
-(
-    id            VARCHAR      NULL,
-    display_value VARCHAR(150) NULL, --Наименование способа доставки
-    internal_id   integer      NULL  --Внутренний (технический) номер записи SAP MDM
-);
-
 CREATE TABLE nci_units_of_measurement
 (
     id            VARCHAR      NULL,
@@ -208,16 +210,35 @@ CREATE TABLE nci_types_of_transport
     internal_id   integer      NULL
 );
 
-CREATE TABLE mtrs
+CREATE TABLE nci_mtrs
+(
+    id                      VARCHAR      NULL,
+    display_value           VARCHAR      NULL,
+    name                    VARCHAR      NULL,
+    type                    VARCHAR      NULL,
+    internal_id             integer      NULL,
+    value                   VARCHAR      NULL
+);
+
+CREATE TABLE nci_consignees
+(
+    id            VARCHAR      NULL,
+    display_value VARCHAR(150) NULL,
+    internal_id   integer      NULL
+);
+
+CREATE TABLE specifications_tables_entities
 (
     id                          VARCHAR PRIMARY KEY     NOT NULL,
     pid                         VARCHAR                 NULL,
     position_number             BIGINT                  NULL,
-    customer_id                 VARCHAR                 NULL,
-    nci_delivery_id             VARCHAR                 NULL,
+    delivery_method             BOOLEAN DEFAULT FALSE,
     position_code               BIGINT                  NULL,
-    product_name                VARCHAR                 NULL,
+    nci_mtr_id                  VARCHAR                 NULL,
+    gost_ost_tu                 VARCHAR                 NULL,
+    code                        VARCHAR                 NULL,
     nci_unit_of_measurement_id  VARCHAR                 NULL,
+    quantity                    BIGINT                  NULL,
     price_no_vat                NUMERIC DEFAULT 0       NULL,
     sum_no_vat                  NUMERIC DEFAULT 0       NULL,
     vat                         NUMERIC DEFAULT 0       NULL,
@@ -226,8 +247,9 @@ CREATE TABLE mtrs
     contractor_id               VARCHAR                 NULL,
     nci_country_id              VARCHAR                 NULL,
     delivery_date               TIMESTAMP               NULL,
-    shipping_details            VARCHAR                 NULL,
     nci_type_of_transport_id    VARCHAR                 NULL,
-    belonging_to_the_dsi        VARCHAR                 NULL
+    belonging_to_the_dsi        VARCHAR                 NULL,
+    specification_id            VARCHAR                 NULL,
+    note                        VARCHAR                 NULL
 )
 
