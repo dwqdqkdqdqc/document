@@ -2,7 +2,10 @@ package ru.sitronics.tn.document.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
@@ -10,15 +13,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -52,7 +51,7 @@ public class Document extends BaseEntity implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_of_creation", insertable = false, updatable = false)
-    private LocalDateTime dateOfCreation;
+    private LocalDate dateOfCreation;
 
     @CreatedBy
     //  @NotNull
@@ -173,12 +172,11 @@ public class Document extends BaseEntity implements Serializable {
     private List<NciDocumentType> nciDocumentTypes;
 
 
-
     ////=========================================== Contract
     //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing"/*, updatable = false*/)
-    private LocalDateTime dateOfSigning;
+    private LocalDate dateOfSigning;
 
     // @NotNull
     @Column(name = "document_registration_number"/*, updatable = false*/)

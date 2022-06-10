@@ -21,7 +21,7 @@ public class Contract extends Document {
     //  @NotNull
   /*  @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing"*//*, updatable = false*//*)
-    private LocalDateTime dateOfSigning;
+    private LocalDate dateOfSigning;
 
    // @NotNull
     @Column(name = "document_registration_number"*//*, updatable = false*//*)
