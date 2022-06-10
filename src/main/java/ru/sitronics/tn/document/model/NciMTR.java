@@ -30,5 +30,5 @@ public class NciMTR extends BaseEntity {
 
     @OneToMany(mappedBy = "nciMTR")
     @JsonIgnore
-    private List<SpecificationsTablesEntity> specificationsTablesEntityList;
+    private List<SpecificationTableEntity> specificationTableEntityList;
 }

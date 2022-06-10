@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "specifications_tables_entities")
-public class SpecificationsTablesEntity extends BaseEntity implements Serializable {
+@Table(name = "specification_table_entities")
+public class SpecificationTableEntity extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

@@ -267,7 +267,7 @@ VALUES ('123e4567-e89b-12d3-a456-500000000000', 'Спецификация',  'SP
         123456789, 1676265.55, 1255.4, 1675010.15, 'contract status', TRUE,
         '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');
 
-INSERT INTO specifications_tables_entities (id, pid, position_number, delivery_method, position_code, nci_mtr_id,
+INSERT INTO specification_table_entities (id, pid, position_number, delivery_method, position_code, nci_mtr_id,
                                             gost_ost_tu, code, nci_unit_of_measurement_id, quantity, price_no_vat,
                                             sum_no_vat, vat, sum_vat, amount_with_vat, contractor_id, nci_country_id,
                                             delivery_date, nci_type_of_transport_id, belonging_to_the_dsi,

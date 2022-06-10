@@ -27,5 +27,5 @@ public class NciCountry extends BaseEntity {
 
     @OneToMany(mappedBy = "nciCountry")
     @JsonIgnore
-    private List<SpecificationsTablesEntity> specificationsTablesEntityList;
+    private List<SpecificationTableEntity> specificationTableEntityList;
 }

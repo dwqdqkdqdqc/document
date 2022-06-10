@@ -46,7 +46,7 @@ public class Specification extends Document {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OrderBy("positionNumber")
     @JsonManagedReference
-    private List<SpecificationsTablesEntity> specificationsTablesEntities;
+    private List<SpecificationTableEntity> specificationsTablesEntities;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dop_contract_id")

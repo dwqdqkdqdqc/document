@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS nci_countries;
 DROP TABLE IF EXISTS nci_types_of_transport;
 DROP TABLE IF EXISTS nci_mtrs;
 DROP TABLE IF EXISTS nci_consignees;
-DROP TABLE IF EXISTS specifications_tables_entities;
+DROP TABLE IF EXISTS specification_table_entities;
 
 
 CREATE TABLE documents
@@ -280,7 +280,7 @@ CREATE TABLE nci_consignees
     fourth_city                 VARCHAR      NULL
 );
 
-CREATE TABLE specifications_tables_entities
+CREATE TABLE specification_table_entities
 (
     id                          VARCHAR PRIMARY KEY     NOT NULL,
     pid                         VARCHAR                 NULL,

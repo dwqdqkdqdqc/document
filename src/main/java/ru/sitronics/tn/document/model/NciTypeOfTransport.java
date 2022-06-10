@@ -27,5 +27,5 @@ public class NciTypeOfTransport extends BaseEntity {
 
     @OneToMany(mappedBy = "nciTypeOfTransport")
     @JsonIgnore
-    private List<SpecificationsTablesEntity> specificationsTablesEntityList;
+    private List<SpecificationTableEntity> specificationTableEntityList;
 }

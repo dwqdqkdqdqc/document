@@ -27,5 +27,5 @@ public class NciUnitsOfMeasurement extends BaseEntity {
 
     @OneToMany(mappedBy = "nciUnitsOfMeasurement")
     @JsonIgnore
-    private List<SpecificationsTablesEntity> specificationsTablesEntityList;
+    private List<SpecificationTableEntity> specificationTableEntityList;
 }
