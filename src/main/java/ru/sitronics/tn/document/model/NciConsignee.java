@@ -23,137 +23,137 @@ public class NciConsignee extends BaseEntity {
     @Column(name = "bukrs")
     private String bukrs;
 
-    @Column(name = "sortl")
-    private String sortl;
+    @Column(name = "external_consignee_id")
+    private String externalConsigneeId;
 
-    @Column(name = "name_1")
-    private String name1;
+    @Column(name = "first_consignee_name")
+    private String firstConsigneeName;
 
-    @Column(name = "name_2")
-    private String name2;
+    @Column(name = "second_consignee_name")
+    private String secondConsigneeName;
 
-    @Column(name = "name_3")
-    private String name3;
+    @Column(name = "third_consignee_name")
+    private String thirdConsigneeName;
 
-    @Column(name = "name_4")
-    private String name4;
+    @Column(name = "fourth_consignee_name")
+    private String fourthConsigneeName;
 
-    @Column(name = "zzsrm_stcd_1")
-    private String zzsrmStcd1;
+    @Column(name = "inn")
+    private String inn;
 
-    @Column(name = "zzsrm_stcd_2")
-    private String zzsrmStcd2;
+    @Column(name = "kpp")
+    private String kpp;
 
-    @Column(name = "zzsrm_stcd_3")
-    private String zzsrmStcd3;
+    @Column(name = "okpo")
+    private String okpo;
 
-    @Column(name = "zzsrm_rw_code_1")
-    private String zzsrmRwCode1;
+    @Column(name = "first_railway_code")
+    private String firstRailwayCode;
 
-    @Column(name = "zzsrm_rw_freight_yard_1")
-    private String zzsrmRwFreightYard1;
+    @Column(name = "first_freight_yard")
+    private String firstFreightYard;
 
-    @Column(name = "zzsrm_rw_station_code_1")
-    private String zzsrmRwStationCode1;
+    @Column(name = "first_station_code")
+    private String firstStationCode;
 
-    @Column(name = "zzsrm_rw_cuscode_1")
-    private String zzsrmRwCuscode1;
+    @Column(name = "first_customer_code")
+    private String firstCustomerCode;
 
-    @Column(name = "zzsrm_rw_code_2")
-    private String zzsrmRwCode2;
+    @Column(name = "second_railway_code")
+    private String secondRailwayCode;
 
-    @Column(name = "zzsrm_rw_station_code_2")
-    private String zzsrmRwStationCode2;
+    @Column(name = "second_station_code")
+    private String secondStationCode;
 
-    @Column(name = "zzsrm_rw_freight_yard_2")
-    private String zzsrmRwFreightYard2;
+    @Column(name = "second_freight_yard")
+    private String secondFreightYard;
 
-    @Column(name = "zzsrm_rw_cuscode_2")
-    private String zzsrmRwCuscode2;
+    @Column(name = "second_customer_code")
+    private String secondCustomerCode;
 
-    @Column(name = "zzsrm_rw_code_3")
-    private String zzsrmRwCode3;
+    @Column(name = "third_railway_code")
+    private String thirdRailwayCode;
 
-    @Column(name = "zzsrm_rw_station_code_3")
-    private String zzsrmRwStationCode3;
+    @Column(name = "third_station_code")
+    private String thirdStationCode;
 
-    @Column(name = "zzsrm_rw_cuscode_3")
-    private String zzsrmRwCuscode3;
+    @Column(name = "third_customer_code")
+    private String thirdCustomerCode;
 
-    @Column(name = "zzsrm_rw_code_4")
-    private String zzsrmRwCode4;
+    @Column(name = "fourth_railway_code")
+    private String fourthRailwayCode;
 
-    @Column(name = "zzsrm_rw_station_code_4")
-    private String zzsrmRwStationCode4;
+    @Column(name = "fourth_station_code")
+    private String fourthStationCode;
 
-    @Column(name = "zzsrm_rw_cuscode_4")
-    private String zzsrmRwCuscode4;
+    @Column(name = "fourth_customer_code")
+    private String fourthCustomerCode;
 
-    @Column(name = "zzsrm_rw_code_5")
-    private String zzsrmRwCode5;
+    @Column(name = "fifth_railway_code")
+    private String fifthRailwayCode;
 
-    @Column(name = "zzsrm_rw_station_code_5")
-    private String zzsrmRwStationCode5;
+    @Column(name = "fifth_station_code")
+    private String fifthStationCode;
 
-    @Column(name = "zzsrm_rw_cuscode_5")
-    private String zzsrmRwCuscode5;
+    @Column(name = "fifth_customer_code")
+    private String fifthCustomerCode;
 
-    @Column(name = "zzsrm_post_code")
-    private String zzsrmPostCode;
+    @Column(name = "first_post_code")
+    private String firstPostCode;
 
-    @Column(name = "zzsrm_country")
-    private String zzsrmCountry;
+    @Column(name = "first_country")
+    private String firstCountry;
 
-    @Column(name = "zzsrm_region")
-    private String zzsrmRegion;
+    @Column(name = "first_region")
+    private String firstRegion;
 
-    @Column(name = "zzsrm_city")
-    private String zzsrmCity;
+    @Column(name = "first_city")
+    private String firstCity;
 
-    @Column(name = "zzsrm_street")
-    private String zzsrmStreet;
+    @Column(name = "first_street")
+    private String firstStreet;
 
-    @Column(name = "zzsrm_str_suppl")
-    private String zzsrmStrSuppl;
+    @Column(name = "first_street_suppl")
+    private String firstStreetSuppl;
 
-    @Column(name = "zzsrm_house_num")
-    private String zzsrmHouseNum;
+    @Column(name = "first_house_number")
+    private String firstHouseNumber;
 
-    @Column(name = "zzsrm_house_num2")
-    private String zzsrmHouseNum2;
+    @Column(name = "first_house_number_suppl")
+    private String firstHouseNumberSuppl;
 
-    @Column(name = "zzsrm_post_code2")
-    private String zzsrmPostCode2;
+    @Column(name = "second_post_code")
+    private String secondPostCode;
 
-    @Column(name = "zzsrm_country2")
-    private String zzsrmCountry2;
+    @Column(name = "second_country")
+    private String secondCountry;
 
-    @Column(name = "zzsrm_region2")
-    private String zzsrmRegion2;
+    @Column(name = "second_region")
+    private String secondRegion;
 
-    @Column(name = "zzsrm_city2")
-    private String zzsrmCity2;
+    @Column(name = "second_city")
+    private String secondCity;
 
-    @Column(name = "zzsrm_street2")
-    private String zzsrmStreet2;
+    @Column(name = "second_street")
+    private String secondStreet;
 
-    @Column(name = "zzsrm_str_suppl2")
-    private String zzsrmStrSuppl2;
+    @Column(name = "second_street_suppl")
+    private String secondStreetSuppl;
 
-    @Column(name = "zzsrm_house_num_2")
-    private String zzsrmHouseNum_2;
+    @Column(name = "second_house_number")
+    private String secondHouseNumber;
 
-    @Column(name = "zzsrm_house_num2_2")
-    private String zzsrmHouseNum2_2;
+    @Column(name = "second_house_number_suppl")
+    private String secondHouseNumberSuppl;
 
-    @Column(name = "zzsrm_rw_code_6")
-    private String zzsrmRwCode6;
+    @Column(name = "sixth_railway_code")
+    private String sixthRailwayCode;
 
-    @Column(name = "zzsrm_rw_station_code_6")
-    private String zzsrmRwStationCode6;
+    @Column(name = "sixth_station_code")
+    private String sixthStationCode;
 
-    @Column(name = "zzsrm_rw_cuscode_6")
-    private String zzsrmRwCuscode6;
+    @Column(name = "sixth_customer_code")
+    private String sixthCustomerCode;
 
     @Column(name = "department")
     private String department;
@@ -161,35 +161,35 @@ public class NciConsignee extends BaseEntity {
     @Column(name = "function")
     private String function;
 
-    @Column(name = "name_last")
-    private String nameLast;
+    @Column(name = "last_name")
+    private String lastName;
 
-    @Column(name = "name_first")
-    private String nameFirst;
+    @Column(name = "first_name")
+    private String firstName;
 
     @Column(name = "tel_number")
     private String telNumber;
 
-    @Column(name = "tel_extens")
-    private String telExtens;
+    @Column(name = "tel_extension")
+    private String telExtension;
 
     @Column(name = "fax_number")
     private String faxNumber;
 
-    @Column(name = "fax_extens")
-    private String faxExtens;
+    @Column(name = "fax_extension")
+    private String faxExtension;
 
-    @Column(name = "zzsrm_country_4")
-    private String zzsrmCountry4;
+    @Column(name = "fourth_country")
+    private String fourthCountry;
 
-    @Column(name = "zzsrm_region_4")
-    private String zzsrmRegion4;
+    @Column(name = "fourth_region")
+    private String fourthRegion;
 
-    @Column(name = "zzsrm_district_4")
-    private String zzsrmDistrict4;
+    @Column(name = "fourth_district")
+    private String fourthDistrict;
 
-    @Column(name = "zzsrm_city_4")
-    private String zzsrmCity4;
+    @Column(name = "fourth_city")
+    private String fourthCity;
 
 
     @OneToMany(mappedBy = "nciConsignee")
