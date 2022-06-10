@@ -50,9 +50,9 @@ CREATE TABLE documents
 
 --Fields of other classes
     lot                          VARCHAR             NULL, --Specification
-    total_sum_no_vat             NUMERIC DEFAULT 0   NULL, --Specification
-    total_vat                    NUMERIC DEFAULT 0   NULL, --Specification
-    total_sum_vat                NUMERIC DEFAULT 0   NULL, --Specification
+    sum_no_vat                   NUMERIC DEFAULT 0   NULL, --Specification
+    sum_vat                      NUMERIC DEFAULT 0   NULL, --Specification
+    total_including_vat          NUMERIC DEFAULT 0   NULL, --Specification
     contract_status              VARCHAR             NULL, --Specification
     dop_contract_id              VARCHAR             NULL, --Specification
     supervised_products          BOOLEAN DEFAULT FALSE,    --Specification

@@ -100,7 +100,7 @@ VALUES ('123e4567-e89b-12d3-a456-200000000000', '123e4567-e89b-12d3-a456-1000000
         '123e4567-e89b-12d3-a456-002000000000', '4'),
        ('123e4567-e89b-12d3-a456-400000000000', '123e4567-e89b-12d3-a456-100000000000',
         '123e4567-e89b-12d3-a456-003000000000', '1'),
-       ('123e4567-e89b-12d3-a456-500000000000', '123e4567-e89b-12d3-a456-100000000000',
+       ('123e4567-e89b-12d3-a456-555000000000', '123e4567-e89b-12d3-a456-100000000000',
         '123e4567-e89b-12d3-a456-003000000000', '1');
 
 INSERT INTO document_history_bpm(id, serial_number, document_id, relating_document_id, type_relation)
@@ -110,7 +110,7 @@ VALUES ('123e4567-e89b-12d3-a456-000100000000', '1', '123e4567-e89b-12d3-a456-20
         '123e4567-e89b-12d3-a456-300000000000', 'MANDATORY'),
        ('123e4567-e89b-12d3-a456-000300000000', '3', '123e4567-e89b-12d3-a456-200000000000',
         '123e4567-e89b-12d3-a456-400000000000', 'MANDATORY'),
-       ('123e4567-e89b-12d3-a456-000400000000', '4', '123e4567-e89b-12d3-a456-500000000000',
+       ('123e4567-e89b-12d3-a456-000400000000', '4', '123e4567-e89b-12d3-a456-555000000000',
         '123e4567-e89b-12d3-a456-400000000000', 'MANDATORY');
 
 INSERT INTO construction_objects (id, name, address, organization)
@@ -141,7 +141,7 @@ VALUES ('123e4567-e89b-12d3-a456-000000000100', '123e4567-e89b-12d3-a456-0000001
        ('123e4567-e89b-12d3-a456-000000000400', '123e4567-e89b-12d3-a456-000000400000',
         '123e4567-e89b-12d3-a456-100000000000'),
        ('123e4567-e89b-12d3-a456-000000000500', '123e4567-e89b-12d3-a456-000000400000',
-        '123e4567-e89b-12d3-a456-500000000000');
+        '123e4567-e89b-12d3-a456-555000000000');
 
 INSERT INTO nci_factory_numbers (id, factory_number, document_id)
 VALUES ('123e4567-e89b-12d3-a456-000000000010', '123e4567-e89b-12d3-a456-000000010000',
@@ -153,7 +153,7 @@ VALUES ('123e4567-e89b-12d3-a456-000000000010', '123e4567-e89b-12d3-a456-0000000
        ('123e4567-e89b-12d3-a456-000000000040', '123e4567-e89b-12d3-a456-000000040000',
         '123e4567-e89b-12d3-a456-100000000000'),
        ('123e4567-e89b-12d3-a456-000000000050', '123e4567-e89b-12d3-a456-000000040000',
-        '123e4567-e89b-12d3-a456-500000000000');
+        '123e4567-e89b-12d3-a456-555000000000');
 
 INSERT INTO attachments (id, serial_number, address)
 VALUES ('123e4567-e89b-12d3-a456-000000000001', '1', 'address_1'),
@@ -258,9 +258,9 @@ INSERT INTO documents (id, type_id, d_type, serial_number,
                        contract_id, dop_contract_id, contractor_id,
                        author_id, construction_object_id, supplier_id,
                        customer_id, nci_ost_id, status, access,
-                       lot, total_sum_no_vat, total_vat, total_sum_vat, contract_status, supervised_products,
+                       lot, sum_no_vat, sum_vat, total_including_vat, contract_status, supervised_products,
                        nci_consignee_id, shipping_details, barcode, lkk_document_number, lus_document_number, comment)
-VALUES ('123e4567-e89b-12d3-a456-500000000000', 'Спецификация',  'SPECIFICATION', 0001,
+VALUES ('123e4567-e89b-12d3-a456-555000000000', 'Спецификация',  'SPECIFICATION', 0001,
         '123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-100000000000', 'Contractor_1',
         '123e4567-e89b-12d3-a456-010000000000', '123e4567-e89b-12d3-a456-000001000000', 'Организация_2',
         '123e4567-e89b-12d3-a456-030000000000', '123e4567-e89b-12d3-a456-000000001000', 'DRAFT', 'WITHOUT_A_FINGERBOARD',
@@ -276,12 +276,12 @@ VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321,
         'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
         2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000003000',
         '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000040000', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-500000000000'),
+        'some note', '123e4567-e89b-12d3-a456-555000000000'),
     ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, '123e4567-e89b-12d3-a456-320000000000',
      'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
      2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000005000',
      '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000030000', 'some information about belonging to the dsi',
-     'some note', '123e4567-e89b-12d3-a456-500000000000');
+     'some note', '123e4567-e89b-12d3-a456-555000000000');
 
 /*
     RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза

@@ -26,13 +26,13 @@ public class Specification extends Document {
     @Column(name = "lot")
     private String lot;
 
-    @Column(name = "total_sum_no_vat")
+    @Column(name = "sum_no_vat")
     private BigDecimal totalSumNoVat;
 
-    @Column(name = "total_vat")
+    @Column(name = "sum_vat")
     private BigDecimal totalVat;
 
-    @Column(name = "total_sum_vat")
+    @Column(name = "total_including_vat")
     private BigDecimal totalSumVat;
 
     @Column(name = "contract_status")
