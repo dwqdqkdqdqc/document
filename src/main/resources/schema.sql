@@ -232,11 +232,11 @@ VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
        ('123e4567-e89b-12d3-a456-000000700000', 'шт', 7);
 
 INSERT INTO nci_mtrs (id, name, internal_id, control_prod)
-VALUES ('123e4567-e89b-12d3-a456-000001000000', 'гайка', 1, TRUE),
-       ('123e4567-e89b-12d3-a456-000002000000', 'болт', 2, TRUE),
-       ('123e4567-e89b-12d3-a456-000003000000', 'шайба', 3, TRUE),
-       ('123e4567-e89b-12d3-a456-000004000000', 'шайба пружинная', 4, TRUE),
-       ('123e4567-e89b-12d3-a456-000005000000', 'винт', 5, TRUE);
+VALUES ('123e4567-e89b-12d3-a456-310000000000', 'гайка', 1, TRUE),
+       ('123e4567-e89b-12d3-a456-320000000000', 'болт', 2, TRUE),
+       ('123e4567-e89b-12d3-a456-330000000000', 'шайба', 3, TRUE),
+       ('123e4567-e89b-12d3-a456-340000000000', 'шайба пружинная', 4, TRUE),
+       ('123e4567-e89b-12d3-a456-350000000000', 'винт', 5, TRUE);
 
 INSERT INTO nci_consignees (id, bukrs, external_consignee_id, first_consignee_name, second_consignee_name,
                             third_consignee_name, fourth_consignee_name, inn, kpp, okpo, first_railway_code,
@@ -272,12 +272,12 @@ INSERT INTO specification_table_entities (id, pid, position_number, delivery_met
                                             sum_no_vat, vat, sum_vat, amount_with_vat, contractor_id, nci_country_id,
                                             delivery_date, nci_type_of_transport_id, belonging_to_the_dsi,
                                             note, specification_id)
-VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, '123e4567-e89b-12d3-a456-000001000000',
+VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, '123e4567-e89b-12d3-a456-310000000000',
         'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
         2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000003000',
         '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000040000', 'some information about belonging to the dsi',
         'some note', '123e4567-e89b-12d3-a456-500000000000'),
-    ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, '123e4567-e89b-12d3-a456-000002000000',
+    ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, '123e4567-e89b-12d3-a456-320000000000',
      'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
      2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000005000',
      '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000030000', 'some information about belonging to the dsi',
