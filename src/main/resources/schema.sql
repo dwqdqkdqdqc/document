@@ -139,7 +139,9 @@ VALUES ('123e4567-e89b-12d3-a456-000000000100', '123e4567-e89b-12d3-a456-0000001
        ('123e4567-e89b-12d3-a456-000000000300', '123e4567-e89b-12d3-a456-000000300000',
         '123e4567-e89b-12d3-a456-200000000000'),
        ('123e4567-e89b-12d3-a456-000000000400', '123e4567-e89b-12d3-a456-000000400000',
-        '123e4567-e89b-12d3-a456-100000000000');
+        '123e4567-e89b-12d3-a456-100000000000'),
+       ('123e4567-e89b-12d3-a456-000000000500', '123e4567-e89b-12d3-a456-000000400000',
+        '123e4567-e89b-12d3-a456-500000000000');
 
 INSERT INTO nci_factory_numbers (id, factory_number, document_id)
 VALUES ('123e4567-e89b-12d3-a456-000000000010', '123e4567-e89b-12d3-a456-000000010000',
@@ -149,7 +151,9 @@ VALUES ('123e4567-e89b-12d3-a456-000000000010', '123e4567-e89b-12d3-a456-0000000
        ('123e4567-e89b-12d3-a456-000000000030', '123e4567-e89b-12d3-a456-000000030000',
         '123e4567-e89b-12d3-a456-200000000000'),
        ('123e4567-e89b-12d3-a456-000000000040', '123e4567-e89b-12d3-a456-000000040000',
-        '123e4567-e89b-12d3-a456-100000000000');
+        '123e4567-e89b-12d3-a456-100000000000'),
+       ('123e4567-e89b-12d3-a456-000000000050', '123e4567-e89b-12d3-a456-000000040000',
+        '123e4567-e89b-12d3-a456-500000000000');
 
 INSERT INTO attachments (id, serial_number, address)
 VALUES ('123e4567-e89b-12d3-a456-000000000001', '1', 'address_1'),
@@ -258,14 +262,14 @@ VALUES ('123e4567-e89b-12d3-a456-000000100000', 'БЕ', 'Внешний номе
         'факс', 'доп. к номеру факса', 'код страны', 'регион', 'район', 'город');
 
 INSERT INTO documents (id, type_id, d_type, serial_number,
-                       contract_id, dop_contract_id,
-                       author_id, construction_object_id,
+                       contract_id, dop_contract_id, contractor_id,
+                       author_id, construction_object_id, supplier_id,
                        customer_id, nci_ost_id, status, access,
                        lot, total_sum_no_vat, total_vat, total_sum_vat, contract_status, supervised_products,
                        nci_consignee_id, shipping_details, barcode, lkk_document_number, lus_document_number, comment)
 VALUES ('123e4567-e89b-12d3-a456-500000000000', 'Спецификация',  'SPECIFICATION', 0001,
-        '123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-100000000000',
-        '123e4567-e89b-12d3-a456-010000000000', '123e4567-e89b-12d3-a456-000001000000',
+        '123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-100000000000', 'Contractor_1',
+        '123e4567-e89b-12d3-a456-010000000000', '123e4567-e89b-12d3-a456-000001000000', 'Организация_2',
         '123e4567-e89b-12d3-a456-030000000000', '123e4567-e89b-12d3-a456-000000001000', 'DRAFT', 'WITHOUT_A_FINGERBOARD',
         123456789, 1676265.55, 1255.4, 1675010.15, 'contract status', TRUE,
         '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');

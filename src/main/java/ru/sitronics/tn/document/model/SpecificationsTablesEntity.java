@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -73,7 +73,7 @@ public class SpecificationsTablesEntity extends BaseEntity implements Serializab
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "delivery_date")
-    private LocalDateTime deliveryDate;
+    private LocalDate deliveryDate;
 
     @ManyToOne
     @JoinColumn(name = "nci_type_of_transport_id")
