@@ -161,7 +161,7 @@ public class Document extends BaseEntity implements Serializable {
 
     @Column(name = "customer_id"/*, updatable = false*/)
     //  @Enumerated(EnumType.STRING)
-    // private Customer customer;
+//     private Customer customer;
     private String customer;
 
     @Column(name = "supplier_id"/*, updatable = false*/)
