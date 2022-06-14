@@ -258,13 +258,13 @@ INSERT INTO documents (id, type_id, d_type, serial_number,
                        contract_id, dop_contract_id, contractor_id,
                        author_id, construction_object_id, supplier_id,
                        customer_id, nci_ost_id, status, access,
-                       lot, sum_no_vat, sum_vat, total_including_vat, contract_status, supervised_products,
+                       lot, sum_no_vat, sum_vat, total_including_vat, contract_status,
                        nci_consignee_id, shipping_details, barcode, lkk_document_number, lus_document_number, comment)
 VALUES ('123e4567-e89b-12d3-a456-555000000000', 'Спецификация',  'SPECIFICATION', 0001,
         '123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-100000000000', 'Contractor_1',
         '123e4567-e89b-12d3-a456-010000000000', '123e4567-e89b-12d3-a456-000001000000', 'Организация_2',
         '123e4567-e89b-12d3-a456-030000000000', '123e4567-e89b-12d3-a456-000000001000', 'DRAFT', 'WITHOUT_A_FINGERBOARD',
-        123456789, 1676265.55, 1255.4, 1675010.15, 'contract status', TRUE,
+        123456789, 1676265.55, 1255.4, 1675010.15, 'contract status',
         '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');
 
 INSERT INTO specification_table_entities (id, pid, position_number, delivery_method, position_code, nci_mtr_id,

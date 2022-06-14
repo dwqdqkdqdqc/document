@@ -55,7 +55,6 @@ CREATE TABLE documents
     total_including_vat          NUMERIC DEFAULT 0   NULL, --Specification
     contract_status              VARCHAR             NULL, --Specification
     dop_contract_id              VARCHAR             NULL, --Specification
-    supervised_products          BOOLEAN DEFAULT FALSE,    --Specification
     nci_consignee_id             VARCHAR             NULL, --Specification
     shipping_details             VARCHAR             NULL, --Specification
     date_of_signing              TIMESTAMP           NULL, --contract

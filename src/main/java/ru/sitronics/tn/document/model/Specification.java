@@ -52,9 +52,6 @@ public class Specification extends Document {
     @JoinColumn(name = "dop_contract_id")
     private Contract dopContract;
 
-    @Column(name = "supervised_products")
-    private boolean supervisedProducts;
-
     @ManyToOne
     @JoinColumn(name = "nci_consignee_id")
     private NciConsignee nciConsignee;
