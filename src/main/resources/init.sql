@@ -40,6 +40,465 @@ CREATE TABLE documents
     factory_number               VARCHAR             NULL,
     barcode                      VARCHAR             NULL,
     lkk_document_number          VARCHAR             NULL,
+    lus_document_number          VARCHAR
+        DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents_curators;
+DROP INDEX IF EXISTS document_id_curators_id_idx;
+--DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+DROP TABLE IF EXISTS type_relation;
+DROP TABLE IF EXISTS documents_relating_documents;
+DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS nci_construction_objects;
+DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_osts;
+DROP TABLE IF EXISTS nci_pids;
+DROP TABLE IF EXISTS nci_factory_numbers;
+DROP TABLE IF EXISTS nci_attachments;
+DROP TABLE IF EXISTS documents_attachments;
+DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_document_types;
+DROP TABLE IF EXISTS nci_mtr_groups;
+DROP TABLE IF EXISTS nci_mtrs;
+DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR       DROP TABLE IF EXISTS nci_users;
+-- DROP TABLE IF EXISTS documents;
+-- DROP TABLE IF EXISTS documents_curators;
+-- DROP INDEX IF EXISTS document_id_curators_id_idx;
+-- --DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
+-- DROP TABLE IF EXISTS type_relation;
+-- DROP TABLE IF EXISTS documents_relating_documents;
+-- DROP TABLE IF EXISTS document_history_bpm;
+-- DROP TABLE IF EXISTS contracts;
+-- DROP TABLE IF EXISTS nci_construction_objects;
+-- DROP TABLE IF EXISTS documents_construction_objects;
+-- DROP TABLE IF EXISTS nci_osts;
+-- DROP TABLE IF EXISTS nci_pids;
+-- DROP TABLE IF EXISTS nci_factory_numbers;
+-- DROP TABLE IF EXISTS nci_attachments;
+-- DROP TABLE IF EXISTS documents_attachments;
+-- DROP TABLE IF EXISTS nci_contractors;
+-- DROP TABLE IF EXISTS nci_document_types;
+-- DROP TABLE IF EXISTS nci_mtr_groups;
+-- DROP TABLE IF EXISTS nci_mtrs;
+-- DROP TABLE IF EXISTS nci_phases;
+
+
+CREATE TABLE documents
+(                                                          --Base fields
+    id                           VARCHAR PRIMARY KEY NOT NULL,
+    type_id                      VARCHAR             NULL,
+    d_type                       VARCHAR             NULL,
+    serial_number                BIGINT              NULL,
+    date_of_creation             TIMESTAMP DEFAULT now(),
+    author_id                    VARCHAR             NULL,
+    content                      bytea               NULL,
+    status                       VARCHAR             NULL,
+    access                       VARCHAR             NULL,
+    comment
+                                 VARCHAR             NULL,
+    contract_id                  VARCHAR             NULL,
+    specification_id             VARCHAR             NULL,
+    nci_construction_object_id   VARCHAR             NULL,
+    factory_number               VARCHAR             NULL,
+    barcode                      VARCHAR             NULL,
+    lkk_document_number          VARCHAR             NULL,
     lus_document_number          VARCHAR             NULL,
     customer_id                  VARCHAR             NULL,
     supplier_id                  VARCHAR             NULL,
