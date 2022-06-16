@@ -34,5 +34,6 @@ public class RelatingDocumentsTable {
 
     @Column(name = "relating_document_serial_number")
     String serialNumber;
+
 }
 

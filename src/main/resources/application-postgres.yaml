@@ -17,8 +17,8 @@ spring:
 #   https://stackoverflow.com/questions/35411070/hibernate-not-creating-table-automatically-in-spring-boot-using-postgresql
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
-  sql:
-    init:
-      mode: embedded
+#  sql:
+#    init:
+#      mode: embedded

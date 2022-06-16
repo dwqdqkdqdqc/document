@@ -164,6 +164,7 @@ public class Document extends BaseEntity implements Serializable {
 //     private Customer customer;
     private String customer;
 
+
     @Column(name = "supplier_id"/*, updatable = false*/)
     //  @Enumerated(EnumType.STRING)
     //  private Supplier supplier;
@@ -178,6 +179,11 @@ public class Document extends BaseEntity implements Serializable {
     @BatchSize(size = 100)
     @OrderBy("nameRus")
     private List<NciDocumentType> nciDocumentTypes;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "phase_id")
+    private NciPhase phase;
 
 
     ////=========================================== Contract
