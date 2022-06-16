@@ -21,6 +21,6 @@ public class Specification extends Document {
     @Column(name = "lot")
     private String lot;
 
-    @OneToMany(mappedBy = "specification")
-    private List<Document> documents;
+/*    @OneToMany(mappedBy = "specification")
+    private List<Document> documents;*/
 }

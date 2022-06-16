@@ -17,7 +17,6 @@ import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
 
-import javax.print.Doc;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -104,9 +103,9 @@ public class DocumentController {
                 .map(NciDocumentType.NciDocumentTypeEnum::name).toList();
     }
 
-    @GetMapping("/contractors")
-    public List<String> getContractors() {
-        return Stream.of(NciContractor.values()).map(NciContractor::name).toList();
+    @GetMapping("/customers")
+    public List<String> getCustomers() {
+        return Stream.of(NciCustomer.values()).map(NciCustomer::name).toList();
     }
 
     @GetMapping("/statuses")
@@ -126,10 +125,10 @@ public class DocumentController {
         return map;
     }
 
-    @GetMapping("/contractorsWithTranslate")
-    public Map<NciContractor, String> getContractorsWithTranslate() {
-        Map<NciContractor, String> map = new EnumMap<>(NciContractor.class);
-        Arrays.asList(NciContractor.values()).forEach(value -> map.put(value, value.getTranslate()));
+    @GetMapping("/customersWithTranslate")
+    public Map<NciCustomer, String> getCustomersWithTranslate() {
+        Map<NciCustomer, String> map = new EnumMap<>(NciCustomer.class);
+        Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
     }
 }

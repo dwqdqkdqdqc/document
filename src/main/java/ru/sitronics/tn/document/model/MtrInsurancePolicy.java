@@ -18,16 +18,10 @@ import java.time.LocalDate;
 @DiscriminatorValue("MTR_INSURANCE_POLICY")
 public class MtrInsurancePolicy extends Document{
 
-    @Column(name = "sum_no_vat")
-    private BigDecimal sumNoVat;
-    @Column(name = "sum_vat")
-    private BigDecimal sumVat;
-    @Column(name = "total_including_vat")
-    private BigDecimal totalIncludingVat;
-    @Column(name = "commencement_date")
-    private LocalDate commencementDate;
-    @Column(name = "expiration_date")
-    private LocalDate expirationDate;
+    @Column(name = "starting_date")
+    private LocalDate startingDate;
+    @Column(name = "end_date")
+    private LocalDate endDate;
     @Column(name = "number_policy")
     private String numberPolicy;
     @Column(name = "data_policy")

@@ -7,71 +7,90 @@ DROP TABLE IF EXISTS type_relation;
 DROP TABLE IF EXISTS documents_relating_documents;
 DROP TABLE IF EXISTS document_history_bpm;
 DROP TABLE IF EXISTS contracts;
-DROP TABLE IF EXISTS nci_construction_objects;
-DROP TABLE IF EXISTS documents_construction_objects;
+DROP TABLE IF EXISTS nci_objects;
+DROP TABLE IF EXISTS documents_objects;
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_pids;
 DROP TABLE IF EXISTS nci_factory_numbers;
 DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
-DROP TABLE IF EXISTS nci_contractors;
+DROP TABLE IF EXISTS nci_customers;
 DROP TABLE IF EXISTS nci_document_types;
 DROP TABLE IF EXISTS nci_mtr_groups;
 DROP TABLE IF EXISTS nci_mtrs;
 DROP TABLE IF EXISTS nci_phases;
+DROP TABLE IF EXISTS nci_class_contracts;
+DROP TABLE IF EXISTS nci_standard_forms;
+DROP TABLE IF EXISTS nci_termination_codes;
 
 
 CREATE TABLE documents
-(                                                          --Base fields
-    id                           VARCHAR PRIMARY KEY NOT NULL,
-    type_id                      VARCHAR             NULL,
-    d_type                       VARCHAR             NULL,
-    serial_number                BIGINT              NULL,
-    date_of_creation             TIMESTAMP DEFAULT now(),
-    date_of_creation_short       TIMESTAMP DEFAULT now(),
-    author_id                    VARCHAR             NULL,
-    content                      bytea               NULL,
-    status                       VARCHAR             NULL,
-    access                       VARCHAR             NULL,
-    comment                      VARCHAR             NULL,
-    contract_id                  VARCHAR             NULL,
-    specification_id             VARCHAR             NULL,
-    nci_construction_object_id   VARCHAR             NULL,
-    factory_number               VARCHAR             NULL,
-    barcode                      VARCHAR             NULL,
-    lkk_document_number          VARCHAR             NULL,
-    lus_document_number          VARCHAR             NULL,
-    customer_id                  VARCHAR             NULL,
-    supplier_id                  VARCHAR             NULL,
-    amount                       numeric   default 0 NULL,
+(                                                                   --Base fields
+    id                                    VARCHAR PRIMARY KEY NOT NULL,
+    type_id                               VARCHAR             NULL,
+    d_type                                VARCHAR             NULL,
+    serial_number                         BIGINT              NULL,
+    date_of_creation                      TIMESTAMP DEFAULT now(),
+    date_of_creation_short                TIMESTAMP DEFAULT now(),
+    author_id                             VARCHAR             NULL,
+    content                               bytea               NULL,
+    status                                VARCHAR             NULL,
+    access                                VARCHAR             NULL,
+    comment                               VARCHAR             NULL,
+    mtr_supply_contract_id                VARCHAR             NULL,
+    specification_id                      VARCHAR             NULL,
+    nci_object_kis_up                     VARCHAR             NULL,
+    factory_number                        VARCHAR             NULL,
+    barcode                               VARCHAR             NULL,
+    lkk_document_number                   VARCHAR             NULL,
+    lkk_document_date                     TIMESTAMP           NULL,
+
+    lus_document_number                   VARCHAR             NULL,
+    customer_id                           VARCHAR             NULL,
+    supplier_id                           VARCHAR             NULL,
+    amount                                numeric   default 0 NULL,
 
 --Fields of other classes
-    lot                          VARCHAR             NULL, --Specification
-    date_of_signing              TIMESTAMP           NULL, --contract
-    document_registration_number VARCHAR             NULL, --contract
-    nci_ost_id                   VARCHAR             NULL, --contract
-    contract_subject             VARCHAR             NULL, --contract
-    reg_number                   VARCHAR             NULL, --contract
-    inn                          VARCHAR             NULL, --contract
-    contractor_id                VARCHAR             NULL, --contract
-    contract_class               VARCHAR             NULL, --contract
-    typical_form                 VARCHAR             NULL, --contract
-    contract_view                VARCHAR             NULL, --contract
-    frame_contract               VARCHAR             NULL, --contract
-    sum_no_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
-    sum_vat                      numeric   default 0 NULL, --MtrInsurancePolicy
-    total_including_vat          numeric   default 0 NULL, --MtrInsurancePolicy
-    commencement_date            TIMESTAMP           null, --MtrInsurancePolicy
-    expiration_date              TIMESTAMP           null, --MtrInsurancePolicy
-    number_policy                VARCHAR             NULL, --MtrInsurancePolicy
-    data_policy                  TIMESTAMP           null, --MtrInsurancePolicy
-    nci_mtr_group_id             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    nci_mtr_id                   VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    phase_number                 VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    nci_phase_id                 VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    plan_date                    TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
-    fact_date                    TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
-    verify_document              VARCHAR             NULL  --ProgressOfProductionForShipmentOfMtr
+    lot                                   VARCHAR             NULL, --Specification
+    additional_agreement_date             TIMESTAMP           NULL, --contract
+    additional_agreement_number           VARCHAR             NULL, --contract
+    additional_agreement_specification_id VARCHAR             NULL, --contract     ???
+    nci_class_contract_id                 VARCHAR             NULL, --contract
+    date_of_termination                   TIMESTAMP           NULL, --contract
+    date_of_signing                       TIMESTAMP           NULL, --contract
+    document_registration_number          VARCHAR             NULL, --contract
+    nci_ost_id                            VARCHAR             NULL, --contract
+    contract_subject                      VARCHAR             NULL, --contract
+    reg_number                            VARCHAR             NULL, --contract
+    inn                                   VARCHAR             NULL, --contract
+    contract_class                        VARCHAR             NULL, --contract
+    typical_form                          VARCHAR             NULL, --contract
+    contract_view                         VARCHAR             NULL, --contract
+    frame_contract                        VARCHAR             NULL, --contract
+    framework_agreement                   boolean             null, --contract
+    subject_of_the_contract               VARCHAR             NULL, --contract
+    nci_standard_form_id                  VARCHAR             NULL, --contract
+    status_zakupki                        VARCHAR             NULL, --contract
+    role                                  VARCHAR             NULL, --contract
+    organization_id                       VARCHAR             NULL, --contract
+    responsible_id                        VARCHAR             NULL, --contract
+    nci_termination_code_id               VARCHAR             NULL, --contract
+
+
+    sum_no_vat                            numeric   default 0 NULL, --MtrInsurancePolicy
+    sum_vat                               numeric   default 0 NULL, --MtrInsurancePolicy
+    total_including_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
+    starting_date                         TIMESTAMP           null, --MtrInsurancePolicy
+    end_date                              TIMESTAMP           null, --MtrInsurancePolicy
+    number_policy                         VARCHAR             NULL, --MtrInsurancePolicy
+    data_policy                           TIMESTAMP           null, --MtrInsurancePolicy
+    nci_mtr_group_id                      VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    nci_mtr_id                            VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    phase_number                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    nci_phase_id                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    plan_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
+    fact_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
+    verify_document                       VARCHAR             NULL  --ProgressOfProductionForShipmentOfMtr
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
 
@@ -127,18 +146,17 @@ CREATE TABLE document_history_bpm
     type_relation        varchar null
 );
 
-CREATE TABLE nci_construction_objects
+CREATE TABLE nci_objects
 (
-    id           VARCHAR NULL,
-    name         VARCHAR NULL,
-    address      VARCHAR NULL,
-    organization VARCHAR NULL
+    id        VARCHAR NULL,
+    kis_up    VARCHAR NULL, --Код объекта КИС УП
+    kis_up_id integer NULL  --Уникальный идентификатор ID КИС УП
 );
 
-CREATE TABLE documents_construction_objects
+CREATE TABLE documents_objects
 (
-    document_id            VARCHAR NULL,
-    construction_object_id VARCHAR NULL
+    document_id   VARCHAR NULL,
+    object_kis_up VARCHAR NULL
 );
 --CREATE UNIQUE INDEX document_id_construction_object_id_idx ON documents_construction_objects (document_id, construction_object_id);
 
@@ -177,7 +195,7 @@ CREATE TABLE documents_attachments
     attachment_id VARCHAR NULL
 );
 
-CREATE TABLE nci_contractors
+CREATE TABLE nci_customers
 (
     name                 VARCHAR NULL,
     name_rus             VARCHAR NULL,
@@ -186,7 +204,7 @@ CREATE TABLE nci_contractors
     inn                  VARCHAR NULL,
     ogrn_ogrni           VARCHAR NULL,
     registration_address VARCHAR NULL,
-    contractor_manager   VARCHAR NULL
+    customer_manager     VARCHAR NULL
 );
 
 CREATE TABLE nci_document_types
@@ -215,4 +233,25 @@ CREATE TABLE nci_phases
     id       VARCHAR NOT NULL,
     name     VARCHAR NOT NULL,
     name_rus VARCHAR NULL
+);
+
+CREATE TABLE nci_class_contracts
+(
+    id        VARCHAR NULL,
+    class_agr VARCHAR NULL, --Наименование Объекта строительства
+    code      VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE nci_standard_forms
+(
+    id                VARCHAR NULL,
+    nci_standard_form VARCHAR NULL, --Наименование - Типовая форма
+    internal_id       integer NULL  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE nci_termination_codes
+(
+    id                VARCHAR NULL,
+    cancellation_code VARCHAR NULL, --Наименование – Код расторжения
+    internal_id       VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
 );

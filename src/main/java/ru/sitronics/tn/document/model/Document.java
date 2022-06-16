@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -99,10 +100,10 @@ public class Document extends BaseEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY/*, optional = false*/) //рабозбрать, почему именно тут не работает eager
     @JoinColumn(/*nullable = false*/)
-    private Contract contract;
+    private MtrSupplyContract mtrSupplyContract;
 
-    @ManyToOne
-    private Specification  specification;
+    @OneToOne
+    private Specification specification;
 
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -122,13 +123,13 @@ public class Document extends BaseEntity implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     // @JsonManagedReference
     @BatchSize(size = 100)
-    @JoinTable(name = "documents_construction_objects",
+    @JoinTable(name = "documents_objects",
             joinColumns = @JoinColumn(name = "document_id"/*, nullable = false, updatable = false*/),
-            inverseJoinColumns = @JoinColumn(name = "construction_object_id"/*, nullable = false, updatable = false*/),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "construction_object_id"}, name = "documents_construction_objects_uc")}
+            inverseJoinColumns = @JoinColumn(name = "object_kis_up"/*, nullable = false, updatable = false*/),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "object_kis_up"}, name = "documents_construction_objects_uc")}
     )
-    @OrderBy("name")
-    private List<NciConstructionObject> nciConstructionObjects;
+    @OrderBy("kisUp")
+    private List<NciObject> nciObjects;
 
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -145,6 +146,9 @@ public class Document extends BaseEntity implements Serializable {
 
     @Column(name = "lkk_document_number")
     private String lkkDocumentNumber;
+
+    @Column(name = "lkk_document_date")
+    private LocalDate lkkDocumentDate;
 
     @Column(name = "lus_document_number")
     private String lusDocumentNumber;
@@ -181,10 +185,71 @@ public class Document extends BaseEntity implements Serializable {
 
 
     ////=========================================== Contract
-    //  @NotNull
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "date_of_signing"/*, updatable = false*/)
-    private LocalDateTime dateOfSigning;
+    @Column(name = "additional_agreement_date"/*, updatable = false*/)
+    private LocalDate additionalAgreementDate;
+
+    @Column(name = "additional_agreement_number"/*, updatable = false*/)
+    private String additionalAgreementNumber;
+
+/*    @OneToOne
+    @JsonBackReference(value = "id")
+    @JoinColumn(name = "id")
+    private MtrSupplyContract additionalAgreementSpecification;*/  //////////
+
+    @OneToOne
+    @JoinColumn(/*updatable = false*/)
+    private NciClassContract nciClassContract;
+
+    @Column(name = "starting_date")
+    private LocalDate startingDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    @Column(name = "date_of_termination")
+    private LocalDate dateOfTermination;
+
+    @OneToOne
+    @JoinColumn(/* updatable = false*/)
+    private NciStandardForm nciStandardForm;
+
+    @Column(name = "framework_agreement"/*, updatable = false*/)
+    private Boolean frameworkAgreement;
+
+    @Column(name = "subject_of_the_contract"/*, updatable = false*/)
+    private String subjectOfTheContract;
+
+    @OneToOne
+    @JoinColumn(/*updatable = false*/)
+    private NciTerminationCode nciTerminationCode;
+
+    @Column(name = "sum_no_vat"/*, updatable = false*/)
+    private BigDecimal sumNoVat;
+
+    @Column(name = "sum_vat"/*, updatable = false*/)
+    private BigDecimal sumVat;
+
+    @Column(name = "total_including_vat"/*, updatable = false*/)
+    private BigDecimal totalIncludingVat;
+
+    @Column(name = "status_zakupki")
+    private String statusZakupki;
+
+    @OneToOne
+    @JoinColumn
+    private NciOst organization;
+
+    @Column(name = "role")
+    private String role;
+
+    @OneToOne
+    @JoinColumn
+    private NciUser responsible;
+
+
+
 
     // @NotNull
     @Column(name = "document_registration_number"/*, updatable = false*/)
@@ -203,9 +268,6 @@ public class Document extends BaseEntity implements Serializable {
 
     @Column(name = "inn")
     private String inn;
-
-    @Column(name = "contractor_id")
-    private String contractor;
 
     @Column(name = "contract_class")
     private String contractClass;
