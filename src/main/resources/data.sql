@@ -227,6 +227,80 @@ VALUES ('123e4567-e89b-12d3-a456-710000000000', 'cancellation_code_1',  '1'),
        ('123e4567-e89b-12d3-a456-740000000000', 'cancellation_code_4',  '4'),
        ('123e4567-e89b-12d3-a456-750000000000', 'cancellation_code_5',  '5');
 
+INSERT INTO nci_countries (id, country_name, internal_id)
+VALUES ('123e4567-e89b-12d3-a456-000000001000', 'Абхазия', 1),
+       ('123e4567-e89b-12d3-a456-000000002000', 'Австралия', 2),
+       ('123e4567-e89b-12d3-a456-000000003000', 'Бангладеш', 3),
+       ('123e4567-e89b-12d3-a456-000000004000', 'Беларусь', 4),
+       ('123e4567-e89b-12d3-a456-000000005000', 'Вьетнам', 5);
+
+INSERT INTO nci_types_of_transport (id, type_of_transport, internal_id)
+VALUES ('123e4567-e89b-12d3-a456-000000010000', 'автомобильная грузоперевозка', 1),
+       ('123e4567-e89b-12d3-a456-000000020000', 'железнодорожная грузоперевозка', 2),
+       ('123e4567-e89b-12d3-a456-000000030000', 'морская грузоперевозка', 3),
+       ('123e4567-e89b-12d3-a456-000000040000', 'авиаперевозка', 4);
+
+INSERT INTO nci_units_of_measurement (id, name, internal_id)
+VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
+       ('123e4567-e89b-12d3-a456-000000200000', 'т', 2),
+       ('123e4567-e89b-12d3-a456-000000300000', 'мм', 3),
+       ('123e4567-e89b-12d3-a456-000000400000', 'см', 4),
+       ('123e4567-e89b-12d3-a456-000000500000', 'м', 5),
+       ('123e4567-e89b-12d3-a456-000000600000', 'км', 6),
+       ('123e4567-e89b-12d3-a456-000000700000', 'шт', 7);
+
+INSERT INTO nci_mtrs (id, name, internal_id, control_prod)
+VALUES ('123e4567-e89b-12d3-a456-310000000000', 'гайка', 1, TRUE),
+       ('123e4567-e89b-12d3-a456-320000000000', 'болт', 2, TRUE),
+       ('123e4567-e89b-12d3-a456-330000000000', 'шайба', 3, TRUE),
+       ('123e4567-e89b-12d3-a456-340000000000', 'шайба пружинная', 4, TRUE),
+       ('123e4567-e89b-12d3-a456-350000000000', 'винт', 5, TRUE);
+
+INSERT INTO nci_consignees (id, bukrs, external_consignee_id, first_consignee_name, second_consignee_name,
+                            third_consignee_name, fourth_consignee_name, inn, kpp, okpo, first_railway_code,
+                            first_freight_yard, first_station_code, first_customer_code, second_railway_code,
+                            second_station_code, second_freight_yard, second_customer_code, third_railway_code, third_station_code, third_customer_code, fourth_railway_code, fourth_station_code, fourth_customer_code, fifth_railway_code, fifth_station_code, fifth_customer_code, first_post_code, first_country, first_region, first_city, first_street, first_street_suppl, first_house_number, first_house_number_suppl, second_post_code, second_country, second_region, second_city, second_street, second_street_suppl, second_house_number, second_house_number_suppl, sixth_railway_code, sixth_station_code, sixth_customer_code, department, function, last_name, first_name, tel_number, tel_extension, fax_number, fax_extension, fourth_country, fourth_region, fourth_district, fourth_city)
+VALUES ('123e4567-e89b-12d3-a456-000000100000', 'БЕ', 'Внешний номер грузополучателя', 'имя 1', 'имя 2',
+        'имя 3','имя 4', '6449013711', '644901001', '2308771683', '01',
+        'Грузовой двор', '935741', '12345', '02',
+        '155656', 'Грузовой двор', '123455', '03', '8563885',
+        '954295', '04', '97422', '6548756',
+        '05', '6548676', '664265', '111257', 'Россия',
+        'МО', 'Москва', 'Садовая', 'примечание к улице', '21', 'дополнение к номеру дома',
+        '000001', 'Россия', 'Приморский край', 'Владивосток', 'Амурска', 'дополнение к улице',
+        '6', 'дополнение к номеру дома', '06', '6468465',
+        '655465', 'Департамент', 'Должность', 'Иванов', 'Иван', '+78000000000', '243',
+        '+78000000000', '001', 'RU', 'МО', 'район', 'Москва');
+
+INSERT INTO documents (id, type_id, d_type, serial_number,
+                       contract_id, dop_contract_id, contractor_id,
+                       author_id, construction_object_id, supplier_id,
+                       customer_id, nci_ost_id, status, access,
+                       lot, sum_no_vat, sum_vat, total_including_vat, contract_status,
+                       nci_consignee_id, shipping_details, barcode, lkk_document_number, lus_document_number, comment)
+VALUES ('123e4567-e89b-12d3-a456-555000000000', 'Спецификация',  'SPECIFICATION', 0001,
+        '123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-100000000000', 'Contractor_1',
+        '123e4567-e89b-12d3-a456-010000000000', '123e4567-e89b-12d3-a456-000001000000', 'Организация_2',
+        '123e4567-e89b-12d3-a456-030000000000', '123e4567-e89b-12d3-a456-000000001000', 'DRAFT', 'WITHOUT_A_FINGERBOARD',
+        123456789, 1676265.55, 1255.4, 1675010.15, 'contract status',
+        '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');
+
+INSERT INTO specification_table_entities (id, pid, position_number, delivery_method, position_code, nci_mtr_id,
+                                          gost_ost_tu, code, nci_unit_of_measurement_id, quantity, price_no_vat,
+                                          sum_no_vat, vat, sum_vat, amount_with_vat, contractor_id, nci_country_id,
+                                          delivery_date, nci_type_of_transport_id, belonging_to_the_dsi,
+                                          note, specification_id)
+VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, '123e4567-e89b-12d3-a456-310000000000',
+        'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
+        2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000003000',
+        '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000040000', 'some information about belonging to the dsi',
+        'some note', '123e4567-e89b-12d3-a456-555000000000'),
+       ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, '123e4567-e89b-12d3-a456-320000000000',
+        'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
+        2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000005000',
+        '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000030000', 'some information about belonging to the dsi',
+        'some note', '123e4567-e89b-12d3-a456-555000000000');
+
 -- select * from documents;
 -- select * from nci_users;
 
