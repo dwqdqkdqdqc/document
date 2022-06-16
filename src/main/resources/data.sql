@@ -2,7 +2,11 @@
 DELETE
 FROM documents;
 DELETE
+<<<<<<< HEAD
 FROM nci_users;
+=======
+FROM users;
+>>>>>>> dev
 DELETE
 FROM documents_curators;
 DELETE
@@ -12,9 +16,15 @@ FROM documents_relating_documents;
 DELETE
 FROM document_history_bpm;
 DELETE
+<<<<<<< HEAD
 FROM nci_objects;
 DELETE
 FROM documents_objects;
+=======
+FROM construction_objects;
+DELETE
+FROM documents_construction_objects;
+>>>>>>> dev
 DELETE
 FROM nci_osts;
 DELETE
