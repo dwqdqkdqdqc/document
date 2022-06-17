@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "nci_mtrs")
-public class NciMTR extends BaseEntity {
+public class NciMtr extends BaseEntity {
 
     @Column(name = "name")
     private String name;

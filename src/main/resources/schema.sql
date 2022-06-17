@@ -22,6 +22,11 @@ DROP TABLE IF EXISTS nci_phases;
 DROP TABLE IF EXISTS nci_class_contracts;
 DROP TABLE IF EXISTS nci_standard_forms;
 DROP TABLE IF EXISTS nci_termination_codes;
+DROP TABLE IF EXISTS nci_units_of_measurement;
+DROP TABLE IF EXISTS nci_countries;
+DROP TABLE IF EXISTS nci_types_of_transport;
+DROP TABLE IF EXISTS nci_consignees;
+DROP TABLE IF EXISTS specification_table_entities;
 
 
 CREATE TABLE documents
@@ -37,7 +42,7 @@ CREATE TABLE documents
     status                                VARCHAR             NULL,
     access                                VARCHAR             NULL,
     comment                               VARCHAR             NULL,
-    mtr_supply_contract_id                VARCHAR             NULL,
+    contract_id                           VARCHAR             NULL,
     specification_id                      VARCHAR             NULL,
     nci_object_kis_up                     VARCHAR             NULL,
     factory_number                        VARCHAR             NULL,
@@ -75,8 +80,6 @@ CREATE TABLE documents
     organization_id                       VARCHAR             NULL, --contract
     responsible_id                        VARCHAR             NULL, --contract
     nci_termination_code_id               VARCHAR             NULL, --contract
-
-
     sum_no_vat                            numeric   default 0 NULL, --MtrInsurancePolicy
     sum_vat                               numeric   default 0 NULL, --MtrInsurancePolicy
     total_including_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
@@ -90,7 +93,12 @@ CREATE TABLE documents
     nci_phase_id                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     plan_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     fact_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
-    verify_document                       VARCHAR             NULL  --ProgressOfProductionForShipmentOfMtr
+    verify_document                       VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    dop_contract_id                       VARCHAR             NULL,
+    nci_object_id                         VARCHAR             NULL,
+    contract_status                       VARCHAR             NULL,
+    nci_consignee_id                      VARCHAR             NULL,
+    shipping_details                      integer             null  --какой тип? уточнить
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
 
@@ -221,13 +229,6 @@ CREATE TABLE nci_mtr_groups
     name_rus VARCHAR NULL
 );
 
-CREATE TABLE nci_mtrs
-(
-    id       VARCHAR NOT NULL,
-    name     VARCHAR NOT NULL,
-    name_rus VARCHAR NULL
-);
-
 CREATE TABLE nci_phases
 (
     id       VARCHAR NOT NULL,
@@ -258,28 +259,18 @@ CREATE TABLE nci_termination_codes
 
 
 
-
-
-
-
-
-
-
-
-
-
 CREATE TABLE nci_units_of_measurement
 (
-    id            VARCHAR      NOT NULL,
-    name          VARCHAR(150) NULL,
-    internal_id   integer      NULL
+    id          VARCHAR      NOT NULL,
+    name        VARCHAR(150) NULL,
+    internal_id integer      NULL
 );
 
 CREATE TABLE nci_countries
 (
-    id            VARCHAR      NOT NULL,
-    country_name  VARCHAR(150) NULL,
-    internal_id   integer      NULL
+    id           VARCHAR      NOT NULL,
+    country_name VARCHAR(150) NULL,
+    internal_id  integer      NULL
 );
 
 CREATE TABLE nci_types_of_transport
@@ -291,96 +282,96 @@ CREATE TABLE nci_types_of_transport
 
 CREATE TABLE nci_mtrs
 (
-    id                      VARCHAR      NULL,
-    name                    VARCHAR      NULL,
-    internal_id             integer      NULL,
-    control_prod            BOOLEAN      DEFAULT FALSE
+    id           VARCHAR NULL,
+    name         VARCHAR NULL,
+    internal_id  integer NULL,
+    control_prod BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE nci_consignees
 (
-    id                          VARCHAR      NOT NULL,
-    bukrs                       VARCHAR      NULL,
-    external_consignee_id       VARCHAR      NULL,
-    first_consignee_name        VARCHAR      NULL,
-    second_consignee_name       VARCHAR      NULL,
-    third_consignee_name        VARCHAR      NULL,
-    fourth_consignee_name       VARCHAR      NULL,
-    inn                         VARCHAR      NULL,
-    kpp                         VARCHAR      NULL,
-    okpo                        VARCHAR      NULL,
-    first_railway_code          VARCHAR      NULL,
-    first_freight_yard          VARCHAR      NULL,
-    first_station_code          VARCHAR      NULL,
-    first_customer_code         VARCHAR      NULL,
-    second_railway_code         VARCHAR      NULL,
-    second_station_code         VARCHAR      NULL,
-    second_freight_yard         VARCHAR      NULL,
-    second_customer_code        VARCHAR      NULL,
-    third_railway_code          VARCHAR      NULL,
-    third_station_code          VARCHAR      NULL,
-    third_customer_code         VARCHAR      NULL,
-    fourth_railway_code         VARCHAR      NULL,
-    fourth_station_code         VARCHAR      NULL,
-    fourth_customer_code        VARCHAR      NULL,
-    fifth_railway_code          VARCHAR      NULL,
-    fifth_station_code          VARCHAR      NULL,
-    fifth_customer_code         VARCHAR      NULL,
-    first_post_code             VARCHAR      NULL,
-    first_country               VARCHAR      NULL,
-    first_region                VARCHAR      NULL,
-    first_city                  VARCHAR      NULL,
-    first_street                VARCHAR      NULL,
-    first_street_suppl          VARCHAR      NULL,
-    first_house_number          VARCHAR      NULL,
-    first_house_number_suppl    VARCHAR      NULL,
-    second_post_code            VARCHAR      NULL,
-    second_country              VARCHAR      NULL,
-    second_region               VARCHAR      NULL,
-    second_city                 VARCHAR      NULL,
-    second_street               VARCHAR      NULL,
-    second_street_suppl         VARCHAR      NULL,
-    second_house_number         VARCHAR      NULL,
-    second_house_number_suppl   VARCHAR      NULL,
-    sixth_railway_code          VARCHAR      NULL,
-    sixth_station_code          VARCHAR      NULL,
-    sixth_customer_code         VARCHAR      NULL,
-    department                  VARCHAR      NULL,
-    function                    VARCHAR      NULL,
-    last_name                   VARCHAR      NULL,
-    first_name                  VARCHAR      NULL,
-    tel_number                  VARCHAR      NULL,
-    tel_extension               VARCHAR      NULL,
-    fax_number                  VARCHAR      NULL,
-    fax_extension               VARCHAR      NULL,
-    fourth_country              VARCHAR      NULL,
-    fourth_region               VARCHAR      NULL,
-    fourth_district             VARCHAR      NULL,
-    fourth_city                 VARCHAR      NULL
+    id                        VARCHAR NOT NULL,
+    bukrs                     VARCHAR NULL,
+    external_consignee_id     VARCHAR NULL,
+    first_consignee_name      VARCHAR NULL,
+    second_consignee_name     VARCHAR NULL,
+    third_consignee_name      VARCHAR NULL,
+    fourth_consignee_name     VARCHAR NULL,
+    inn                       VARCHAR NULL,
+    kpp                       VARCHAR NULL,
+    okpo                      VARCHAR NULL,
+    first_railway_code        VARCHAR NULL,
+    first_freight_yard        VARCHAR NULL,
+    first_station_code        VARCHAR NULL,
+    first_customer_code       VARCHAR NULL,
+    second_railway_code       VARCHAR NULL,
+    second_station_code       VARCHAR NULL,
+    second_freight_yard       VARCHAR NULL,
+    second_customer_code      VARCHAR NULL,
+    third_railway_code        VARCHAR NULL,
+    third_station_code        VARCHAR NULL,
+    third_customer_code       VARCHAR NULL,
+    fourth_railway_code       VARCHAR NULL,
+    fourth_station_code       VARCHAR NULL,
+    fourth_customer_code      VARCHAR NULL,
+    fifth_railway_code        VARCHAR NULL,
+    fifth_station_code        VARCHAR NULL,
+    fifth_customer_code       VARCHAR NULL,
+    first_post_code           VARCHAR NULL,
+    first_country             VARCHAR NULL,
+    first_region              VARCHAR NULL,
+    first_city                VARCHAR NULL,
+    first_street              VARCHAR NULL,
+    first_street_suppl        VARCHAR NULL,
+    first_house_number        VARCHAR NULL,
+    first_house_number_suppl  VARCHAR NULL,
+    second_post_code          VARCHAR NULL,
+    second_country            VARCHAR NULL,
+    second_region             VARCHAR NULL,
+    second_city               VARCHAR NULL,
+    second_street             VARCHAR NULL,
+    second_street_suppl       VARCHAR NULL,
+    second_house_number       VARCHAR NULL,
+    second_house_number_suppl VARCHAR NULL,
+    sixth_railway_code        VARCHAR NULL,
+    sixth_station_code        VARCHAR NULL,
+    sixth_customer_code       VARCHAR NULL,
+    department                VARCHAR NULL,
+    function                  VARCHAR NULL,
+    last_name                 VARCHAR NULL,
+    first_name                VARCHAR NULL,
+    tel_number                VARCHAR NULL,
+    tel_extension             VARCHAR NULL,
+    fax_number                VARCHAR NULL,
+    fax_extension             VARCHAR NULL,
+    fourth_country            VARCHAR NULL,
+    fourth_region             VARCHAR NULL,
+    fourth_district           VARCHAR NULL,
+    fourth_city               VARCHAR NULL
 );
 
 CREATE TABLE specification_table_entities
 (
-    id                          VARCHAR PRIMARY KEY     NOT NULL,
-    pid                         VARCHAR                 NULL,
-    position_number             BIGINT                  NULL,
-    delivery_method             BOOLEAN DEFAULT FALSE,
-    position_code               BIGINT                  NULL,
-    nci_mtr_id                  VARCHAR                 NULL,
-    gost_ost_tu                 VARCHAR                 NULL,
-    code                        VARCHAR                 NULL,
-    nci_unit_of_measurement_id  VARCHAR                 NULL,
-    quantity                    BIGINT                  NULL,
-    price_no_vat                NUMERIC DEFAULT 0       NULL,
-    sum_no_vat                  NUMERIC DEFAULT 0       NULL,
-    vat                         NUMERIC DEFAULT 0       NULL,
-    sum_vat                     NUMERIC DEFAULT 0       NULL,
-    amount_with_vat             NUMERIC DEFAULT 0       NULL,
-    contractor_id               VARCHAR                 NULL,
-    nci_country_id              VARCHAR                 NULL,
-    delivery_date               TIMESTAMP               NULL,
-    nci_type_of_transport_id    VARCHAR                 NULL,
-    belonging_to_the_dsi        VARCHAR                 NULL,
-    specification_id            VARCHAR                 NULL,
-    note                        VARCHAR                 NULL
+    id                         VARCHAR PRIMARY KEY NOT NULL,
+    pid                        VARCHAR             NULL,
+    position_number            BIGINT              NULL,
+    delivery_method            BOOLEAN DEFAULT FALSE,
+    position_code              BIGINT              NULL,
+    nci_mtr_id                 VARCHAR             NULL,
+    gost_ost_tu                VARCHAR             NULL,
+    code                       VARCHAR             NULL,
+    nci_unit_of_measurement_id VARCHAR             NULL,
+    quantity                   BIGINT              NULL,
+    price_no_vat               NUMERIC DEFAULT 0   NULL,
+    sum_no_vat                 NUMERIC DEFAULT 0   NULL,
+    vat                        NUMERIC DEFAULT 0   NULL,
+    sum_vat                    NUMERIC DEFAULT 0   NULL,
+    amount_with_vat            NUMERIC DEFAULT 0   NULL,
+    contractor_id              VARCHAR             NULL,
+    nci_country_id             VARCHAR             NULL,
+    delivery_date              TIMESTAMP           NULL,
+    nci_type_of_transport_id   VARCHAR             NULL,
+    belonging_to_the_dsi       VARCHAR             NULL,
+    specification_id           VARCHAR             NULL,
+    note                       VARCHAR             NULL
 )

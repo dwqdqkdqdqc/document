@@ -34,7 +34,7 @@ public class SpecificationTableEntity extends BaseEntity implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "nci_mtr_id")
-    private NciMTR nciMTR;
+    private NciMtr nciMTR;
 
     @Column(name = "gost_ost_tu")
     private String gostOstTu;

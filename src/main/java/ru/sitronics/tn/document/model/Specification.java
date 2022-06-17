@@ -26,21 +26,21 @@ public class Specification extends Document {
     @Column(name = "lot")
     private String lot;
 
-    @Column(name = "sum_no_vat")
+  /*  @Column(name = "sum_no_vat")
     private BigDecimal totalSumNoVat;
 
     @Column(name = "sum_vat")
     private BigDecimal totalVat;
 
     @Column(name = "total_including_vat")
-    private BigDecimal totalSumVat;
+    private BigDecimal totalSumVat;*/
 
     @Column(name = "contract_status")
     private String contractStatus;
 
-    @OneToMany(mappedBy = "specification")
+/*    @OneToMany(mappedBy = "specification")
     @JsonIgnore
-    private List<Document> documents;
+    private List<Document> documents;*/
 
     @OneToMany(mappedBy = "specification")
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -50,7 +50,7 @@ public class Specification extends Document {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dop_contract_id")
-    private Contract dopContract;
+    private MtrSupplyContract dopContract;
 
     @ManyToOne
     @JoinColumn(name = "nci_consignee_id")

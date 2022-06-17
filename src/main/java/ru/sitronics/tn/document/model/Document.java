@@ -100,7 +100,7 @@ public class Document extends BaseEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY/*, optional = false*/) //рабозбрать, почему именно тут не работает eager
     @JoinColumn(/*nullable = false*/)
-    private MtrSupplyContract mtrSupplyContract;
+    private MtrSupplyContract contract;
 
     @OneToOne
     private Specification specification;
