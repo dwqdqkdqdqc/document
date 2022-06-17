@@ -14,9 +14,9 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "nci_mtr_groups")
-public class NciMtrGroup extends BaseEntity{
-    @Column(name = "name")
-    private String name;
-    @Column(name = "name_rus")
-    private String nameRus;
+public class NciMtrGroup extends BaseEntity {
+    @Column(name = "name_group")
+    private String nameGroup;
+    @Column(name = "internal_id")
+    private int internalId;
 }
