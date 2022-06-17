@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class InfoSupplierChain extends Document{
 
     @ManyToOne
-    private Contract contract;
+    private MtrSupplyContract contract;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing", updatable = false)

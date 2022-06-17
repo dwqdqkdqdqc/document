@@ -27,6 +27,8 @@ DROP TABLE IF EXISTS nci_countries;
 DROP TABLE IF EXISTS nci_types_of_transport;
 DROP TABLE IF EXISTS nci_consignees;
 DROP TABLE IF EXISTS specification_table_entities;
+DROP TABLE IF EXISTS nci_units_measurement;
+DROP TABLE IF EXISTS nsi_delivery_methods;
 
 
 CREATE TABLE documents
@@ -98,7 +100,9 @@ CREATE TABLE documents
     nci_object_id                         VARCHAR             NULL,
     contract_status                       VARCHAR             NULL,
     nci_consignee_id                      VARCHAR             NULL,
-    shipping_details                      integer             null  --какой тип? уточнить
+    shipping_details                      integer             null, --какой тип? уточнить
+    nci_units_measurement_id              VARCHAR             NULL,
+    nci_delivery_method_id                VARCHAR             NULL
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
 
@@ -224,9 +228,9 @@ CREATE TABLE nci_document_types
 
 CREATE TABLE nci_mtr_groups
 (
-    id       VARCHAR NOT NULL,
-    name     VARCHAR NOT NULL,
-    name_rus VARCHAR NULL
+    id          VARCHAR NOT NULL,
+    mtr_group   VARCHAR NOT NULL, --Код Группы МТР+ Наименование Группы МТР
+    internal_id Integer NULL
 );
 
 CREATE TABLE nci_phases
@@ -259,11 +263,11 @@ CREATE TABLE nci_termination_codes
 
 
 
-CREATE TABLE nci_units_of_measurement
+CREATE TABLE nci_units_measurement
 (
-    id          VARCHAR      NOT NULL,
-    name        VARCHAR(150) NULL,
-    internal_id integer      NULL
+    id          VARCHAR NOT NULL,
+    unit        VARCHAR NULL, --Наименование ЕИ по ОКЕИ
+    internal_id integer NULL  --Внутренний номер записи SAP MDM
 );
 
 CREATE TABLE nci_countries
@@ -374,4 +378,10 @@ CREATE TABLE specification_table_entities
     belonging_to_the_dsi       VARCHAR             NULL,
     specification_id           VARCHAR             NULL,
     note                       VARCHAR             NULL
+);
+
+CREATE TABLE nsi_delivery_methods
+(
+    delivery_method VARCHAR NULL, --Наименование – Способ доставки
+    internal_id     integer null  --Внутренний (технический) номер записи SAP MDM
 )

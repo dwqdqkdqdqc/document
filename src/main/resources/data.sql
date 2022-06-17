@@ -45,22 +45,22 @@ INSERT INTO documents (id, type_id, d_type, author_id, status, access, contract_
                        specification_id, customer_id, supplier_id, amount, date_of_signing,
                        document_registration_number, nci_ost_id, date_of_creation, serial_number)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPPLY_CONTRACT',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', null, null,
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', null, null,
         '123e4567-e89b-12d3-a456-300000000000', 'customer_1',
         'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1',
         '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00', '1'),
        ('123e4567-e89b-12d3-a456-800000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPPLY_CONTRACT',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', null, null,
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', null, null,
         '123e4567-e89b-12d3-a456-400000000000', 'customer_1',
         'customer_2', '1000.01', '2020-02-21 10:00:00', 'registration_number_1',
         '123e4567-e89b-12d3-a456-000000001000', '2020-02-21 10:00:00', '8'),
        ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', 'WAYBILL',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null,
         '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '3'),
        ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', 'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         'lot_1',
         '123e4567-e89b-12d3-a456-400000000000', 'customer_5',
         'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00', '2'),
@@ -69,15 +69,16 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPP
         null, 'lot_1', null, 'customer_7', 'customer_8', '2000',
         null, null, null, '2020-01-21 10:00:00', '4'),
        ('123e4567-e89b-12d3-a456-500000000000', 'QUALITY_DOCUMENTS', 'QUALITY_DOCUMENTS',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '5'),
        ('123e4567-e89b-12d3-a456-600000000000', 'MTR_INSURANCE_POLICY', 'MTR_INSURANCE_POLICY',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '7'),
-       ('123e4567-e89b-12d3-a456-700000000000', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
-        '123e4567-e89b-12d3-a456-010000000000', 'IN_WORK', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+       ('123e4567-e89b-12d3-a456-700000000000', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
+        'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
+        '123e4567-e89b-12d3-a456-010000000000', 'FORMED', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '6');
 
@@ -192,7 +193,7 @@ VALUES ('123e4567-e89b-12d3-a456-000000010000', 'автомобильная гр
        ('123e4567-e89b-12d3-a456-000000030000', 'морская грузоперевозка', 3),
        ('123e4567-e89b-12d3-a456-000000040000', 'авиаперевозка', 4);
 
-INSERT INTO nci_units_of_measurement (id, name, internal_id)
+INSERT INTO nci_units_measurement (id, unit, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
        ('123e4567-e89b-12d3-a456-000000200000', 'т', 2),
        ('123e4567-e89b-12d3-a456-000000300000', 'мм', 3),
@@ -202,12 +203,12 @@ VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
        ('123e4567-e89b-12d3-a456-000000700000', 'шт', 7);
 
 
-INSERT INTO nci_mtr_groups (id, name, name_rus)
-VALUES ('123e4567-e89b-12d3-a456-210000000000', 'mtr_group_1',  'мтр_группа_1'),
-       ('123e4567-e89b-12d3-a456-220000000000', 'mtr_group_2',  'мтр_группа_2'),
-       ('123e4567-e89b-12d3-a456-230000000000', 'mtr_group_3',  'мтр_группа_3'),
-       ('123e4567-e89b-12d3-a456-240000000000', 'mtr_group_4',  'мтр_группа_4'),
-       ('123e4567-e89b-12d3-a456-250000000000', 'mtr_group_5',  'мтр_группа_5');
+INSERT INTO nci_mtr_groups (id, mtr_group, internal_id)
+VALUES ('123e4567-e89b-12d3-a456-210000000000', 'mtr_group_1', '1'),
+       ('123e4567-e89b-12d3-a456-220000000000', 'mtr_group_2', '2'),
+       ('123e4567-e89b-12d3-a456-230000000000', 'mtr_group_3', '3'),
+       ('123e4567-e89b-12d3-a456-240000000000', 'mtr_group_4', '4'),
+       ('123e4567-e89b-12d3-a456-250000000000', 'mtr_group_5', '5');
 
 INSERT INTO nci_mtrs (id, name, internal_id, control_prod)
 VALUES ('123e4567-e89b-12d3-a456-310000000000', 'гайка', 1, TRUE),
@@ -215,71 +216,49 @@ VALUES ('123e4567-e89b-12d3-a456-310000000000', 'гайка', 1, TRUE),
        ('123e4567-e89b-12d3-a456-330000000000', 'шайба', 3, TRUE),
        ('123e4567-e89b-12d3-a456-340000000000', 'шайба пружинная', 4, TRUE),
        ('123e4567-e89b-12d3-a456-350000000000', 'винт', 5, TRUE);
-
 
 INSERT INTO nci_phases (id, name, name_rus)
-VALUES ('123e4567-e89b-12d3-a456-410000000000', 'phase_1',  'этап_1'),
-       ('123e4567-e89b-12d3-a456-420000000000', 'phase_2',  'этап_2'),
-       ('123e4567-e89b-12d3-a456-430000000000', 'phase_3',  'этап_3'),
-       ('123e4567-e89b-12d3-a456-440000000000', 'phase_4',  'этап_4'),
-       ('123e4567-e89b-12d3-a456-450000000000', 'phase_5',  'этап_5');
+VALUES ('123e4567-e89b-12d3-a456-410000000000', 'phase_1', 'этап_1'),
+       ('123e4567-e89b-12d3-a456-420000000000', 'phase_2', 'этап_2'),
+       ('123e4567-e89b-12d3-a456-430000000000', 'phase_3', 'этап_3'),
+       ('123e4567-e89b-12d3-a456-440000000000', 'phase_4', 'этап_4'),
+       ('123e4567-e89b-12d3-a456-450000000000', 'phase_5', 'этап_5');
 
 INSERT INTO nci_class_contracts (id, class_agr, code)
-VALUES ('123e4567-e89b-12d3-a456-510000000000', 'class_agr_1',  'code_1'),
-       ('123e4567-e89b-12d3-a456-520000000000', 'class_agr_2',  'code_2'),
-       ('123e4567-e89b-12d3-a456-530000000000', 'class_agr_3',  'code_3'),
-       ('123e4567-e89b-12d3-a456-540000000000', 'class_agr_4',  'code_4'),
-       ('123e4567-e89b-12d3-a456-550000000000', 'class_agr_5',  'code_5');
+VALUES ('123e4567-e89b-12d3-a456-510000000000', 'class_agr_1', 'code_1'),
+       ('123e4567-e89b-12d3-a456-520000000000', 'class_agr_2', 'code_2'),
+       ('123e4567-e89b-12d3-a456-530000000000', 'class_agr_3', 'code_3'),
+       ('123e4567-e89b-12d3-a456-540000000000', 'class_agr_4', 'code_4'),
+       ('123e4567-e89b-12d3-a456-550000000000', 'class_agr_5', 'code_5');
 
 INSERT INTO nci_standard_forms (id, nci_standard_form, internal_id)
-VALUES ('123e4567-e89b-12d3-a456-610000000000', 'standard_form_1',  '1'),
-       ('123e4567-e89b-12d3-a456-620000000000', 'standard_form_2',  '2'),
-       ('123e4567-e89b-12d3-a456-630000000000', 'standard_form_3',  '3'),
-       ('123e4567-e89b-12d3-a456-640000000000', 'standard_form_4',  '4'),
-       ('123e4567-e89b-12d3-a456-650000000000', 'standard_form_5',  '5');
+VALUES ('123e4567-e89b-12d3-a456-610000000000', 'standard_form_1', '1'),
+       ('123e4567-e89b-12d3-a456-620000000000', 'standard_form_2', '2'),
+       ('123e4567-e89b-12d3-a456-630000000000', 'standard_form_3', '3'),
+       ('123e4567-e89b-12d3-a456-640000000000', 'standard_form_4', '4'),
+       ('123e4567-e89b-12d3-a456-650000000000', 'standard_form_5', '5');
 
 INSERT INTO nci_termination_codes (id, cancellation_code, internal_id)
-VALUES ('123e4567-e89b-12d3-a456-710000000000', 'cancellation_code_1',  '1'),
-       ('123e4567-e89b-12d3-a456-720000000000', 'cancellation_code_2',  '2'),
-       ('123e4567-e89b-12d3-a456-730000000000', 'cancellation_code_3',  '3'),
-       ('123e4567-e89b-12d3-a456-740000000000', 'cancellation_code_4',  '4'),
-       ('123e4567-e89b-12d3-a456-750000000000', 'cancellation_code_5',  '5');
-
-INSERT INTO nci_countries (id, country_name, internal_id)
-VALUES ('123e4567-e89b-12d3-a456-000000001000', 'Абхазия', 1),
-       ('123e4567-e89b-12d3-a456-000000002000', 'Австралия', 2),
-       ('123e4567-e89b-12d3-a456-000000003000', 'Бангладеш', 3),
-       ('123e4567-e89b-12d3-a456-000000004000', 'Беларусь', 4),
-       ('123e4567-e89b-12d3-a456-000000005000', 'Вьетнам', 5);
-
-INSERT INTO nci_types_of_transport (id, type_of_transport, internal_id)
-VALUES ('123e4567-e89b-12d3-a456-000000010000', 'автомобильная грузоперевозка', 1),
-       ('123e4567-e89b-12d3-a456-000000020000', 'железнодорожная грузоперевозка', 2),
-       ('123e4567-e89b-12d3-a456-000000030000', 'морская грузоперевозка', 3),
-       ('123e4567-e89b-12d3-a456-000000040000', 'авиаперевозка', 4);
-
-INSERT INTO nci_units_of_measurement (id, name, internal_id)
-VALUES ('123e4567-e89b-12d3-a456-000000100000', 'кг', 1),
-       ('123e4567-e89b-12d3-a456-000000200000', 'т', 2),
-       ('123e4567-e89b-12d3-a456-000000300000', 'мм', 3),
-       ('123e4567-e89b-12d3-a456-000000400000', 'см', 4),
-       ('123e4567-e89b-12d3-a456-000000500000', 'м', 5),
-       ('123e4567-e89b-12d3-a456-000000600000', 'км', 6),
-       ('123e4567-e89b-12d3-a456-000000700000', 'шт', 7);
-
-INSERT INTO nci_mtrs (id, name, internal_id, control_prod)
-VALUES ('123e4567-e89b-12d3-a456-310000000000', 'гайка', 1, TRUE),
-       ('123e4567-e89b-12d3-a456-320000000000', 'болт', 2, TRUE),
-       ('123e4567-e89b-12d3-a456-330000000000', 'шайба', 3, TRUE),
-       ('123e4567-e89b-12d3-a456-340000000000', 'шайба пружинная', 4, TRUE),
-       ('123e4567-e89b-12d3-a456-350000000000', 'винт', 5, TRUE);
+VALUES ('123e4567-e89b-12d3-a456-710000000000', 'cancellation_code_1', '1'),
+       ('123e4567-e89b-12d3-a456-720000000000', 'cancellation_code_2', '2'),
+       ('123e4567-e89b-12d3-a456-730000000000', 'cancellation_code_3', '3'),
+       ('123e4567-e89b-12d3-a456-740000000000', 'cancellation_code_4', '4'),
+       ('123e4567-e89b-12d3-a456-750000000000', 'cancellation_code_5', '5');
 
 INSERT INTO nci_consignees (id, bukrs, external_consignee_id, first_consignee_name, second_consignee_name,
                             third_consignee_name, fourth_consignee_name, inn, kpp, okpo, first_railway_code,
                             first_freight_yard, first_station_code, first_customer_code, second_railway_code,
-                            second_station_code, second_freight_yard, second_customer_code, third_railway_code, third_station_code, third_customer_code, fourth_railway_code, fourth_station_code, fourth_customer_code, fifth_railway_code, fifth_station_code, fifth_customer_code, first_post_code, first_country, first_region, first_city, first_street, first_street_suppl, first_house_number, first_house_number_suppl, second_post_code, second_country, second_region, second_city, second_street, second_street_suppl, second_house_number, second_house_number_suppl, sixth_railway_code, sixth_station_code, sixth_customer_code, department, function, last_name, first_name, tel_number, tel_extension, fax_number, fax_extension, fourth_country, fourth_region, fourth_district, fourth_city)
+                            second_station_code, second_freight_yard, second_customer_code, third_railway_code,
+                            third_station_code, third_customer_code, fourth_railway_code, fourth_station_code,
+                            fourth_customer_code, fifth_railway_code, fifth_station_code, fifth_customer_code,
+                            first_post_code, first_country, first_region, first_city, first_street, first_street_suppl,
+                            first_house_number, first_house_number_suppl, second_post_code, second_country,
+                            second_region, second_city, second_street, second_street_suppl, second_house_number,
+                            second_house_number_suppl, sixth_railway_code, sixth_station_code, sixth_customer_code,
+                            department, function, last_name, first_name, tel_number, tel_extension, fax_number,
+                            fax_extension, fourth_country, fourth_region, fourth_district, fourth_city)
 VALUES ('123e4567-e89b-12d3-a456-000000100000', 'БЕ', 'Внешний номер грузополучателя', 'имя 1', 'имя 2',
-        'имя 3','имя 4', '6449013711', '644901001', '2308771683', '01',
+        'имя 3', 'имя 4', '6449013711', '644901001', '2308771683', '01',
         'Грузовой двор', '935741', '12345', '02',
         '155656', 'Грузовой двор', '123455', '03', '8563885',
         '954295', '04', '97422', '6548756',

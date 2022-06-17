@@ -13,10 +13,10 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_mtr_groups")
-public class NciMtrGroup extends BaseEntity {
-    @Column(name = "mtr_group")
-    private String mtrGroup;
+@Table(name = "nci_units_measurement")
+public class NciUnitsMeasurement extends BaseEntity {
+    @Column(name = "unit")
+    private String nameUnits;
     @Column(name = "internal_id")
-    private int internalId;
+    private Integer internalId;
 }

@@ -44,7 +44,7 @@ public class SpecificationTableEntity extends BaseEntity implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "nci_unit_of_measurement_id")
-    private NciUnitsOfMeasurement nciUnitsOfMeasurement;
+    private NciUnitsMeasurement nciUnitsOfMeasurement;
 
     @Column(name = "quantity")
     private Long quantity;
