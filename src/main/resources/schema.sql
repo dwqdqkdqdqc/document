@@ -387,7 +387,7 @@ CREATE TABLE nsi_delivery_methods
 );
 
 
-
+/*
 CREATE TABLE test_table_a
 (
     name   VARCHAR NULL,
@@ -400,10 +400,10 @@ CREATE TABLE test_table_b
 );
 
 INSERT INTO test_table_a (name, name_b)
-VALUES ('a_1',  'b_1'),
-       ('a_2',  'b_2'),
-       ('a_3',  'b_3'),
-       ('a_4',  'b_5');
+VALUES ('a_1', 'b_1'),
+       ('a_2', 'b_2'),
+       ('a_3', 'b_3'),
+       ('a_4', 'b_5');
 
 INSERT INTO test_table_b (name)
 VALUES ('b_1'),
@@ -413,3 +413,4 @@ VALUES ('b_1'),
 
 DROP TABLE IF EXISTS test_table_a;
 DROP TABLE IF EXISTS test_table_b;
+*/
