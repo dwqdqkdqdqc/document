@@ -20,8 +20,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.DocumentDto;
+import ru.sitronics.tn.document.dto.DocumentPageDto;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.repository.DocumentRepository;
+import ru.sitronics.tn.document.util.ObjectUtils;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
@@ -33,8 +36,8 @@ import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class DocumentService {
     @Autowired
     EntityManager manager;
@@ -68,6 +71,56 @@ public class DocumentService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+
+/*
+    @SuppressWarnings("unchecked")
+    public DocumentPageDto getDocuments(String filter, Integer page, Integer size, String sort, String fields) {
+
+        //pages start from 1 for user
+        if (page == null || page < 1) {
+            log.warn("Invalid page value (page = {}). Set default page value = 0", page);
+            page = 0; //default page
+        } else --page;
+
+        if (sort == null || sort.isBlank()) {
+            log.warn("Invalid sort value (sort = {}). Set default sort value = {}", sort, defaultSort);
+            sort = defaultSort;
+        }
+        if (size == null || size <= 0) {
+            log.warn("Invalid size value (size = {}). Set default size  = {}", size, defaultPageSize);
+            size = defaultPageSize;
+        }
+
+        DocumentPageDto documentPageDto = new DocumentPageDto();
+        documentPageDto.setSort(sort);
+        documentPageDto.setPage(page + 1);
+        documentPageDto.setElementsOnPage(size);
+
+        Page<Document> documentPage;
+
+        if (filter == null || filter.isBlank()) {
+            documentPage = repository.findAll(RSQLJPASupport.toSort(sort), PageRequest.of(page, size));
+        } else {
+            documentPageDto.setFilter(filter);
+            Specification<?> specification = RSQLJPASupport.toSpecification(filter).and(RSQLJPASupport.toSort(sort));
+            documentPage = repository.findAll((Specification<Document>) specification, PageRequest.of(page, size));
+        }
+        documentPageDto.setTotalAmount(documentPage.getTotalElements());
+        documentPageDto.setPages(documentPage.getTotalPages());
+        documentPageDto.setEntity(documentPage.stream()
+                .map(document -> {
+                    DocumentDto documentDto = new DocumentDto();
+                    if (fields == null) {
+                        ObjectUtils.convertObject(document, documentDto);
+                    } else {
+                        ObjectUtils.convertObject(document, documentDto, fields);
+                    }
+                    return documentDto;
+                })
+                .collect(Collectors.toList()));
+        return documentPageDto;
+    }
+*/
 
 
     public Map<String, Object> findAll(String filter, Integer page, Integer size, String sort) {
@@ -295,4 +348,5 @@ public class DocumentService {
             throw new RuntimeException(e);
         }
     }
+
 }

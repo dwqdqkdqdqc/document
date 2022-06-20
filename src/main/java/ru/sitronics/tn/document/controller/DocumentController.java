@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.DocumentPageDto;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
@@ -58,10 +59,10 @@ public class DocumentController {
     @Operation(summary = "Get all documents")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
-                                                      @RequestParam(value = "page", required = false) Integer page,
-                                                      @RequestParam(value = "size", required = false) Integer size,
-                                                      @RequestParam(value = "sort", required = false) String sort,
-                                                      @RequestParam(value = "fields", required = false) String fields) {
+                                                  @RequestParam(value = "page", required = false) Integer page,
+                                                  @RequestParam(value = "size", required = false) Integer size,
+                                                  @RequestParam(value = "sort", required = false) String sort,
+                                                  @RequestParam(value = "fields", required = false) String fields) {
         try {
             if (fields == null || fields.isBlank()) {
                 return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
@@ -71,6 +72,7 @@ public class DocumentController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
         }
+     //   return ResponseEntity.ok(service.getDocuments(filter, page, size, sort, fields));
     }
 
     @PatchMapping("/{id}")
