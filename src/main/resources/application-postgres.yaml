@@ -7,6 +7,8 @@ spring:
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      minimumIdle: 2
 
   jpa:
     properties:
