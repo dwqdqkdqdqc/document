@@ -7,5 +7,4 @@ import ru.sitronics.tn.document.model.Document;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, String>,
-        JpaSpecificationExecutor<Document>/*, QuerydslPredicateExecutor<QDocument>*/ {
-}
+        JpaSpecificationExecutor<Document> { }

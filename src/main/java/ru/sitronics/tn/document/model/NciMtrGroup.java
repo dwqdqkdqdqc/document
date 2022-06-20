@@ -13,11 +13,10 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "attachments")
-public class Attachment extends BaseEntity{
-    @Column(name = "serial_number")
-    private long serialNumber;
-    @Column(name = "address")
-    private String address;
-
+@Table(name = "nci_mtr_groups")
+public class NciMtrGroup extends BaseEntity {
+    @Column(name = "mtr_group")
+    private String mtrGroup;
+    @Column(name = "internal_id")
+    private int internalId;
 }

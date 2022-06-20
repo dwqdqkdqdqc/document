@@ -13,12 +13,10 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "construction_objects")
-public class ConstructionObject extends BaseEntity {
-    @Column(name = "name")
-    private String name;
-    @Column(name = "address")
-    private String address;
-    @Column(name = "organization")
-    private String organization;
+@Table(name = "nci_class_contracts")
+public class NciClassContract extends BaseEntity{
+    @Column(name = "class_agr")
+    private String classAgr;
+    @Column(name = "code")
+    private String code;
 }

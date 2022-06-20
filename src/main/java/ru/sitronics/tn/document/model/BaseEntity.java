@@ -4,16 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
-import ru.sitronics.tn.document.HasId;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 @MappedSuperclass
 @Access(AccessType.FIELD) //https://stackoverflow.com/a/6084701/548473

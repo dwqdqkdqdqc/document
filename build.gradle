@@ -7,8 +7,6 @@ plugins {
 }
 
 group = 'ru.sitronics.tn'
-//version = '0.1.0'
-sourceCompatibility = '17'
 
 bootRun {
     jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n"]
@@ -31,10 +29,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.monitorjbl:json-view:1.1.0'
     // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
-
-
     // https://mvnrepository.com/artifact/com.github.java-json-tools/json-patch
     implementation 'com.github.java-json-tools:json-patch:1.13'
     //    compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
@@ -45,6 +42,7 @@ dependencies {
     //implementation 'cz.jirutka.rsql:rsql-parser:2.1.0'
     //  implementation 'io.github.perplexhub:rsql-querydsl-spring-boot-starter:5.0.19'
     implementation 'io.github.perplexhub:rsql-jpa-spring-boot-starter:5.0.19'
+  //  implementation 'com.github.tennaito:rsql-jpa:2.0.2'
 
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation 'org.jsoup:jsoup:1.14.3'

@@ -13,11 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.DocumentPageDto;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
 
-import javax.print.Doc;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -59,14 +59,20 @@ public class DocumentController {
     @Operation(summary = "Get all documents")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
-                                                      @RequestParam(value = "page", required = false) Integer page,
-                                                      @RequestParam(value = "size", required = false) Integer size,
-                                                      @RequestParam(value = "sort", required = false) String sort) {
+                                                  @RequestParam(value = "page", required = false) Integer page,
+                                                  @RequestParam(value = "size", required = false) Integer size,
+                                                  @RequestParam(value = "sort", required = false) String sort,
+                                                  @RequestParam(value = "fields", required = false) String fields) {
         try {
-            return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+            if (fields == null || fields.isBlank()) {
+                return new ResponseEntity<>(service.findAll(filter, page, size, sort), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(service.findAllFields(filter, page, size, sort, fields), HttpStatus.OK);
+            }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
         }
+     //   return ResponseEntity.ok(service.getDocuments(filter, page, size, sort, fields));
     }
 
     @PatchMapping("/{id}")
@@ -99,9 +105,9 @@ public class DocumentController {
                 .map(NciDocumentType.NciDocumentTypeEnum::name).toList();
     }
 
-    @GetMapping("/contractors")
-    public List<String> getContractors() {
-        return Stream.of(NciContractor.values()).map(NciContractor::name).toList();
+    @GetMapping("/customers")
+    public List<String> getCustomers() {
+        return Stream.of(NciCustomer.values()).map(NciCustomer::name).toList();
     }
 
     @GetMapping("/statuses")
@@ -121,10 +127,10 @@ public class DocumentController {
         return map;
     }
 
-    @GetMapping("/contractorsWithTranslate")
-    public Map<NciContractor, String> getContractorsWithTranslate() {
-        Map<NciContractor, String> map = new EnumMap<>(NciContractor.class);
-        Arrays.asList(NciContractor.values()).forEach(value -> map.put(value, value.getTranslate()));
+    @GetMapping("/customersWithTranslate")
+    public Map<NciCustomer, String> getCustomersWithTranslate() {
+        Map<NciCustomer, String> map = new EnumMap<>(NciCustomer.class);
+        Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
     }
 }

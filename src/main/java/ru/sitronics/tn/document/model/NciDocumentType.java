@@ -1,17 +1,15 @@
 package ru.sitronics.tn.document.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -21,7 +19,7 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)
 @Table(name = "nci_document_types")
-public class NciDocumentType extends BaseEntity  implements Serializable {
+public class NciDocumentType extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -36,10 +34,10 @@ public class NciDocumentType extends BaseEntity  implements Serializable {
         CONTRACT("Контракт"), //
         MTR_SUPPLY_CONTRACT("Договор на поставку МТР (включая дополнительные соглашения)"),  //
         SPECIFICATION_TO_THE_MTR_CONTRACT("Спецификация к договору МТР"), //
-        INFORMATION_ON_THE_SUPPLIERS_CHAIN_OF_OWNERSHIP("Сведения о цепочке собственников Поставщика"), //
-        MTP_INSURANCE_POLICY("Полис страхования МТР"), //
+        INFORMATION_ABOUT_SUPPLIERS_CHAIN_OF_OWNERSHIP("Сведения о цепочке собственников Поставщика"), //
+        MTR_INSURANCE_POLICY("Полис страхования МТР"), //
         MTR_PRODUCTION_AND_SHIPMENT_PLAN("План изготовления и отгрузки МТР"), //
-        INFORMATION_ON_THE_PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR("Информация о ходе изготовления и подготовке к отгрузке МТР"), //
+        PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR("Информация о ходе изготовления и подготовке к отгрузке МТР"), //
         DESIGN_DOCUMENTS_FOR_THE_SUPPLIER("Конструкторская документация (для поставщика)"), //
         KMD_WORKING_DOCUMENTATION("Рабочая документация по КМД"), //
         ACT_OR_DOCUMENT_ON_KMD_APPROVAL("Акт/документ о согласовании КМД"), //
@@ -54,7 +52,8 @@ public class NciDocumentType extends BaseEntity  implements Serializable {
         RECONCILIATION_ACT_ON_THE_PART_OF_OST("Акт сверки со стороны ОСТ"), //
         CARGO_CUSTOMS_DECLARATION("Грузовая таможенная декларация"), //
         WAYBILL("Транспортная накладная"),
-        SPECIFICATION("Спецификация"); //;
+        SPECIFICATION("Спецификация"),
+        QUALITY_DOCUMENTS("Документы о качестве(проставление отметки ТН)");  //Документы о качестве(проставление отметки ТН); //;
         /*  RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза
           AIR_WAYBILL, //Авиа-накладная
           RECEIPT_OF_POSTAL_ITEMS, //Квитанция о приеме почтовых отправлений
@@ -76,7 +75,6 @@ public class NciDocumentType extends BaseEntity  implements Serializable {
           ACT_ON_THE_RECOGNITION_OF_PRODUCTS_AS_DEFECTIVE,  //Акт о признании продукции дефектной (о признании продукции не соответствующей количеству и/или комплектности и/или марке)
           TN_SURVEILLANCE_CONTRACT,  //Договор ТН-Надзор
           OST_APPLICATION,  //Заявка ОСТ (план поставок, спецификация на поднадзорную продукцию, указанная в плане поставок)
-          QUALITY_DOCUMENTS,  //Документы о качестве(проставление отметки ТН)
           REPORT_ON_SUPERVISED_PRODUCTS_THAT_HAVE_UNDERGONE_TECHNICAL_SUPERVISION_AT_MANUFACTURING_ENTERPRISES,  //Отчет по поднадзорной продукции, прошедшей технический надзор на предприятиях-изготовителях
           TECHNICAL_ACT,  //Технический акт
           ACT_OF_ACCEPTANCE_OF_SERVICES_RENDERED,  //Акт сдачи-приёмки оказанных услуг
