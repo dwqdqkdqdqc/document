@@ -84,9 +84,9 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "access")
     @Enumerated(EnumType.STRING)
     private NciAccessLimitation access;
-    @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
+    /*@Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
-    private String comment;
+    private String comment;*/
     @ManyToOne(fetch = FetchType.LAZY/*, optional = false*/) //рабозбрать, почему именно тут не работает eager
     @JoinColumn(/*nullable = false*/)
     private MtrSupplyContract contract;
@@ -225,4 +225,9 @@ public class Document extends BaseEntity implements Serializable {
     private String contractView;
     @Column(name = "frame_contract")
     private Boolean frameContract;
+
+    @OneToMany(mappedBy = "document")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OrderBy("dateOfCreation")
+    private List<Comment> comments;
 }
