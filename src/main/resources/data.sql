@@ -159,7 +159,7 @@ VALUES ('123e4567-e89b-12d3-a456-000000000010', '123e4567-e89b-12d3-a456-0000000
        ('123e4567-e89b-12d3-a456-000000000040', '123e4567-e89b-12d3-a456-000000040000',
         '123e4567-e89b-12d3-a456-100000000000');
 
-INSERT INTO attachments (id, serial_number, address)
+INSERT INTO nci_attachments (id, serial_number, address)
 VALUES ('123e4567-e89b-12d3-a456-000000000001', '1', 'address_1'),
        ('123e4567-e89b-12d3-a456-000000000002', '2', 'address_2'),
        ('123e4567-e89b-12d3-a456-000000000003', '3', 'address_3');
@@ -338,4 +338,3 @@ values ('123e4567-e89b-12d3-a456-111000000000', 'DOCUMENT', 'Документ'),
     NOTIFICATION_OF_OFFSET_OF_AMOUNT_OF_ADVANCE_PAYMENT_ISSUED,  //Уведомление о зачете суммы выданного аванса
     NOTICE_OF_SECURITY_RETAINER_IN_LIEU_OF_CONTRACT_SECURITY,  //Уведомление о гарантийном удержании взамен обеспечения по контракту
     STATEMENT_OF_THE_COST_OF_WORK_AND_SERVICES_PERFORMED_MATERIALS_AND_EQUIPMENT_DELIVERED //Справка о стоимости выполненных работ и услуг, поставленных материалов и оборудования); */
-

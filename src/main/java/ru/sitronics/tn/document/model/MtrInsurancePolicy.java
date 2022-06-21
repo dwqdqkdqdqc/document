@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("MTR_INSURANCE_POLICY")
-public class MtrInsurancePolicy extends Document{
+public class MtrInsurancePolicy extends Document {
 
     @Column(name = "sum_no_vat")
     private BigDecimal sumNoVat;

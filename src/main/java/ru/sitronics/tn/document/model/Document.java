@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
@@ -58,7 +57,7 @@ public class Document extends BaseEntity implements Serializable {
     //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "date_of_creation", insertable = false, updatable = false)
+    @Column(name = "date_of_creation_short", insertable = false, updatable = false)
     private LocalDate dateOfCreationShort;
 
     @CreatedBy
@@ -102,7 +101,7 @@ public class Document extends BaseEntity implements Serializable {
     private Contract contract;
 
     @ManyToOne
-    private Specification  specification;
+    private Specification specification;
 
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -179,6 +178,8 @@ public class Document extends BaseEntity implements Serializable {
     @OrderBy("nameRus")
     private List<NciDocumentType> nciDocumentTypes;
 
+    @Column(name = "deleted")
+    private boolean deleted;
 
     ////=========================================== Contract
     //  @NotNull

@@ -2,12 +2,12 @@ package ru.sitronics.tn.document.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
-import ru.sitronics.tn.document.service.NciDocumentTypeService;
-
-import javax.print.Doc;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -26,16 +23,14 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Tag(name = "Document controller")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = DocumentController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class DocumentController {
     static final String REST_URL = "/documents";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private DocumentService service;
-    @Autowired
-    private NciDocumentTypeService documentTypeService;
+    private final DocumentService service;
 
     @GetMapping("/{id}")
     public Document get(@PathVariable String id) {
@@ -47,13 +42,6 @@ public class DocumentController {
     public ResponseEntity<Document> create(@RequestBody Document document) {
         log.info("creating document: {}", document.toString());
         return new ResponseEntity<>(service.createOrUpdate(document), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable String id) {
-        log.info("delete document {} ", id);
-        service.delete(id);
     }
 
     @Operation(summary = "Get all documents")
@@ -80,6 +68,12 @@ public class DocumentController {
         document = (Document) PersistenceUtils.partialUpdate(currentDocument, document);
         return service.createOrUpdate(document);
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDocument(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     public static class PersistenceUtils {

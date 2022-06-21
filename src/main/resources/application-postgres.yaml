@@ -1,17 +1,14 @@
 spring:
   datasource:
-    #  url: jdbc:postgresql://localhost:5432/transneftpua_db
-    #  username: postgres
-    #  password: admin
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DATABASE:transneftpua_db}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:admin}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     properties:
-      hibernatc:
+      hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
-      mode: embedded
+      mode: never

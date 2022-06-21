@@ -12,7 +12,6 @@ import com.monitorjbl.json.Match;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,12 +22,10 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
-
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
@@ -36,8 +33,6 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @Slf4j
 public class DocumentService {
-    @Autowired
-    EntityManager manager;
 
     @Value("${rsql.defaultSort}")
     private String defaultSort;
@@ -45,12 +40,14 @@ public class DocumentService {
     @Value("${rsql.defaultPageSize}")
     private Integer defaultPageSize;
 
+    @Value("${rsql.defaultDeleted}")
+    private String defaultDeleted;
+
     private final DocumentRepository repository;
 
     public Document get(String id) {
-        return repository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
+        Optional<Document> document = repository.findById(id);
+        return document.filter(d -> !d.isDeleted()).orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
     }
 
     public List<Document> getAll() {
@@ -65,14 +62,14 @@ public class DocumentService {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + id));
     }
 
+    @Transactional
     public void delete(String id) {
-        repository.deleteById(id);
+        repository.markDocumentAsDeletedById(id);
     }
-
 
     public Map<String, Object> findAll(String filter, Integer page, Integer size, String sort) {
         Map<String, Object> responseEntity = new HashMap<>();
-        Page<Document> documentPage;
+        StringBuilder filterBuilder = new StringBuilder(defaultDeleted);
 
         //pages start from 1 for user
         if (page == null || page < 1) {
@@ -94,26 +91,23 @@ public class DocumentService {
         responseEntity.put("page", page + 1);
         responseEntity.put("elementsOnPage", size);
 
-        if (filter == null || filter.isBlank()) {
-            responseEntity.put("filter", null);
-            documentPage = repository.findAll(RSQLJPASupport.toSort(sort), PageRequest.of(page, size));
-        } else {
-            Specification<?> specification = RSQLJPASupport.toSpecification(filter)
-                    .and(RSQLJPASupport.toSort(sort));
-
-            //  https://www.baeldung.com/java-warning-unchecked-cast#:~:text=4.2.%20Suppress%20the%20%E2%80%9Cunchecked%E2%80%9D%20Warning
-            @SuppressWarnings("unchecked")
-            Page<Document> temp = repository
-                    .findAll((Specification<Document>) specification, PageRequest.of(page, size));
-            documentPage = temp;
+        if (filter != null && !filter.isBlank()) {
+            if ("deleted=='true'".equals(filter)) {
+                filterBuilder.delete(0, defaultDeleted.length()).append(filter);
+            } else {
+                filterBuilder.append(";").append(filter);
+            }
         }
+
+        Specification<?> specification = RSQLJPASupport.toSpecification(filterBuilder.toString()).and(RSQLJPASupport.toSort(sort));
+        @SuppressWarnings("unchecked")
+        Page<Document> documentPage = repository.findAll((Specification<Document>) specification, PageRequest.of(page, size));
+
         responseEntity.put("totalAmount", documentPage.getTotalElements());
         responseEntity.put("pages", documentPage.getTotalPages());
         responseEntity.put("entity", documentPage.stream().toList());
-
         return responseEntity;
     }
-
 
     public Map<String, Object> findAllFields(String filter, Integer page, Integer size, String sort, String fields) {
         String[] selectedFields = fields.split(", ");
@@ -173,7 +167,6 @@ public class DocumentService {
                                                 .filter(f -> f.getKey().equalsIgnoreCase("specification"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
                     }
-
                     case "CONTRACT" -> {
                         optionalInteger = entitiesList.stream()
                                 .filter(entity -> "CONTRACT".equalsIgnoreCase(entity.getType()))
@@ -279,7 +272,6 @@ public class DocumentService {
                                                 .filter(f -> f.getKey().equalsIgnoreCase("contract"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
                     }
-
                     default -> System.out.println("Ok");
                 }
             }

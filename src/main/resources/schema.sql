@@ -44,6 +44,7 @@ CREATE TABLE documents
     customer_id                  VARCHAR             NULL,
     supplier_id                  VARCHAR             NULL,
     amount                       numeric   default 0 NULL,
+    deleted                      BOOLEAN   default false,
 
 --Fields of other classes
     lot                          VARCHAR             NULL, --Specification
