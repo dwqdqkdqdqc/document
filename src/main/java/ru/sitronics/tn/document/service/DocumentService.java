@@ -360,42 +360,52 @@ public class DocumentService {
     }
 
     public Comment addComment(String docId, Comment comment) {
+        if (docId == null || docId.isBlank()) {
+            log.warn("Given invalid document id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid docId.");
+        }
         if (comment.getId() != null && commentRepo.existsById(comment.getId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     String.format("comment with id %s is already exist.", comment.getId()));
         }
         comment.setDocument(repository.findById(docId).orElseThrow(() ->
-                new EntityNotFoundException("Can't found document with id " + docId)));
+                new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        String.format("Document with id %s is not exist.", docId))));
         return commentRepo.save(comment);
     }
 
     @Transactional
     public ResponseEntity<?> addCommentWithAttachment(String docId, Comment comment, MultipartFile[] files) {
-        List<CommentAttachment> attachments = new ArrayList<>();
-        List<String> errors = new ArrayList<>();
-        Map<String, Object> response = new HashMap<>();
-
         List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
-        if (s3FileDtoList == null) {
+
+        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
             return new ResponseEntity<>(addComment(docId, comment), HttpStatus.CREATED);
         }
-        Comment commentFromDb;
-
         if (comment.getId() != null && commentRepo.existsById(comment.getId())) {
-            commentFromDb = commentRepo.getById(comment.getId());
-            attachments.addAll(commentFromDb.getAttachments());
-        } else commentFromDb = addComment(docId, comment);
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    String.format("comment with id %s is already exist.", comment.getId()));
+        }
+        Comment commentFromDb = addComment(docId, comment);
+        return addAttachments(s3FileDtoList, commentFromDb);
+    }
 
-        s3FileDtoList.forEach(dto -> {
-            if (dto.getError() == null || dto.getError().isBlank()) {
-                attachments.add(commentAttachmentRepo
-                        .save(new CommentAttachment(dto.getName(), dto.getId(), commentFromDb)));
-            } else errors.add(dto.getError());
-        });
-        commentFromDb.setAttachments(attachments);
-        response.put("notUploaded", errors);
-        response.put("comment", commentFromDb);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    @Transactional
+    public ResponseEntity<?> addAttachmentsToComment(String commentId, MultipartFile[] files) {
+        if (commentId == null || commentId.isBlank()) {
+            log.warn("Given invalid comment id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid commentId.");
+        }
+        if (!commentRepo.existsById(commentId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Comment with id %s doesn't exist.", commentId));
+        }
+        Comment commentFromDb = commentRepo.getById(commentId);
+
+        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
+        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Returned ");
+        }
+        return addAttachments(s3FileDtoList, commentFromDb);
     }
 
 
@@ -413,6 +423,27 @@ public class DocumentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid comment's attachId.");
         }
         commentAttachmentRepo.deleteById(attachId);
+    }
+
+    private ResponseEntity<?> addAttachments(List<S3FileDto> s3FileDtoList, Comment commentFromDb) {
+
+        List<String> errors = new ArrayList<>();
+        Map<String, Object> response = new HashMap<>();
+        List<CommentAttachment> attachments = new ArrayList<>();
+        if (commentFromDb.getAttachments() != null) {
+            attachments.addAll(commentFromDb.getAttachments());
+        }
+
+        s3FileDtoList.forEach(dto -> {
+            if (dto.getError() == null || dto.getError().isBlank()) {
+                attachments.add(commentAttachmentRepo
+                        .save(new CommentAttachment(dto.getName(), dto.getId(), commentFromDb)));
+            } else errors.add(dto.getError());
+        });
+        commentFromDb.setAttachments(attachments);
+        response.put("notUploaded", errors);
+        response.put("comment", commentFromDb);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }

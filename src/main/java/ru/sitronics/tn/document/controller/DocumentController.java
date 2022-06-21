@@ -145,6 +145,12 @@ public class DocumentController {
         } else return service.addCommentWithAttachment(docId, comment, files);
     }
 
+    @PostMapping(value = "/comments/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAttachment(@PathVariable("id") String commentId,
+                                           @RequestPart MultipartFile[] files) {
+        return service.addAttachmentsToComment(commentId, files);
+    }
+
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") String commentId) {
         service.deleteComment(commentId);

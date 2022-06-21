@@ -10,7 +10,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,14 +41,9 @@ public class S3RestServiceClient {
         Arrays.stream(files).forEach(file -> body.add("files", file.getResource()));
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        ResponseEntity<String> response;
-        try {
-            response = restTemplate.exchange(URI.create(url), HttpMethod.POST, requestEntity,
-                    new ParameterizedTypeReference<>() {});
-        } catch (RestClientException e) {
-            log.warn("Exception while trying to rich s3Servise. Error message: {}", e.getMessage());
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Can't rich S3RestService");
-        }
+
+        ResponseEntity<String> response = restTemplate.exchange(URI.create(url), HttpMethod.POST, requestEntity,
+                new ParameterizedTypeReference<>() {});
 
         if (response.getStatusCode().is2xxSuccessful()) {
             try {
