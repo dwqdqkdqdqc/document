@@ -1,9 +1,12 @@
+jdbcAppName: "Microcervice: ${spring.application.name}"
+
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
+  application.name: document-service
+  profiles.active: postgres
+
   jackson:
     default-property-inclusion: NON_NULL
-  profiles:
-    active: postgres
 
   jpa:
     open-in-view: false
