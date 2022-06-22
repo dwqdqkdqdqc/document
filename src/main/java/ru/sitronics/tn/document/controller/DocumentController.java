@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.dto.DocumentPageDto;
 import ru.sitronics.tn.document.model.*;
@@ -133,5 +134,33 @@ public class DocumentController {
         Map<NciCustomer, String> map = new EnumMap<>(NciCustomer.class);
         Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
+    }
+
+    @PostMapping(value = "/{id}/comments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addComment(@PathVariable("id") String docId,
+                                        Comment comment,
+                                        @RequestPart(required = false) MultipartFile[] files) {
+
+        if (files == null) {
+            return new ResponseEntity<>(service.addComment(docId, comment), HttpStatus.CREATED);
+        } else return service.addCommentWithAttachment(docId, comment, files);
+    }
+
+    @PostMapping(value = "/comments/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAttachment(@PathVariable("id") String commentId,
+                                           @RequestPart MultipartFile[] files) {
+        return service.addAttachmentsToComment(commentId, files);
+    }
+
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<?> deleteComment(@PathVariable("id") String commentId) {
+        service.deleteComment(commentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/comments/attachments/{id}")
+    public ResponseEntity<?> deleteCommentAttachment(@PathVariable("id") String attachId) {
+        service.deleteCommentAttachment(attachId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

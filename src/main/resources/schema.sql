@@ -28,6 +28,9 @@ DROP TABLE IF EXISTS nci_consignees;
 DROP TABLE IF EXISTS specification_table_entities;
 DROP TABLE IF EXISTS nci_units_measurement;
 DROP TABLE IF EXISTS nsi_delivery_methods;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS comment_attachments;
+DROP TABLE IF EXISTS s3_files;
 
 
 CREATE TABLE documents
@@ -383,6 +386,31 @@ CREATE TABLE nsi_delivery_methods
 (
     delivery_method VARCHAR NULL, --Наименование – Способ доставки
     internal_id     integer null  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE comments
+(
+    id                      VARCHAR PRIMARY KEY     NOT NULL,
+    comment                 VARCHAR                 NULL,
+    date_of_creation        TIMESTAMP               NULL,
+    date_of_modification    TIMESTAMP               NULL,
+    document_id             VARCHAR                 NULL
+);
+
+CREATE TABLE comment_attachments
+(
+    id             VARCHAR PRIMARY KEY   NOT NULL,
+    file_name      VARCHAR               NULL,
+    file_id        VARCHAR               NULL,
+    comment_id     VARCHAR               NULL
+);
+
+CREATE TABLE s3_files
+(
+    id uuid primary key NOT NULL,
+    bucket character varying(255),
+    prefix character varying(255),
+    name character varying(255)
 );
 
 

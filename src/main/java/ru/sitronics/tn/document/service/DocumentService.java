@@ -18,13 +18,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.dto.DocumentDto;
 import ru.sitronics.tn.document.dto.DocumentPageDto;
+import ru.sitronics.tn.document.dto.S3FileDto;
 import ru.sitronics.tn.document.model.*;
+import ru.sitronics.tn.document.repository.CommentAttachmentRepository;
+import ru.sitronics.tn.document.repository.CommentRepository;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.ObjectUtils;
+import ru.sitronics.tn.document.util.S3RestServiceClient;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
@@ -49,6 +56,9 @@ public class DocumentService {
     private Integer defaultPageSize;
 
     private final DocumentRepository repository;
+    private final CommentRepository commentRepo;
+    private final S3RestServiceClient s3RestServiceClient;
+    private final CommentAttachmentRepository commentAttachmentRepo;
 
     public Document get(String id) {
         return repository
@@ -347,6 +357,93 @@ public class DocumentService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Comment addComment(String docId, Comment comment) {
+        if (docId == null || docId.isBlank()) {
+            log.warn("Given invalid document id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid docId.");
+        }
+        if (comment.getId() != null && commentRepo.existsById(comment.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    String.format("comment with id %s is already exist.", comment.getId()));
+        }
+        comment.setDocument(repository.findById(docId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        String.format("Document with id %s is not exist.", docId))));
+        return commentRepo.save(comment);
+    }
+
+    @Transactional
+    public ResponseEntity<?> addCommentWithAttachment(String docId, Comment comment, MultipartFile[] files) {
+        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
+
+        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
+            return new ResponseEntity<>(addComment(docId, comment), HttpStatus.CREATED);
+        }
+        if (comment.getId() != null && commentRepo.existsById(comment.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    String.format("comment with id %s is already exist.", comment.getId()));
+        }
+        Comment commentFromDb = addComment(docId, comment);
+        return addAttachments(s3FileDtoList, commentFromDb);
+    }
+
+    @Transactional
+    public ResponseEntity<?> addAttachmentsToComment(String commentId, MultipartFile[] files) {
+        if (commentId == null || commentId.isBlank()) {
+            log.warn("Given invalid comment id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid commentId.");
+        }
+        if (!commentRepo.existsById(commentId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Comment with id %s doesn't exist.", commentId));
+        }
+        Comment commentFromDb = commentRepo.getById(commentId);
+
+        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
+        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Returned ");
+        }
+        return addAttachments(s3FileDtoList, commentFromDb);
+    }
+
+
+    public void deleteComment(String commentId) {
+        if (commentId == null || commentId.isBlank()) {
+            log.warn("Given invalid comment id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid commentId.");
+        }
+        commentRepo.deleteById(commentId);
+    }
+
+    public void deleteCommentAttachment(String attachId) {
+        if (attachId == null || attachId.isBlank()) {
+            log.warn("Given invalid comment's attachment's id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid comment's attachId.");
+        }
+        commentAttachmentRepo.deleteById(attachId);
+    }
+
+    private ResponseEntity<?> addAttachments(List<S3FileDto> s3FileDtoList, Comment commentFromDb) {
+
+        List<String> errors = new ArrayList<>();
+        Map<String, Object> response = new HashMap<>();
+        List<CommentAttachment> attachments = new ArrayList<>();
+        if (commentFromDb.getAttachments() != null) {
+            attachments.addAll(commentFromDb.getAttachments());
+        }
+
+        s3FileDtoList.forEach(dto -> {
+            if (dto.getError() == null || dto.getError().isBlank()) {
+                attachments.add(commentAttachmentRepo
+                        .save(new CommentAttachment(dto.getName(), dto.getId(), commentFromDb)));
+            } else errors.add(dto.getError());
+        });
+        commentFromDb.setAttachments(attachments);
+        response.put("notUploaded", errors);
+        response.put("comment", commentFromDb);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }

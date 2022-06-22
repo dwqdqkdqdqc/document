@@ -8,7 +8,10 @@ spring:
     password: ${DB_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
     hikari:
-      minimumIdle: 2
+      minimumIdle: 1
+      maximumPoolSize: 2
+      dataSourceProperties:
+        ApplicationName: "Microservice: ${spring.application.name}"
 
   jpa:
     properties:
