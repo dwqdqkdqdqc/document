@@ -1,4 +1,4 @@
-jdbcAppName: "Microcervice: ${spring.application.name}"
+jdbcAppName: "Microservice: ${spring.application.name}"
 
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
