@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS nci_users;
-DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents CASCADE;
 DROP TABLE IF EXISTS documents_curators;
 DROP INDEX IF EXISTS document_id_curators_id_idx;
 --DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
@@ -22,7 +22,6 @@ DROP TABLE IF EXISTS nci_phases;
 DROP TABLE IF EXISTS nci_class_contracts;
 DROP TABLE IF EXISTS nci_standard_forms;
 DROP TABLE IF EXISTS nci_termination_codes;
-DROP TABLE IF EXISTS nci_units_of_measurement;
 DROP TABLE IF EXISTS nci_countries;
 DROP TABLE IF EXISTS nci_types_of_transport;
 DROP TABLE IF EXISTS nci_consignees;
@@ -36,7 +35,7 @@ CREATE TABLE documents
     id                                    VARCHAR PRIMARY KEY NOT NULL,
     type_id                               VARCHAR             NULL,
     d_type                                VARCHAR             NULL,
-    serial_number                         BIGINT              NULL,
+    serial_number                         BIGINT null           ,
     date_of_creation                      TIMESTAMP DEFAULT now(),
     date_of_creation_short                TIMESTAMP DEFAULT now(),
     author_id                             VARCHAR             NULL,

@@ -1,86 +1,77 @@
 /*
-DELETE
-FROM documents;
-DELETE
-<<<<<<< HEAD
-FROM nci_users;
-=======
-FROM users;
->>>>>>> dev
-DELETE
-FROM documents_curators;
-DELETE
-FROM type_relation;
-DELETE
-FROM documents_relating_documents;
-DELETE
-FROM document_history_bpm;
-DELETE
-<<<<<<< HEAD
-FROM nci_objects;
-DELETE
-FROM documents_objects;
-=======
-FROM construction_objects;
-DELETE
-FROM documents_construction_objects;
->>>>>>> dev
-DELETE
-FROM nci_osts;
-DELETE
-FROM nci_pids;
-DELETE
-FROM nci_factory_numbers;
-DELETE
-FROM attachments;
-DELETE
-FROM documents_attachments;
-DELETE
-FROM nci_contractors;
-DELETE
-FROM nci_document_types;
+DELETE FROM documents;
+DELETE FROM nci_users;
+DELETE FROM documents_curators;
+DELETE FROM type_relation;
+DELETE FROM documents_relating_documents;
+DELETE FROM document_history_bpm;
+DELETE FROM nci_objects;
+DELETE FROM documents_objects;
+DELETE FROM nci_objects;
+DELETE FROM documents_construction_objects;
+DELETE FROM nci_osts;
+DELETE FROM nci_pids;
+DELETE FROM nci_factory_numbers;
+DELETE FROM attachments;
+DELETE FROM documents_attachments;
+DELETE FROM nci_customers;
+DELETE FROM nci_document_types;
+
+DELETE FROM nci_mtr_groups;
+DELETE FROM nci_mtrs;
+DELETE FROM nci_phases;
+DELETE FROM nci_class_contracts;
+DELETE FROM nci_standard_forms;
+DELETE FROM nci_termination_codes;
+DELETE FROM nci_countries;
+DELETE FROM nci_types_of_transport;
+DELETE FROM nci_consignees;
+DELETE FROM specification_table_entities;
+DELETE FROM nci_units_measurement;
+DELETE FROM nsi_delivery_methods;
+
 */
 
 INSERT INTO documents (id, type_id, d_type, author_id, status, access, contract_id, lot,
                        specification_id, customer_id, supplier_id, amount, date_of_signing,
-                       document_registration_number, nci_ost_id, date_of_creation, serial_number)
+                       document_registration_number, nci_ost_id, date_of_creation)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPPLY_CONTRACT',
         '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', null, null,
         '123e4567-e89b-12d3-a456-300000000000', 'customer_1',
         'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1',
-        '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00', '1'),
+        '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00'),
        ('123e4567-e89b-12d3-a456-800000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPPLY_CONTRACT',
         '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', null, null,
         '123e4567-e89b-12d3-a456-400000000000', 'customer_1',
         'customer_2', '1000.01', '2020-02-21 10:00:00', 'registration_number_1',
-        '123e4567-e89b-12d3-a456-000000001000', '2020-02-21 10:00:00', '8'),
+        '123e4567-e89b-12d3-a456-000000001000', '2020-02-21 10:00:00'),
        ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', 'WAYBILL',
         '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null,
         '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
-        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '3'),
+        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
        ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', 'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-010000000000', 'APPROVAL_IN_PROGRESS', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         'lot_1',
         '123e4567-e89b-12d3-a456-400000000000', 'customer_5',
-        'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00', '2'),
+        'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00'),
        ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION', 'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-040000000000', 'APPROVAL_IN_PROGRESS', 'CONFIDENTIALLY',
+        '123e4567-e89b-12d3-a456-040000000000', 'ACCEPTED', 'CONFIDENTIALLY',
         null, 'lot_1', null, 'customer_7', 'customer_8', '2000',
-        null, null, null, '2020-01-21 10:00:00', '4'),
+        null, null, null, '2020-01-21 10:00:00'),
        ('123e4567-e89b-12d3-a456-500000000000', 'QUALITY_DOCUMENTS', 'QUALITY_DOCUMENTS',
         '123e4567-e89b-12d3-a456-010000000000', 'APPROVAL_IN_PROGRESS', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
-        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '5'),
+        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
        ('123e4567-e89b-12d3-a456-600000000000', 'MTR_INSURANCE_POLICY', 'MTR_INSURANCE_POLICY',
-        '123e4567-e89b-12d3-a456-010000000000', 'APPROVAL_IN_PROGRESS', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
-        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '7'),
+        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
        ('123e4567-e89b-12d3-a456-700000000000', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
         'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
-        '123e4567-e89b-12d3-a456-010000000000', 'APPROVED', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
-        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00', '6');
+        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00');
 
 INSERT INTO nci_users (id, login, password, name, last_name, role, mail)
 VALUES ('123e4567-e89b-12d3-a456-010000000000', 'user_1', '12345', 'user', 'A', 'user', 'user@gmail.com'),

@@ -29,7 +29,8 @@ public enum NciStatus {
     REQUIRES_CLARIFICATION("требует уточнения"), //
     ARCHIVAL("архивный"), //
     FILLED("заполнен"), //
-    FORMED("сформирован");
+    FORMED("сформирован"),
+    PROJECT_CREATION("Создание проекта");
 
     private final String translate;
 

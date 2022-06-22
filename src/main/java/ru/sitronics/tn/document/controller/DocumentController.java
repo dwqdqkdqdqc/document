@@ -59,6 +59,7 @@ public class DocumentController {
     @Operation(summary = "Get all documents")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getAll(@RequestParam(value = "filter", required = false) String filter,
+    //   public ResponseEntity<DocumentPageDto> getAll(@RequestParam(value = "filter", required = false) String filter,
                                                   @RequestParam(value = "page", required = false) Integer page,
                                                   @RequestParam(value = "size", required = false) Integer size,
                                                   @RequestParam(value = "sort", required = false) String sort,
@@ -72,7 +73,7 @@ public class DocumentController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad request");
         }
-     //   return ResponseEntity.ok(service.getDocuments(filter, page, size, sort, fields));
+    //    return ResponseEntity.ok(service.getDocuments(filter, page, size, sort, fields));
     }
 
     @PatchMapping("/{id}")

@@ -37,7 +37,7 @@ public class Document extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @NotNull(message = "Specify document type.")
-    @Column(name = "type_id"/*, insertable = false, updatable = false*/)
+    @Column(name = "type_id")
     private String type;
     //  @NotNull(message = "Specify document type.")
     @Column(name = "d_type", insertable = false, updatable = false)
@@ -59,17 +59,17 @@ public class Document extends BaseEntity implements Serializable {
     private LocalDate dateOfCreationShort;
     @CreatedBy
     //  @NotNull
-    @ManyToOne(/*optional = false*/)
+    @ManyToOne
     //   @JsonManagedReference(value = "User")
-    @JoinColumn(/*updatable = false*/)
+    @JoinColumn
     private NciUser author;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     //@JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_curators",
-            joinColumns = @JoinColumn(name = "document_id"/*, nullable = false, updatable = false*/),
-            inverseJoinColumns = @JoinColumn(name = "curator_id"/*, nullable = false, updatable = false*/),
+            joinColumns = @JoinColumn(name = "document_id"),
+            inverseJoinColumns = @JoinColumn(name = "curator_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "curator_id"}, name = "documents_curators_uc")}
     )
     @OrderBy("lastName")
@@ -87,7 +87,7 @@ public class Document extends BaseEntity implements Serializable {
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
     private String comment;
-    @ManyToOne(fetch = FetchType.LAZY/*, optional = false*/) //рабозбрать, почему именно тут не работает eager
+    @ManyToOne(fetch = FetchType.EAGER) //рабозбрать, почему именно тут не работает eager
     @JoinColumn(/*nullable = false*/)
     private MtrSupplyContract contract;
     @OneToOne
@@ -109,8 +109,8 @@ public class Document extends BaseEntity implements Serializable {
     // @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_objects",
-            joinColumns = @JoinColumn(name = "document_id"/*, nullable = false, updatable = false*/),
-            inverseJoinColumns = @JoinColumn(name = "object_kis_up"/*, nullable = false, updatable = false*/),
+            joinColumns = @JoinColumn(name = "document_id"),
+            inverseJoinColumns = @JoinColumn(name = "object_kis_up"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "object_kis_up"}, name = "documents_construction_objects_uc")}
     )
     @OrderBy("kisUp")
@@ -136,15 +136,15 @@ public class Document extends BaseEntity implements Serializable {
     //  @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_attachments",
-            joinColumns = @JoinColumn(name = "document_id"/*, updatable = false*/),
-            inverseJoinColumns = @JoinColumn(name = "attachment_id"/*, updatable = false*/),
+            joinColumns = @JoinColumn(name = "document_id"),
+            inverseJoinColumns = @JoinColumn(name = "attachment_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
     private List<NciAttachment> nciAttachments = new java.util.ArrayList<>();
-    @Column(name = "customer_id"/*, updatable = false*/)
+    @Column(name = "customer_id")
     //  @Enumerated(EnumType.STRING)
     // private Customer customer;
     private String customer;
-    @Column(name = "supplier_id"/*, updatable = false*/)
+    @Column(name = "supplier_id")
     //  @Enumerated(EnumType.STRING)
     //  private Supplier supplier;
     private String supplier;
@@ -159,18 +159,18 @@ public class Document extends BaseEntity implements Serializable {
 
     ////=========================================== other
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "additional_agreement_date"/*, updatable = false*/)
+    @Column(name = "additional_agreement_date")
     private LocalDate additionalAgreementDate;
-    @Column(name = "additional_agreement_number"/*, updatable = false*/)
+    @Column(name = "additional_agreement_number")
     private String additionalAgreementNumber;
 
-/*    @OneToOne
-    @JsonBackReference(value = "id")
-    @JoinColumn(name = "id")
-    private MtrSupplyContract additionalAgreementSpecification;*/  //////////
+//    @OneToOne
+  //  @JsonBackReference(value = "id")
+ //   @JoinColumn(name = "id")
+ //   private MtrSupplyContract additionalAgreementSpecification;
 
     @OneToOne
-    @JoinColumn(/*updatable = false*/)
+    @JoinColumn
     private NciClassContract nciClassContract;
     @Column(name = "starting_date")
     private LocalDate startingDate;
@@ -179,20 +179,20 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "date_of_termination")
     private LocalDate dateOfTermination;
     @OneToOne
-    @JoinColumn(/* updatable = false*/)
+    @JoinColumn
     private NciStandardForm nciStandardForm;
-    @Column(name = "framework_agreement"/*, updatable = false*/)
+    @Column(name = "framework_agreement")
     private Boolean frameworkAgreement;
-    @Column(name = "subject_of_the_contract"/*, updatable = false*/)
+    @Column(name = "subject_of_the_contract")
     private String subjectOfTheContract;
     @OneToOne
-    @JoinColumn(/*updatable = false*/)
+    @JoinColumn
     private NciTerminationCode nciTerminationCode;
-    @Column(name = "sum_no_vat"/*, updatable = false*/)
+    @Column(name = "sum_no_vat")
     private BigDecimal sumNoVat;
-    @Column(name = "sum_vat"/*, updatable = false*/)
+    @Column(name = "sum_vat")
     private BigDecimal sumVat;
-    @Column(name = "total_including_vat"/*, updatable = false*/)
+    @Column(name = "total_including_vat")
     private BigDecimal totalIncludingVat;
     @Column(name = "status_zakupki")
     private String statusZakupki;
@@ -205,11 +205,11 @@ public class Document extends BaseEntity implements Serializable {
     @JoinColumn
     private NciUser responsible;
     // @NotNull
-    @Column(name = "document_registration_number"/*, updatable = false*/)
+    @Column(name = "document_registration_number")
     private String documentRegistrationNumber;
     //  @NotNull
     @OneToOne
-    @JoinColumn(/*updatable = false*/)
+    @JoinColumn
     private NciOst nciOst;
     @Column(name = "contract_subject")
     private String contractSubject;
