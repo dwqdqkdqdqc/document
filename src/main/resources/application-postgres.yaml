@@ -3,12 +3,15 @@ spring:
     #  url: jdbc:postgresql://localhost:5432/transneftpua_db
     #  username: postgres
     #  password: admin
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DATABASE:transneftpua_db}?ApplicationName=${jdbcAppName}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DATABASE:transneftpua_db}
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
     hikari:
-      minimumIdle: 2
+      minimumIdle: 1
+      maximumPoolSize: 2
+      data-source-properties:
+        ApplicationName: "Microservice: ${spring.application.name}"
 
   jpa:
     properties:
