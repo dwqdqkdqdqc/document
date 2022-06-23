@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -43,7 +42,7 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "d_type", insertable = false, updatable = false)
     private String dType;
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
-    @Column(name = "serial_number", unique = true/*, nullable = false, insertable = false, updatable = false*/)
+    @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
     private Long serialNumber;
     @CreatedDate
     //  @NotNull
@@ -156,6 +155,8 @@ public class Document extends BaseEntity implements Serializable {
     @BatchSize(size = 100)
     @OrderBy("nameRus")
     private List<NciDocumentType> nciDocumentTypes;
+    @Column(name = "deleted")
+    private boolean deleted;
 
     ////=========================================== other
     @DateTimeFormat(pattern = "dd-MM-yyyy")

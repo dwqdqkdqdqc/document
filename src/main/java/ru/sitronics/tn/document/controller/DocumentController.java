@@ -2,6 +2,7 @@ package ru.sitronics.tn.document.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Tag(name = "Document controller")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = DocumentController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class DocumentController {
@@ -50,12 +52,12 @@ public class DocumentController {
         return new ResponseEntity<>(service.createOrUpdate(document), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
+ /*   @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id) {
         log.info("delete document {} ", id);
         service.delete(id);
-    }
+    } */
 
     @Operation(summary = "Get all documents")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -83,6 +85,12 @@ public class DocumentController {
         document = (Document) PersistenceUtils.partialUpdate(currentDocument, document);
         return service.createOrUpdate(document);
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDocument(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     public static class PersistenceUtils {

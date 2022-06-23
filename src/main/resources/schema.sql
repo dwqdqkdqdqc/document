@@ -38,7 +38,7 @@ CREATE TABLE documents
     id                                    VARCHAR PRIMARY KEY NOT NULL,
     type_id                               VARCHAR             NULL,
     d_type                                VARCHAR             NULL,
-    serial_number                         BIGINT null           ,
+    serial_number                         bigserial           not null,
     date_of_creation                      TIMESTAMP DEFAULT now(),
     date_of_creation_short                TIMESTAMP DEFAULT now(),
     author_id                             VARCHAR             NULL,
@@ -53,11 +53,11 @@ CREATE TABLE documents
     barcode                               VARCHAR             NULL,
     lkk_document_number                   VARCHAR             NULL,
     lkk_document_date                     TIMESTAMP           NULL,
-
     lus_document_number                   VARCHAR             NULL,
     customer_id                           VARCHAR             NULL,
     supplier_id                           VARCHAR             NULL,
     amount                                numeric   default 0 NULL,
+    deleted                               BOOLEAN   default false,
 
 --Fields of other classes
     lot                                   VARCHAR             NULL, --Specification
@@ -390,27 +390,27 @@ CREATE TABLE nsi_delivery_methods
 
 CREATE TABLE comments
 (
-    id                      VARCHAR PRIMARY KEY     NOT NULL,
-    comment                 VARCHAR                 NULL,
-    date_of_creation        TIMESTAMP               NULL,
-    date_of_modification    TIMESTAMP               NULL,
-    document_id             VARCHAR                 NULL
+    id                   VARCHAR PRIMARY KEY NOT NULL,
+    comment              VARCHAR             NULL,
+    date_of_creation     TIMESTAMP           NULL,
+    date_of_modification TIMESTAMP           NULL,
+    document_id          VARCHAR             NULL
 );
 
 CREATE TABLE comment_attachments
 (
-    id             VARCHAR PRIMARY KEY   NOT NULL,
-    file_name      VARCHAR               NULL,
-    file_id        VARCHAR               NULL,
-    comment_id     VARCHAR               NULL
+    id         VARCHAR PRIMARY KEY NOT NULL,
+    file_name  VARCHAR             NULL,
+    file_id    VARCHAR             NULL,
+    comment_id VARCHAR             NULL
 );
 
 CREATE TABLE s3_files
 (
-    id uuid primary key NOT NULL,
+    id     uuid primary key NOT NULL,
     bucket character varying(255),
     prefix character varying(255),
-    name character varying(255)
+    name   character varying(255)
 );
 
 

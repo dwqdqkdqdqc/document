@@ -25,10 +25,10 @@ spring:
     setter: none
     is-getter: none
 
-  # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
- # cache:
-  #  cache-names: documents
-   # caffeine.spec: maximumSize=5000,expireAfterAccess=60s
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
+    # cache:
+    #  cache-names: documents
+    # caffeine.spec: maximumSize=5000,expireAfterAccess=60s
 
 logging:
   level:
@@ -54,3 +54,4 @@ s3RestService:
 rsql:
   defaultSort: ${DEFAULT_SORT:dateOfCreation,asc}
   defaultPageSize: ${DEFAULT_PAGE_SIZE:10}
+  defaultDeleted: ${DEFAULT_DELETED:deleted=='false'}
