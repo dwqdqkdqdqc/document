@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS nci_consignees;
 DROP TABLE IF EXISTS specification_table_entities;
 DROP TABLE IF EXISTS nci_units_measurement;
 DROP TABLE IF EXISTS nsi_delivery_methods;
-DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS comments CASCADE ;
 DROP TABLE IF EXISTS comment_attachments;
 DROP TABLE IF EXISTS s3_files;
 
