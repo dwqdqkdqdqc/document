@@ -17,6 +17,7 @@ spring:
     properties:
       hibernatc:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
         ddl-auto: none #с none нет автогенерации. Используем только data.sql и schema.sql.  https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
      # defer-datasource-initialization: true #гарантирует и автогерерацию, а после поикс изменний по schema и заполнение data
   sql:

@@ -156,6 +156,9 @@ public class Document extends BaseEntity implements Serializable {
     private List<NciDocumentType> nciDocumentTypes;
     @Column(name = "deleted")
     private boolean deleted;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nci_phase_id")
+    private NciPhase phase;
 
     ////=========================================== other
     @DateTimeFormat(pattern = "dd-MM-yyyy")
