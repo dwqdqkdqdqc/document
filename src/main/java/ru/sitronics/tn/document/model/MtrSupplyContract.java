@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("MTR_SUPPLY_CONTRACT")
-public class MtrSupplyContract extends Document implements Contract{
+public class MtrSupplyContract extends Document {
     //  @NotNull
   /*  @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing"*//*, updatable = false*//*)

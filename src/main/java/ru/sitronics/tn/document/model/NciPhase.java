@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_phase")
+@Table(name = "nci_phases")
 public class NciPhase extends BaseEntity {
-    @Column(name = "name_phase")
+    @Column(name = "name")
     private String namePhase;
 }

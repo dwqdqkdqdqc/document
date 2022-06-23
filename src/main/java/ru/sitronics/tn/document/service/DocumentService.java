@@ -18,25 +18,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import ru.sitronics.tn.document.dto.DocumentDto;
-import ru.sitronics.tn.document.dto.DocumentPageDto;
-import ru.sitronics.tn.document.dto.S3FileDto;
 import ru.sitronics.tn.document.model.*;
-import ru.sitronics.tn.document.repository.CommentAttachmentRepository;
-import ru.sitronics.tn.document.repository.CommentRepository;
 import ru.sitronics.tn.document.repository.DocumentRepository;
-import ru.sitronics.tn.document.util.ObjectUtils;
-import ru.sitronics.tn.document.util.S3RestServiceClient;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,7 +50,6 @@ public class DocumentService {
     private String defaultDeleted;
 
     private final DocumentRepository repository;
-    private final S3RestServiceClient s3RestServiceClient;
 
     public Document get(String id) {
         Optional<Document> document = repository.findById(id);
