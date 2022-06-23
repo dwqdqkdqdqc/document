@@ -3,17 +3,16 @@ package ru.sitronics.tn.document.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
@@ -226,9 +225,4 @@ public class Document extends BaseEntity implements Serializable {
     private String contractView;
     @Column(name = "frame_contract")
     private Boolean frameContract;
-
-    /*   @OneToMany(mappedBy = "document")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy("dateOfCreation")
-    private List<Comment> comments; */
 }
