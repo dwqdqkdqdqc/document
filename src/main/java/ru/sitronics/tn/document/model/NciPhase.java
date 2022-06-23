@@ -16,5 +16,7 @@ import javax.persistence.Table;
 @Table(name = "nci_phases")
 public class NciPhase extends BaseEntity {
     @Column(name = "name")
-    private String namePhase;
+    private String name;
+    @Column(name = "name_rus")
+    private String nameRus;
 }
