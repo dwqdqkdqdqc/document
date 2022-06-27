@@ -30,7 +30,10 @@ public enum NciStatus {
     ARCHIVAL("архивный"), //
     FILLED("заполнен"), //
     FORMED("сформирован"),
-    PROJECT_CREATION("Создание проекта");
+    PROJECT_CREATION("Создание проекта"),
+    ASSIGNMENT_OF_RESPONSIBLE("назначение ответственных лиц"),
+    AWAITING_FOR_SIGNING("ожидание подписания"),
+    NOT_ACTIVE("неактивный");
 
     private final String translate;
 
