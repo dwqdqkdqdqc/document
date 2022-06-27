@@ -14,6 +14,5 @@ public interface DocumentRepository extends JpaRepository<Document, String>, Jpa
     @Query("UPDATE Document d SET d.deleted = true WHERE d.id = ?1")
     void markDocumentAsDeletedById(String id);
 
-    @Query("SELECT d FROM Document d WHERE d.id = ?1 AND d.deleted = false")
-    Optional<Document> findById(String id);
+    Optional<Document> findByIdAndDeleted(String id, boolean deleted);
 }
