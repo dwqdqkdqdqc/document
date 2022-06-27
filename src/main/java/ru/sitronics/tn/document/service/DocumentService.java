@@ -47,7 +47,7 @@ public class DocumentService {
 
     public Document get(String id) {
         Optional<Document> document = repository.findById(id);
-        return document.filter(d -> !d.isDeleted()).orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
+        return document.orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
     }
 
     public List<Document> getAll() {
