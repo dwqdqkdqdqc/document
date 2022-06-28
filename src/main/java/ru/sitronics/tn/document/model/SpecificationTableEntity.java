@@ -9,6 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+/*
 
 @Entity
 @Getter
@@ -90,3 +91,4 @@ public class SpecificationTableEntity extends BaseEntity implements Serializable
     @JsonBackReference
     private Specification specification;
 }
+*/

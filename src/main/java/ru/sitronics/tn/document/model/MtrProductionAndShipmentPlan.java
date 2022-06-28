@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+/*
 
 @Entity
 @Getter
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("MTR_PRODUCTION_AND_SHIPMENT_PLAN")
 public class MtrProductionAndShipmentPlan extends Document {
+*/
 /*
 
     private Integer positionNumber;
@@ -44,5 +46,7 @@ public class MtrProductionAndShipmentPlan extends Document {
     private String barcode;    @ManyToOne
     @JoinColumn(name = "nci_object_id")
     private NciObject nciObject;
-*/
+*//*
+
 }
+*/

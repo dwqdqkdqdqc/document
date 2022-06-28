@@ -9,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDate;
-
+/*
 @Entity
 @Getter
 @Setter
@@ -28,4 +28,4 @@ public class ProgressOfProductionForShipmentOfMtr extends Document{
     private LocalDate factDate;
     @Column(name = "verify_document")
     private String verifyDocument;
-}
+}*/

@@ -205,6 +205,79 @@ public class DocumentService {
             Optional<Integer> optionalInteger;
             int index = -1;
 
+
+
+    /*        optionalInteger = entitiesList.stream()
+                    .filter(entity -> "WAYBILL".equalsIgnoreCase(entity.getType()))
+                    .map(entitiesList::indexOf).findFirst();
+            if (optionalInteger.isPresent()) index = optionalInteger.get();*/
+
+            while (entitiesList.size() > 0) {
+                json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(0))
+                        .onClass(Document.class, Match.match().exclude("*").include(selectedFields))
+                          /*      .onClass(MtrSupplyContract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("contract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(QualityDocument.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("qualityDocument"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0]))) */
+                ))).append(",");
+            }
+
+            json = new StringBuilder("[" + json.toString().replaceFirst("},$", "}]\""));
+            JsonNode node = mapper.readTree(json.toString());
+            response.put("entity", node);
+
+            return response;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+/*
+    public Map<String, Object> findAllFields(String filter, Integer page, Integer size, String sort, String fields) {
+        String[] selectedFields = fields.split(", ");
+
+        Map<String, List<String>> nameClassesWithSelectedFields = Arrays.stream(selectedFields)
+                .filter(field -> Arrays.stream(NciDocumentType.NciDocumentTypeEnum.values())
+                        .map(en -> en.name().toLowerCase()).toList()
+                        .contains(field.split("\\.")[0]))
+                .collect(Collectors.groupingBy(field -> field.split("\\.")[0],
+                        mapping(field -> field.replaceFirst(field.split("\\.")[0] + "\\.", ""), toList())));
+
+        Map<String, Object> response = findAll(filter, page, size, sort);
+        List<Object> entities = new ArrayList<>();
+
+        if (response.get("entity") instanceof List<?> list) {
+            entities = list.stream().map(obj -> {
+                if (obj instanceof Document doc) {
+                    return doc;
+                } else return null;
+            }).filter(Objects::nonNull).collect(toList());
+        }
+
+        JavaTimeModule module = new JavaTimeModule();
+        module.addSerializer(LocalDateTimeSerializer.INSTANCE);
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JsonViewModule());
+        mapper.registerModule(module);
+        mapper.setDateFormat(new StdDateFormat().withColonInTimeZone(true));
+
+        try {
+            // https://github.com/monitorjbl/json-view
+            StringBuilder json = new StringBuilder();
+            List<Document> entitiesList = new ArrayList<>(entities.stream()
+                    .map(Document.class::cast)
+                    .toList());  //?
+            List<String> entityTypes = entitiesList.stream().map(Document::getType).toList();
+            Optional<Integer> optionalInteger;
+            int index = -1;
+
             for (String type : entityTypes) {
                 switch (type) {
                     case "WAYBILL" -> {
@@ -348,6 +421,7 @@ public class DocumentService {
             throw new RuntimeException(e);
         }
     }
+    */
 
 
 }

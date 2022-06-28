@@ -28,7 +28,7 @@ public class NciMtr extends BaseEntity {
     @Column(name = "control_prod")
     private boolean controlProd;
 
-    @OneToMany(mappedBy = "nciMTR")
+/*    @OneToMany(mappedBy = "nciMTR")
     @JsonIgnore
-    private List<SpecificationTableEntity> specificationTableEntityList;
+    private List<SpecificationTableEntity> specificationTableEntityList;*/
 }

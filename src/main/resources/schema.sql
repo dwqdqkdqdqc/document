@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS nci_users;
-DROP TABLE IF EXISTS documents CASCADE;
+DROP TABLE IF EXISTS documents ;
 DROP TABLE IF EXISTS documents_curators;
 DROP INDEX IF EXISTS document_id_curators_id_idx;
 --DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
@@ -28,9 +28,8 @@ DROP TABLE IF EXISTS nci_consignees;
 DROP TABLE IF EXISTS specification_table_entities;
 DROP TABLE IF EXISTS nci_units_measurement;
 DROP TABLE IF EXISTS nsi_delivery_methods;
-DROP TABLE IF EXISTS comments CASCADE ;
+DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS comment_attachments;
-DROP TABLE IF EXISTS s3_files;
 
 
 CREATE TABLE documents

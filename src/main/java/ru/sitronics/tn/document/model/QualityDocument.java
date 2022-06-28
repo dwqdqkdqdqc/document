@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+/*
 
 @Entity
 @Getter
@@ -25,3 +26,4 @@ public class QualityDocument extends Document{
 
 
 }
+*/

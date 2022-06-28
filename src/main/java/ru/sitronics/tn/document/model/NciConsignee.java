@@ -192,7 +192,7 @@ public class NciConsignee extends BaseEntity {
     private String fourthCity;
 
 
-    @OneToMany(mappedBy = "nciConsignee")
+/*    @OneToMany(mappedBy = "nciConsignee")
     @JsonIgnore
-    private List<Specification> specifications;
+    private List<Specification> specifications;*/
 }

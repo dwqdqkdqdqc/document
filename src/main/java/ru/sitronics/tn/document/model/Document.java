@@ -1,6 +1,6 @@
 package ru.sitronics.tn.document.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.LazyCollection;
@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,17 +30,36 @@ import java.util.List;
 @Access(javax.persistence.AccessType.FIELD)  //https://stackoverflow.com/a/6084701/548473
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "d_type")
-@DiscriminatorValue("DOCUMENT")
+@DiscriminatorValue("null")
+//@JsonIgnoreProperties({ "specification" })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "documents")
 public class Document extends BaseEntity implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
     @NotNull(message = "Specify document type.")
     @Column(name = "type_id")
     private String type;
-    //  @NotNull(message = "Specify document type.")
+
+    @NotNull(message = "Specify document type.")
     @Column(name = "d_type", insertable = false, updatable = false)
     private String dType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    @JsonBackReference
+    private MtrSupplyContract contract;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    @JsonBackReference
+    private Specification specification;
+
+
+
+
+
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
     @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
     private Long serialNumber;
@@ -85,17 +105,29 @@ public class Document extends BaseEntity implements Serializable {
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
     private String comment;
-    @ManyToOne(fetch = FetchType.EAGER) //рабозбрать, почему именно тут не работает eager
-    @JoinColumn(/*nullable = false*/)
-    private MtrSupplyContract contract;
-    @OneToOne
-    private Specification specification;
+    /*    @ManyToOne(fetch = FetchType.EAGER) //рабозбрать, почему именно тут не работает eager
+        @JoinColumn(*//*nullable = false*//*)
+    private MtrSupplyContract contract;*/
+/*    @OneToOne
+    private Specification specification;*/
+
+
+
+/*    @OneToMany(mappedBy = "specification")
+    @JsonIgnore
+    private List<Document> specDocuments;
+
+    @OneToMany(mappedBy = "contract")
+    @JsonIgnore
+    private List<Document> ContDocuments;*/
+
+
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
     //  @JsonManagedReference
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
-    private List<RelatingDocumentsTable> relatingDocuments = new java.util.ArrayList<>();
+    private List<RelatingDocumentsTable> relatingDocuments = new ArrayList<>();
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
     // @JsonManagedReference
@@ -137,7 +169,7 @@ public class Document extends BaseEntity implements Serializable {
             joinColumns = @JoinColumn(name = "document_id"),
             inverseJoinColumns = @JoinColumn(name = "attachment_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
-    private List<NciAttachment> nciAttachments = new java.util.ArrayList<>();
+    private List<NciAttachment> nciAttachments = new ArrayList<>();
     @Column(name = "customer_id")
     //  @Enumerated(EnumType.STRING)
     // private Customer customer;
@@ -168,9 +200,9 @@ public class Document extends BaseEntity implements Serializable {
     private String additionalAgreementNumber;
 
 //    @OneToOne
-  //  @JsonBackReference(value = "id")
- //   @JoinColumn(name = "id")
- //   private MtrSupplyContract additionalAgreementSpecification;
+    //  @JsonBackReference(value = "id")
+    //   @JoinColumn(name = "id")
+    //   private MtrSupplyContract additionalAgreementSpecification;
 
     @OneToOne
     @JoinColumn

@@ -25,7 +25,7 @@ public class NciTypeOfTransport extends BaseEntity {
     @Column(name = "internal_id")
     private int internalId;
 
-    @OneToMany(mappedBy = "nciTypeOfTransport")
+/*    @OneToMany(mappedBy = "nciTypeOfTransport")
     @JsonIgnore
-    private List<SpecificationTableEntity> specificationTableEntityList;
+    private List<SpecificationTableEntity> specificationTableEntityList;*/
 }
