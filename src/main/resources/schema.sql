@@ -36,7 +36,7 @@ CREATE TABLE documents
 (                                                                   --Base fields
     id                                    VARCHAR PRIMARY KEY NOT NULL,
     type_id                               VARCHAR             NULL,
-    d_type                                VARCHAR             NULL,
+   -- d_type                                VARCHAR             NULL,
     serial_number                         bigserial           not null,
     date_of_creation                      TIMESTAMP DEFAULT now(),
     date_of_creation_short                TIMESTAMP DEFAULT now(),

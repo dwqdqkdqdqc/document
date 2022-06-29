@@ -11,7 +11,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-
+/*
 @Entity
 @Getter
 @Setter
@@ -33,15 +33,15 @@ public class Specification extends Document {
     private List<Document> documents;
 
 
-/*    @OneToMany(mappedBy = "specification")
-    @LazyCollection(LazyCollectionOption.FALSE)
-      @OrderBy("positionNumber")
-    @JsonManagedReference
-    private List<SpecificationTableEntity> specificationsTablesEntities;*/
+//    @OneToMany(mappedBy = "specification")
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @OrderBy("positionNumber")
+//    @JsonManagedReference
+//    private List<SpecificationTableEntity> specificationsTablesEntities;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dop_contract_id")
-    private MtrSupplyContract dopContract;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "dop_contract_id")
+//    private MtrSupplyContract dopContract;
 
     @ManyToOne
     @JoinColumn(name = "nci_consignee_id")
@@ -49,9 +49,5 @@ public class Specification extends Document {
 
     @Column(name = "shipping_details")
     private String shippingDetails;
-
-/*    @ManyToOne()
-    @JsonBackReference
-    @JoinColumn(name = "contract_id")
-    private MtrSupplyContract contract;*/
 }
+*/

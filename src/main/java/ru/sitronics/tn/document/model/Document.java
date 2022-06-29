@@ -28,9 +28,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)  //https://stackoverflow.com/a/6084701/548473
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "d_type")
-@DiscriminatorValue("null")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "d_type")
+//@DiscriminatorValue("null")
 //@JsonIgnoreProperties({ "specification" })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "documents")
@@ -42,19 +42,19 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "type_id")
     private String type;
 
-    @NotNull(message = "Specify document type.")
-    @Column(name = "d_type", insertable = false, updatable = false)
-    private String dType;
+//    @NotNull(message = "Specify document type.")
+//    @Column(name = "d_type", insertable = false, updatable = false)
+//    private String dType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonBackReference
-    private MtrSupplyContract contract;
+    private Document contract;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonBackReference
-    private Specification specification;
+    private Document specification;
 
 
 

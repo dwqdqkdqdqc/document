@@ -211,10 +211,12 @@ public class DocumentService {
                     .filter(entity -> "WAYBILL".equalsIgnoreCase(entity.getType()))
                     .map(entitiesList::indexOf).findFirst();
             if (optionalInteger.isPresent()) index = optionalInteger.get();*/
+            try {
 
-            while (entitiesList.size() > 0) {
-                json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(0))
-                        .onClass(Document.class, Match.match().exclude("*").include(selectedFields))
+
+                while (entitiesList.size() > 0) {
+                    json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(0))
+                            .onClass(Document.class, Match.match().exclude("*").include(selectedFields))
                           /*      .onClass(MtrSupplyContract.class, Match.match().exclude("*")
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
                                                 .filter(f -> f.getKey().equalsIgnoreCase("contract"))
@@ -227,7 +229,11 @@ public class DocumentService {
                                         .include(nameClassesWithSelectedFields.entrySet().stream()
                                                 .filter(f -> f.getKey().equalsIgnoreCase("specification"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0]))) */
-                ))).append(",");
+                    ))).append(",");
+                }
+
+            } catch (Exception e){
+                e.printStackTrace();
             }
 
             json = new StringBuilder("[" + json.toString().replaceFirst("},$", "}]\""));
