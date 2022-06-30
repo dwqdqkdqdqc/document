@@ -71,6 +71,11 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPP
         'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
         '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
+        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
+       ('123e4567-e89b-12d3-a456-900000000000', 'KDM_WORKING_DOCUMENTATION',
+        'KDM_WORKING_DOCUMENTATION',
+        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+        null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00');
 
 INSERT INTO nci_users (id, login, password, name, last_name, role, mail)
