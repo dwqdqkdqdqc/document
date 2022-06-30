@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+
 /*
 
 @Entity
@@ -19,33 +20,35 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("MTR_SUPPLY_CONTRACT")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class MtrSupplyContract extends Document {
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+ */
+/*   @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date_of_signing"
-            , updatable = false
+
     )
     private LocalDate dateOfSigning;
 
 
     @Column(name = "document_registration_number"
-            , updatable = false
+
     )
     private String documentRegistrationNumber;
 
 
     @OneToOne
     @JoinColumn(
-            updatable = false
+
     )
     private NciOst nciOst;
 
     @OneToMany(mappedBy = "contract")
-    private List<Document> documents;
+    private List<Document> documents;*//*
+
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "specification_id")
     private Specification specification;
 }
+
 */

@@ -1,6 +1,6 @@
 package ru.sitronics.tn.document.model;
 
-import com.fasterxml.jackson.annotation.*;
+/*import com.fasterxml.jackson.annotation.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-/*
 @Entity
 @Getter
 @Setter
@@ -49,5 +48,4 @@ public class Specification extends Document {
 
     @Column(name = "shipping_details")
     private String shippingDetails;
-}
-*/
+}*/

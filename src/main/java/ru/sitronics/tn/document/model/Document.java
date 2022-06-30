@@ -32,58 +32,40 @@ import java.util.List;
 //@DiscriminatorColumn(name = "d_type")
 //@DiscriminatorValue("null")
 //@JsonIgnoreProperties({ "specification" })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "documents")
 public class Document extends BaseEntity implements Serializable {
-
     @Serial
     private static final long serialVersionUID = 1L;
     @NotNull(message = "Specify document type.")
     @Column(name = "type_id")
     private String type;
-
-//    @NotNull(message = "Specify document type.")
-//    @Column(name = "d_type", insertable = false, updatable = false)
-//    private String dType;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+  /*  @Column(name = "d_type", insertable = false, updatable = false)
+    private String dType;*/
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    @JsonBackReference
     private Document contract;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @JsonBackReference
+    @OneToOne
     private Document specification;
-
-
-
-
-
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
     @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
     private Long serialNumber;
     @CreatedDate
-    //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_of_creation", insertable = false, updatable = false)
     private LocalDateTime dateOfCreation;
     @CreatedDate
-    //  @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_of_creation", insertable = false, updatable = false)
     private LocalDate dateOfCreationShort;
     @CreatedBy
-    //  @NotNull
     @ManyToOne
-    //   @JsonManagedReference(value = "User")
     @JoinColumn
     private NciUser author;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    //@JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_curators",
             joinColumns = @JoinColumn(name = "document_id"),
@@ -105,38 +87,18 @@ public class Document extends BaseEntity implements Serializable {
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
     private String comment;
-    /*    @ManyToOne(fetch = FetchType.EAGER) //рабозбрать, почему именно тут не работает eager
-        @JoinColumn(*//*nullable = false*//*)
-    private MtrSupplyContract contract;*/
-/*    @OneToOne
-    private Specification specification;*/
-
-
-
-/*    @OneToMany(mappedBy = "specification")
-    @JsonIgnore
-    private List<Document> specDocuments;
-
-    @OneToMany(mappedBy = "contract")
-    @JsonIgnore
-    private List<Document> ContDocuments;*/
-
-
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
-    //  @JsonManagedReference
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
     private List<RelatingDocumentsTable> relatingDocuments = new ArrayList<>();
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
-    // @JsonManagedReference
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
     private List<DocumentHistoryBpm> documentHistoryBpm;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    // @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_objects",
             joinColumns = @JoinColumn(name = "document_id"),
@@ -163,7 +125,6 @@ public class Document extends BaseEntity implements Serializable {
     private String lusDocumentNumber;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    //  @JsonManagedReference
     @BatchSize(size = 100)
     @JoinTable(name = "documents_attachments",
             joinColumns = @JoinColumn(name = "document_id"),
@@ -171,12 +132,8 @@ public class Document extends BaseEntity implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
     private List<NciAttachment> nciAttachments = new ArrayList<>();
     @Column(name = "customer_id")
-    //  @Enumerated(EnumType.STRING)
-    // private Customer customer;
     private String customer;
     @Column(name = "supplier_id")
-    //  @Enumerated(EnumType.STRING)
-    //  private Supplier supplier;
     private String supplier;
     @Column(name = "amount")
     private BigDecimal amount;
@@ -239,10 +196,8 @@ public class Document extends BaseEntity implements Serializable {
     @OneToOne
     @JoinColumn
     private NciUser responsible;
-    // @NotNull
     @Column(name = "document_registration_number")
     private String documentRegistrationNumber;
-    //  @NotNull
     @OneToOne
     @JoinColumn
     private NciOst nciOst;

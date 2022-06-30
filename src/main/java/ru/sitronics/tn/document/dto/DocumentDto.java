@@ -28,8 +28,8 @@ public class DocumentDto implements HasId {
     private NciStatus status;
     private NciAccessLimitation access;
     private String comment;
-   // private MtrSupplyContract contract;
-   // private Specification specification;
+    private Document contract;
+    private Document specification;
     private List<RelatingDocumentsTable> relatingDocuments;
     private List<DocumentHistoryBpm> documentHistoryBpm;
     private List<NciObject> nciObjects;
