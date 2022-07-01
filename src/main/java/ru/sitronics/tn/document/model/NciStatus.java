@@ -31,9 +31,11 @@ public enum NciStatus {
     FILLED("заполнен"), //
     FORMED("сформирован"),
     PROJECT_CREATION("Создание проекта"),
-    ASSIGNMENT_OF_RESPONSIBLE("назначение ответственных лиц"),
-    AWAITING_FOR_SIGNING("ожидание подписания"),
-    NOT_ACTIVE("неактивный");
+    ASSIGNMENT_OF_RESPONSIBLE("Назначение ответственных лиц"),
+    AWAITING_FOR_SIGNING("Ожидание подписания"),
+    NOT_ACTIVE("Неактивный"),
+    APPROVAL_IN_PROGRESS_IN_SED("На согласовании в СЭД"),
+    REMARKS_PREPARED("Сформированы замечания");
 
     private final String translate;
 
