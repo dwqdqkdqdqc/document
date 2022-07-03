@@ -39,120 +39,171 @@ public class Document extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @NotNull(message = "Specify document type.")
     @Column(name = "type_id")
-    private String type;                                  //1
+    private String type;                              //1
     /*  @Column(name = "d_type", insertable = false, updatable = false)
       private String dType;*/
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    private Document contract;                      //38
+    private Document contract;                           //4
     @OneToOne
-    private Document specification;                   //4
+    private Document specification;
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
     @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
-    private Long serialNumber;
+    private Long serialNumber;                       //2
     @CreatedDate
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "date_of_creation", insertable = false, updatable = false)
-    private LocalDateTime dateOfCreation;
+    @Column(name = "create_date", insertable = false, updatable = false)
+    private LocalDateTime createDate;               //3
     @CreatedDate
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "date_of_creation", insertable = false, updatable = false)
-    private LocalDate dateOfCreationShort;
+    @Column(name = "create_date", insertable = false, updatable = false)
+    private LocalDate createDateShort;
     @Column(name = "registration_number")
-    private String registrationNumber;                    //2
+    private String registrationNumber;
     @Column(name = "date_signature")
-    private LocalDate dateSignature;                       //3
+    private LocalDate dateSignature;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "additional_agreement_date")
-    private LocalDate additionalAgreementDate;             //5
+    private LocalDate additionalAgreementDate;
     @OneToOne
     @JoinColumn(name = "object_kis_up_id")
-    private NciObjectKisUp objectKisUp;                           //6
+    private NciObjectKisUp objectKisUp;                     //7
     @CreatedBy
     @ManyToOne
     @JoinColumn
-    private NciUser author;                           //7
+    private NciUser author;                          //6
     @Column(name = "customer_id")
-    private String customer;                          //8
+    private String customer;                       //8
     @OneToOne
     @JoinColumn
-    private NciOst ost;                          //9
+    private NciOst ost;                      //9
     @OneToOne
     @JoinColumn(name = "access_limitation_id")
-    private NciAccessLimitation accessLimitation;                          //10
+    private NciAccessLimitation accessLimitation;          //11
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
-    private String comment;                         //11
+    private String comment;
     // @NotNull(message = "Specify the status of the document.")
     @OneToOne
-    @JoinColumn(name = "document_status_id")
-    private NciDocumentStatus statusDocument;                        //12
+    @JoinColumn(name = "status_id")
+    private NciDocumentStatus status;                 //10
     @OneToOne
     @JoinColumn(name = "ost_agent_id")
-    private NciOstAgent ostAgent;                        //13
+    private NciOstAgent ostAgent;
     @OneToOne
     @JoinColumn(name = "class_contract_id")
-    private NciClassContract classContract;                        //14
+    private NciClassContract classContract;
     @OneToOne
     @JoinColumn(name = "standard_form_id")
-    private NciStandardForm standardForm;                        //15
+    private NciStandardForm standardForm;
     @Column(name = "framework_agreement")
-    private Boolean frameworkAgreement;                        //16
+    private Boolean frameworkAgreement;
     @Column(name = "subject_of_the_contract")
-    private String subjectOfTheContract;                      //17
+    private String subjectOfTheContract;
     @Column(name = "starting_date")
-    private LocalDate startingDate;                    //18
+    private LocalDate startingDate;
     @Column(name = "end_date")
-    private LocalDate endDate;                  //19
+    private LocalDate endDate;
     @Column(name = "starting_date_work")
-    private LocalDate startingDateWork;                    //20
+    private LocalDate startingDateWork;
     @Column(name = "end_date_work")
-    private LocalDate endDateWork;                    //21
+    private LocalDate endDateWork;
     @Column(name = "date_of_termination")
-    private LocalDate dateOfTermination;                  //22
+    private LocalDate dateOfTermination;
     @OneToOne
     @JoinColumn(name = "termination_code_id")
-    private NciTerminationCode terminationCode;                  //23
+    private NciTerminationCode terminationCode;
     @Column(name = "sum_no_vat")
-    private BigDecimal sumNoVat;                 //24
+    private BigDecimal sumNoVat;          //13
     @Column(name = "sum_vat")
-    private BigDecimal sumVat;                 //25
-    @Column(name = "total_including_vat")
-    private BigDecimal totalIncludingVat;                 //26
+    private BigDecimal sumVat;          //14
+    @Column(name = "total_sum_vat")
+    private BigDecimal totalSumVat;          //15
     @Column(name = "status_zakupki")
-    private String statusZakupki;               //27
+    private String statusZakupki;
 
     // Nci_organization - непонятно, что это (Дог. МТР) //28      ???????????????????
 
     @Column(name = "role_id")
-    private String role;                   //29     (тип должен быть Role)
+    private String role;                   // (тип должен быть Role)
     @ManyToOne
     @JoinColumn(name = "responsible_id")
-    private NciUser responsible;                           //30
+    private NciUser responsible;
     @Column(name = "factory_number")
-    private String factoryNumber;                         //32
+    private String factoryNumber;
     @Column(name = "pid_number")
-    private Integer pidNumber;                        //33
+    private Integer pidNumber;        //19
     @Column(name = "barcode")
-    private String barcode;                       //34
+    private String barcode;
     @Column(name = "lkk_number")
-    private String lkkNumber;                    //35
+    private String lkkNumber;
     @Column(name = "lkk_date")
-    private LocalDate lkkDate;                    //36
+    private LocalDate lkkDate;
     @Column(name = "lus_number")
-    private String lusNumber;                    //37
+    private String lusNumber;
     @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
-    private List<LinkDocumentsTable> linkDocuments;  //39
+    private List<LinkDocumentsTable> linkDocuments;
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
-    private List<DocumentHistoryBpm> documentsHistoryBpm; //40
+    private List<DocumentHistoryBpm> documentsHistoryBpm;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dop_Contract_id")
+    private Document dopContract;                           //5
+    @Column(name = "lot_number")
+    private String lotNumber;                         //12
+    @Column(name = "status_contract")
+    private String statusContract;                        //16
+    @ManyToOne
+    @JoinColumn(name = "nci_consignee_id")
+    private NciConsignee nciConsignee;                      //17
+    @Column(name = "shipping_details")
+    private String shippingDetails;                    //18
+    @Column(name = "position_number")
+    private Long positionNumber;        //19
+    @Column(name = "delivery_method")
+    private boolean deliveryMethod;     //20
+    @Column(name = "position_code")
+    private Long positionCode;             //21
+    @ManyToOne
+    @JoinColumn(name = "mtr_id")
+    private NciMtr mtr;            //22
+    @Column(name = "gost_ost_tu")
+    private String gostOstTu;            //23
+    @Column(name = "code")
+    private String code;            //24
+    @ManyToOne
+    @JoinColumn(name = "unit_of_measurement_id")
+    private NciUnitsMeasurement unitsOfMeasurement;            //25
+    @Column(name = "quantity")
+    private Long quantity;            //26
+    @Column(name = "price_no_vat")
+    private BigDecimal priceNoVat;            //27
+    @Column(name = "vat")
+    private Double vat;            //28
+    @Column(name = "amount_with_vat")
+    private BigDecimal amountWithVat;            //29
+    @Column(name = "contractor_id")
+    private String producer;            //30
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private NciCountry country;            //31
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "delivery_date")
+    private LocalDate deliveryDate; //32
+    @ManyToOne
+    @JoinColumn(name = "type_of_transport_id")
+    private NciTypeOfTransport typeOfTransport;  //33
+    @Column(name = "belonging_to_the_dsi")
+    private String belongingToTheDSI;   //34
+    @Column(name = "note")
+    private String note;  //35
 
 
 

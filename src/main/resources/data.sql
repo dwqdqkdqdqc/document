@@ -29,9 +29,9 @@ DELETE FROM nsi_delivery_methods;
 
 */
 
-INSERT INTO documents (id, type_id, author_id, document_status_id, access_limitation_id, contract_id, lot,
+INSERT INTO documents (id, type_id, author_id, status_id, access_limitation_id, contract_id, lot,
                        specification_id, customer_id, supplier_id, amount, date_signature,
-                       registration_number, ost_id, date_of_creation)
+                       registration_number, ost_id, create_date)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', '123e4567-e89b-12d3-a456-010000000000',
         '900000000-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-810000000000', null, null, null,
         '100000000-e89b-12d3-a456-100000000000',

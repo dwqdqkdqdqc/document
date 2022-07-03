@@ -20,8 +20,8 @@ public class DocumentDto implements HasId {
     private String type;
     private String dType;
     private Long serialNumber;
-    private LocalDateTime dateOfCreation;
-    private LocalDate dateOfCreationShort;
+    private LocalDateTime createDate;
+    private LocalDate createDateShort;
     private NciUser author;
     private List<NciUser> curators;
     private byte[] content;

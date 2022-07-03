@@ -52,6 +52,6 @@ s3RestService:
   postMultipartFilesEndpoint: ${POST_MP_FILES_ENDPOINT:/file}
 
 rsql:
-  defaultSort: ${DEFAULT_SORT:dateOfCreation,asc}
+  defaultSort: ${DEFAULT_SORT:createDate,asc}
   defaultPageSize: ${DEFAULT_PAGE_SIZE:10}
   defaultDeleted: ${DEFAULT_DELETED:deleted=='false'}

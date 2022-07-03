@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS documents_objects;
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
-DROP TABLE IF EXISTS nci_customers;
+DROP TABLE IF EXISTS nci_contractors;
 DROP TABLE IF EXISTS nci_document_types;
 DROP TABLE IF EXISTS nci_mtr_groups;
 DROP TABLE IF EXISTS nci_mtrs;
@@ -39,8 +39,8 @@ CREATE TABLE documents
     type_id                               VARCHAR             NULL,
     -- d_type                                VARCHAR             NULL,
     serial_number                         bigserial           not null,
-    date_of_creation                      TIMESTAMP DEFAULT now(),
-    date_of_creation_short                TIMESTAMP DEFAULT now(),
+    create_date                           TIMESTAMP DEFAULT now(),
+    create_date_short                TIMESTAMP DEFAULT now(),
     registration_number                   VARCHAR             NULL, --contract
     date_signature                        TIMESTAMP           NULL, --contract
     additional_agreement_date             TIMESTAMP           NULL, --contract
@@ -48,7 +48,7 @@ CREATE TABLE documents
     author_id                             VARCHAR             NULL,
     ost_id                                VARCHAR             NULL, --contract
     access_limitation_id                  VARCHAR             NULL,
-    document_status_id                    VARCHAR             NULL,
+    status_id                    VARCHAR             NULL,
     comment                               VARCHAR             NULL,
     ost_agent_id                          VARCHAR             NULL,
     class_contract_id                     VARCHAR             NULL, --contract
@@ -60,23 +60,48 @@ CREATE TABLE documents
     date_of_termination                   TIMESTAMP           NULL, --contract
     sum_no_vat                            numeric   default 0 NULL, --MtrInsurancePolicy
     sum_vat                               numeric   default 0 NULL, --MtrInsurancePolicy
-    total_including_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
+    total_sum_vat                 numeric   default 0 NULL, --MtrInsurancePolicy
     status_zakupki                        VARCHAR             NULL, --contract
     role_id                               VARCHAR             NULL, --contract
     responsible_id                        VARCHAR             NULL, --contract
     factory_number                        VARCHAR             NULL,
-    pid_number                                   INTEGER             NULL,
+    pid_number                            INTEGER             NULL,
     barcode                               VARCHAR             NULL,
-    lkk_number                   VARCHAR             NULL,
-    lkk_date                     TIMESTAMP           NULL,
-    lus_number                   VARCHAR             NULL,
+    lkk_number                            VARCHAR             NULL,
+    lkk_date                              TIMESTAMP           NULL,
+    lus_number                            VARCHAR             NULL,
+    dop_Contract_id                       VARCHAR             NULL,
+    lot_number             VARCHAR             NULL,
+    status_contract           VARCHAR             NULL,
+    position_number            BIGINT              NULL,
+    delivery_method            BOOLEAN DEFAULT FALSE,
+    position_code              BIGINT              NULL,
+    mtr_id                 VARCHAR             NULL,
+    gost_ost_tu                VARCHAR             NULL,
+    code                       VARCHAR             NULL,
+    unit_of_measurement_id VARCHAR             NULL,
+    quantity                   BIGINT              NULL,
+    price_no_vat               NUMERIC DEFAULT 0   NULL,
+    vat                        NUMERIC DEFAULT 0   NULL,
+    amount_with_vat            NUMERIC DEFAULT 0   NULL,
+    contractor_id              VARCHAR             NULL,
+    country_id             VARCHAR             NULL,
+    delivery_date              TIMESTAMP           NULL,
+    type_of_transport_id   VARCHAR             NULL,
+    belonging_to_the_dsi       VARCHAR             NULL,
+    specification_id           VARCHAR             NULL,
+    note                       VARCHAR             NULL,
+
+
+
+
+
+
 
 
     content                               bytea               NULL,
 
     contract_id                           VARCHAR             NULL,
-    specification_id                      VARCHAR             NULL,
-
 
 
     customer_id                           VARCHAR             NULL,
@@ -110,13 +135,11 @@ CREATE TABLE documents
     number_policy                         VARCHAR             NULL, --MtrInsurancePolicy
     data_policy                           TIMESTAMP           null, --MtrInsurancePolicy
     nci_mtr_group_id                      VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    nci_mtr_id                            VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     phase_number                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     nci_phase_id                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     plan_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     fact_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     verify_document                       VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    dop_contract_id                       VARCHAR             NULL,
 
     contract_status                       VARCHAR             NULL,
     nci_consignee_id                      VARCHAR             NULL,
@@ -162,7 +185,7 @@ CREATE TABLE type_links
 
 CREATE TABLE documents_link_documents
 (
-    document_id                     VARCHAR NULL,
+    document_id                 VARCHAR NULL,
     link_document_id            VARCHAR NULL,
     type_link_id                VARCHAR NULL,
     link_document_serial_number VARCHAR NULL
@@ -171,9 +194,9 @@ CREATE TABLE documents_link_documents
 
 CREATE TABLE documents_history_bpm
 (
-    id                   varchar null,
-    serial_number        bigint  null,
-    document_id          varchar null,
+    id               varchar null,
+    serial_number    bigint  null,
+    document_id      varchar null,
     link_document_id varchar null,
     type_link        varchar null
 );
@@ -389,11 +412,11 @@ CREATE TABLE nci_access_limitations
     code                  VARCHAR             NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
-CREATE TABLE nci_customers
+CREATE TABLE nci_contractors
 (
     id            VARCHAR PRIMARY KEY NOT NULL,
-    customer      VARCHAR             NULL, --Наименование Контрагента
-    customer_rus  VARCHAR             NULL, --Наименование Контрагента
+    contractor     VARCHAR             NULL, --Наименование Контрагента
+    contractor_rus  VARCHAR             NULL, --Наименование Контрагента
     internal_id   integer             null, --Внутренний номер записи SAP MDM
     internal_guid integer             null, --GUID делового партнера
     inn           VARCHAR             NULL,
@@ -408,7 +431,7 @@ CREATE TABLE nci_customers
     fax           VARCHAR             NULL,
     email         VARCHAR             NULL,
     address       VARCHAR             NULL,
-    customer_type integer             null, --Значение из справочника «Тип контрагента»
+    contractor_type integer             null, --Значение из справочника «Тип контрагента»
     bp_type_lt_id integer             null  --Тип Контрагента
 );
 
