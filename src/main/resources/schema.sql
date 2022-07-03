@@ -1,17 +1,15 @@
 DROP TABLE IF EXISTS nci_users;
-DROP TABLE IF EXISTS documents ;
+DROP TABLE IF EXISTS documents;
 DROP TABLE IF EXISTS documents_curators;
 DROP INDEX IF EXISTS document_id_curators_id_idx;
 --DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
-DROP TABLE IF EXISTS type_relation;
-DROP TABLE IF EXISTS documents_relating_documents;
-DROP TABLE IF EXISTS document_history_bpm;
+DROP TABLE IF EXISTS type_links;
+DROP TABLE IF EXISTS documents_link_documents;
+DROP TABLE IF EXISTS documents_history_bpm;
 DROP TABLE IF EXISTS contracts;
-DROP TABLE IF EXISTS nci_objects;
+DROP TABLE IF EXISTS nci_objects_kis_up;
 DROP TABLE IF EXISTS documents_objects;
 DROP TABLE IF EXISTS nci_osts;
-DROP TABLE IF EXISTS nci_pids;
-DROP TABLE IF EXISTS nci_factory_numbers;
 DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
 DROP TABLE IF EXISTS nci_customers;
@@ -30,29 +28,57 @@ DROP TABLE IF EXISTS nci_units_measurement;
 DROP TABLE IF EXISTS nsi_delivery_methods;
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS comment_attachments;
+DROP TABLE IF EXISTS nci_access_limitations;
+DROP TABLE IF EXISTS nci_document_statuses;
+DROP TABLE IF EXISTS nci_ost_agents;
 
 
 CREATE TABLE documents
 (                                                                   --Base fields
     id                                    VARCHAR PRIMARY KEY NOT NULL,
     type_id                               VARCHAR             NULL,
-   -- d_type                                VARCHAR             NULL,
+    -- d_type                                VARCHAR             NULL,
     serial_number                         bigserial           not null,
     date_of_creation                      TIMESTAMP DEFAULT now(),
     date_of_creation_short                TIMESTAMP DEFAULT now(),
+    registration_number                   VARCHAR             NULL, --contract
+    date_signature                        TIMESTAMP           NULL, --contract
+    additional_agreement_date             TIMESTAMP           NULL, --contract
+    object_kis_up_id                      VARCHAR             NULL,
     author_id                             VARCHAR             NULL,
-    content                               bytea               NULL,
-    status                                VARCHAR             NULL,
-    access                                VARCHAR             NULL,
+    ost_id                                VARCHAR             NULL, --contract
+    access_limitation_id                  VARCHAR             NULL,
+    document_status_id                    VARCHAR             NULL,
     comment                               VARCHAR             NULL,
+    ost_agent_id                          VARCHAR             NULL,
+    class_contract_id                     VARCHAR             NULL, --contract
+    standard_form_id                      VARCHAR             NULL, --contract
+    starting_date                         TIMESTAMP           null, --MtrInsurancePolicy
+    end_date                              TIMESTAMP           null, --MtrInsurancePolicy
+    starting_date_work                    TIMESTAMP           null,
+    end_date_work                         TIMESTAMP           null,
+    date_of_termination                   TIMESTAMP           NULL, --contract
+    sum_no_vat                            numeric   default 0 NULL, --MtrInsurancePolicy
+    sum_vat                               numeric   default 0 NULL, --MtrInsurancePolicy
+    total_including_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
+    status_zakupki                        VARCHAR             NULL, --contract
+    role_id                               VARCHAR             NULL, --contract
+    responsible_id                        VARCHAR             NULL, --contract
+    factory_number                        VARCHAR             NULL,
+    pid_number                                   INTEGER             NULL,
+    barcode                               VARCHAR             NULL,
+    lkk_number                   VARCHAR             NULL,
+    lkk_date                     TIMESTAMP           NULL,
+    lus_number                   VARCHAR             NULL,
+
+
+    content                               bytea               NULL,
+
     contract_id                           VARCHAR             NULL,
     specification_id                      VARCHAR             NULL,
-    nci_object_kis_up                     VARCHAR             NULL,
-    factory_number                        VARCHAR             NULL,
-    barcode                               VARCHAR             NULL,
-    lkk_document_number                   VARCHAR             NULL,
-    lkk_document_date                     TIMESTAMP           NULL,
-    lus_document_number                   VARCHAR             NULL,
+
+
+
     customer_id                           VARCHAR             NULL,
     supplier_id                           VARCHAR             NULL,
     amount                                numeric   default 0 NULL,
@@ -60,14 +86,11 @@ CREATE TABLE documents
 
 --Fields of other classes
     lot                                   VARCHAR             NULL, --Specification
-    additional_agreement_date             TIMESTAMP           NULL, --contract
+
     additional_agreement_number           VARCHAR             NULL, --contract
     additional_agreement_specification_id VARCHAR             NULL, --contract     ???
-    nci_class_contract_id                 VARCHAR             NULL, --contract
-    date_of_termination                   TIMESTAMP           NULL, --contract
-    date_of_signing                       TIMESTAMP           NULL, --contract
-    document_registration_number          VARCHAR             NULL, --contract
-    nci_ost_id                            VARCHAR             NULL, --contract
+
+
     contract_subject                      VARCHAR             NULL, --contract
     reg_number                            VARCHAR             NULL, --contract
     inn                                   VARCHAR             NULL, --contract
@@ -77,17 +100,13 @@ CREATE TABLE documents
     frame_contract                        VARCHAR             NULL, --contract
     framework_agreement                   boolean             null, --contract
     subject_of_the_contract               VARCHAR             NULL, --contract
-    nci_standard_form_id                  VARCHAR             NULL, --contract
-    status_zakupki                        VARCHAR             NULL, --contract
-    role                                  VARCHAR             NULL, --contract
+
+
     organization_id                       VARCHAR             NULL, --contract
-    responsible_id                        VARCHAR             NULL, --contract
-    nci_termination_code_id               VARCHAR             NULL, --contract
-    sum_no_vat                            numeric   default 0 NULL, --MtrInsurancePolicy
-    sum_vat                               numeric   default 0 NULL, --MtrInsurancePolicy
-    total_including_vat                   numeric   default 0 NULL, --MtrInsurancePolicy
-    starting_date                         TIMESTAMP           null, --MtrInsurancePolicy
-    end_date                              TIMESTAMP           null, --MtrInsurancePolicy
+
+    termination_code_id                   VARCHAR             NULL, --contract
+
+
     number_policy                         VARCHAR             NULL, --MtrInsurancePolicy
     data_policy                           TIMESTAMP           null, --MtrInsurancePolicy
     nci_mtr_group_id                      VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
@@ -98,12 +117,12 @@ CREATE TABLE documents
     fact_date                             TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     verify_document                       VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     dop_contract_id                       VARCHAR             NULL,
-    nci_object_id                         VARCHAR             NULL,
+
     contract_status                       VARCHAR             NULL,
     nci_consignee_id                      VARCHAR             NULL,
     shipping_details                      integer             null, --какой тип? уточнить
     nci_units_measurement_id              VARCHAR             NULL,
-    nci_delivery_method_id                VARCHAR             NULL
+    delivery_method_id                    VARCHAR             NULL
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
 
@@ -135,31 +154,31 @@ CREATE TABLE documents_curators
 );
 CREATE UNIQUE INDEX document_id_curators_id_idx ON documents_curators (document_id, curator_id);
 
-CREATE TABLE type_relation
+CREATE TABLE type_links
 (
     id   VARCHAR NULL,
     type VARCHAR NULL
 );
 
-CREATE TABLE documents_relating_documents
+CREATE TABLE documents_link_documents
 (
     document_id                     VARCHAR NULL,
-    relating_document_id            VARCHAR NULL,
-    type_relation_id                VARCHAR NULL,
-    relating_document_serial_number VARCHAR NULL
+    link_document_id            VARCHAR NULL,
+    type_link_id                VARCHAR NULL,
+    link_document_serial_number VARCHAR NULL
 );
---CREATE UNIQUE INDEX doc_id_data_id_name_data_type_idx ON documents_linked_documents (document_id, linked_document_id/*, type_relation_id*/);
+--CREATE UNIQUE INDEX doc_id_data_id_name_data_type_idx ON documents_linked_documents (document_id, linked_document_id/*, type_link_id*/);
 
-CREATE TABLE document_history_bpm
+CREATE TABLE documents_history_bpm
 (
     id                   varchar null,
     serial_number        bigint  null,
     document_id          varchar null,
-    relating_document_id varchar null,
-    type_relation        varchar null
+    link_document_id varchar null,
+    type_link        varchar null
 );
 
-CREATE TABLE nci_objects
+CREATE TABLE nci_objects_kis_up
 (
     id        VARCHAR NULL,
     kis_up    VARCHAR NULL, --Код объекта КИС УП
@@ -181,20 +200,6 @@ CREATE TABLE nci_osts
     internal_id   integer      NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
-CREATE TABLE nci_pids
-(
-    id          VARCHAR NULL,
-    pid         VARCHAR NULL,
-    document_id VARCHAR NULL
-);
-
-CREATE TABLE nci_factory_numbers
-(
-    id             VARCHAR NULL,
-    factory_number VARCHAR NULL,
-    document_id    VARCHAR NULL
-);
-
 CREATE TABLE nci_attachments
 (
     id            VARCHAR NULL,
@@ -206,18 +211,6 @@ CREATE TABLE documents_attachments
 (
     document_id   VARCHAR NULL,
     attachment_id VARCHAR NULL
-);
-
-CREATE TABLE nci_customers
-(
-    name                 VARCHAR NULL,
-    name_rus             VARCHAR NULL,
-    role                 VARCHAR NULL,
-    fio                  VARCHAR NULL,
-    inn                  VARCHAR NULL,
-    ogrn_ogrni           VARCHAR NULL,
-    registration_address VARCHAR NULL,
-    customer_manager     VARCHAR NULL
 );
 
 CREATE TABLE nci_document_types
@@ -243,23 +236,23 @@ CREATE TABLE nci_phases
 
 CREATE TABLE nci_class_contracts
 (
-    id        VARCHAR NULL,
-    class_agr VARCHAR NULL, --Наименование Объекта строительства
-    code      VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
+    id             VARCHAR NULL,
+    class_contract VARCHAR NULL, --Наименование Объекта строительства
+    code           VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
 CREATE TABLE nci_standard_forms
 (
-    id                VARCHAR NULL,
-    nci_standard_form VARCHAR NULL, --Наименование - Типовая форма
-    internal_id       integer NULL  --Внутренний (технический) номер записи SAP MDM
+    id            VARCHAR NULL,
+    standard_form VARCHAR NULL, --Наименование - Типовая форма
+    internal_id   integer NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
 CREATE TABLE nci_termination_codes
 (
-    id                VARCHAR NULL,
-    cancellation_code VARCHAR NULL, --Наименование – Код расторжения
-    internal_id       VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
+    id               VARCHAR NULL,
+    termination_code VARCHAR NULL, --Наименование – Код расторжения
+    internal_id      VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
 
@@ -383,8 +376,55 @@ CREATE TABLE specification_table_entities
 
 CREATE TABLE nsi_delivery_methods
 (
-    delivery_method VARCHAR NULL, --Наименование – Способ доставки
-    internal_id     integer null  --Внутренний (технический) номер записи SAP MDM
+    id              VARCHAR PRIMARY KEY NOT NULL,
+    delivery_method VARCHAR             NULL, --Наименование – Способ доставки
+    internal_id     integer             null  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE nci_access_limitations
+(
+    id                    VARCHAR PRIMARY KEY NOT NULL,
+    access_limitation     VARCHAR             NULL, --Наименование – Грифы доступа
+    access_limitation_rus VARCHAR             NULL, --Наименование – Грифы доступа
+    code                  VARCHAR             NULL  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE nci_customers
+(
+    id            VARCHAR PRIMARY KEY NOT NULL,
+    customer      VARCHAR             NULL, --Наименование Контрагента
+    customer_rus  VARCHAR             NULL, --Наименование Контрагента
+    internal_id   integer             null, --Внутренний номер записи SAP MDM
+    internal_guid integer             null, --GUID делового партнера
+    inn           VARCHAR             NULL,
+    kpp           VARCHAR             NULL,
+    okpo          VARCHAR             NULL,
+    okdp          VARCHAR             NULL,
+    ogrn          VARCHAR             NULL,
+    okved         VARCHAR             NULL,
+    okato         VARCHAR             NULL,
+    oktmo         VARCHAR             NULL,
+    phone         VARCHAR             NULL,
+    fax           VARCHAR             NULL,
+    email         VARCHAR             NULL,
+    address       VARCHAR             NULL,
+    customer_type integer             null, --Значение из справочника «Тип контрагента»
+    bp_type_lt_id integer             null  --Тип Контрагента
+);
+
+CREATE TABLE nci_document_statuses
+(
+    id                  VARCHAR PRIMARY KEY NOT NULL,
+    internal_id         INTEGER             null, --Id Статусы документов
+    status_document     VARCHAR             NULL, --Наименование – Статусы документов
+    status_document_rus VARCHAR             NULL
+);
+
+CREATE TABLE nci_ost_agents
+(
+    id          VARCHAR      NULL,
+    ost_agent   VARCHAR(150) NULL, --Наименование ОСТ агента
+    internal_id integer      NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
 

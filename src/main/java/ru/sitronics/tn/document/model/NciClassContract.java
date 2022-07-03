@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "nci_class_contracts")
 public class NciClassContract extends BaseEntity{
-    @Column(name = "class_agr")
-    private String classAgr;
+    @Column(name = "class_contract")
+    private String classContract;
     @Column(name = "code")
     private String code;
 }

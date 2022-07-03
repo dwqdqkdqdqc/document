@@ -1,27 +1,22 @@
 package ru.sitronics.tn.document.model;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public enum NciAccessLimitation {
-    WITHOUT_A_FINGERBOARD("Без грифа"),
-    CONFIDENTIALLY("Конфиденциально"),
-    SUPER_CONFIDENTIAL("супер конфиденциально");
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-    private final String translate;
-
-    NciAccessLimitation(final String translate) {
-        this.translate = translate;
-    }
-
-    public static Map<NciAccessLimitation, String> getEnumValuesWithTranslate() {
-        Map<NciAccessLimitation, String> map = new EnumMap<>(NciAccessLimitation.class);
-        Arrays.asList(NciAccessLimitation.values()).forEach(value -> map.put(value, value.getTranslate()));
-        return map;
-    }
-
-    public String getTranslate() {
-        return translate;
-    }
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "nci_access_limitations")
+public class NciAccessLimitation extends BaseEntity{
+    @Column(name = "access_limitation")
+    private String accessLimitation;
+    @Column(name = "code")
+    private String code;
 }

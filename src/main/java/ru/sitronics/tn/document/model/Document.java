@@ -39,14 +39,14 @@ public class Document extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @NotNull(message = "Specify document type.")
     @Column(name = "type_id")
-    private String type;
-  /*  @Column(name = "d_type", insertable = false, updatable = false)
-    private String dType;*/
+    private String type;                                  //1
+    /*  @Column(name = "d_type", insertable = false, updatable = false)
+      private String dType;*/
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    private Document contract;
+    private Document contract;                      //38
     @OneToOne
-    private Document specification;
+    private Document specification;                   //4
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
     @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
     private Long serialNumber;
@@ -60,10 +60,107 @@ public class Document extends BaseEntity implements Serializable {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_of_creation", insertable = false, updatable = false)
     private LocalDate dateOfCreationShort;
+    @Column(name = "registration_number")
+    private String registrationNumber;                    //2
+    @Column(name = "date_signature")
+    private LocalDate dateSignature;                       //3
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "additional_agreement_date")
+    private LocalDate additionalAgreementDate;             //5
+    @OneToOne
+    @JoinColumn(name = "object_kis_up_id")
+    private NciObjectKisUp objectKisUp;                           //6
     @CreatedBy
     @ManyToOne
     @JoinColumn
-    private NciUser author;
+    private NciUser author;                           //7
+    @Column(name = "customer_id")
+    private String customer;                          //8
+    @OneToOne
+    @JoinColumn
+    private NciOst ost;                          //9
+    @OneToOne
+    @JoinColumn(name = "access_limitation_id")
+    private NciAccessLimitation accessLimitation;                          //10
+    @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
+    @Column(name = "comment")
+    private String comment;                         //11
+    // @NotNull(message = "Specify the status of the document.")
+    @OneToOne
+    @JoinColumn(name = "document_status_id")
+    private NciDocumentStatus statusDocument;                        //12
+    @OneToOne
+    @JoinColumn(name = "ost_agent_id")
+    private NciOstAgent ostAgent;                        //13
+    @OneToOne
+    @JoinColumn(name = "class_contract_id")
+    private NciClassContract classContract;                        //14
+    @OneToOne
+    @JoinColumn(name = "standard_form_id")
+    private NciStandardForm standardForm;                        //15
+    @Column(name = "framework_agreement")
+    private Boolean frameworkAgreement;                        //16
+    @Column(name = "subject_of_the_contract")
+    private String subjectOfTheContract;                      //17
+    @Column(name = "starting_date")
+    private LocalDate startingDate;                    //18
+    @Column(name = "end_date")
+    private LocalDate endDate;                  //19
+    @Column(name = "starting_date_work")
+    private LocalDate startingDateWork;                    //20
+    @Column(name = "end_date_work")
+    private LocalDate endDateWork;                    //21
+    @Column(name = "date_of_termination")
+    private LocalDate dateOfTermination;                  //22
+    @OneToOne
+    @JoinColumn(name = "termination_code_id")
+    private NciTerminationCode terminationCode;                  //23
+    @Column(name = "sum_no_vat")
+    private BigDecimal sumNoVat;                 //24
+    @Column(name = "sum_vat")
+    private BigDecimal sumVat;                 //25
+    @Column(name = "total_including_vat")
+    private BigDecimal totalIncludingVat;                 //26
+    @Column(name = "status_zakupki")
+    private String statusZakupki;               //27
+
+    // Nci_organization - непонятно, что это (Дог. МТР) //28      ???????????????????
+
+    @Column(name = "role_id")
+    private String role;                   //29     (тип должен быть Role)
+    @ManyToOne
+    @JoinColumn(name = "responsible_id")
+    private NciUser responsible;                           //30
+    @Column(name = "factory_number")
+    private String factoryNumber;                         //32
+    @Column(name = "pid_number")
+    private Integer pidNumber;                        //33
+    @Column(name = "barcode")
+    private String barcode;                       //34
+    @Column(name = "lkk_number")
+    private String lkkNumber;                    //35
+    @Column(name = "lkk_date")
+    private LocalDate lkkDate;                    //36
+    @Column(name = "lus_number")
+    private String lusNumber;                    //37
+    @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @OrderBy("serialNumber")
+    private List<LinkDocumentsTable> linkDocuments;  //39
+    @OneToMany(mappedBy = "documentId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @OrderBy("serialNumber")
+    private List<DocumentHistoryBpm> documentsHistoryBpm; //40
+
+
+
+
+
+
+
+
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
@@ -74,55 +171,14 @@ public class Document extends BaseEntity implements Serializable {
     )
     @OrderBy("lastName")
     private List<NciUser> curators;
+
+
+
     @Type(type = "org.hibernate.type.BinaryType")
     @Column(name = "content")
     private byte[] content;
-    // @NotNull(message = "Specify the status of the document.")
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private NciStatus status;
-    @Column(name = "access")
-    @Enumerated(EnumType.STRING)
-    private NciAccessLimitation access;
-    @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
-    @Column(name = "comment")
-    private String comment;
-    @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @BatchSize(size = 100)
-    @OrderBy("serialNumber")
-    private List<RelatingDocumentsTable> relatingDocuments = new ArrayList<>();
-    @OneToMany(mappedBy = "documentId")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @BatchSize(size = 100)
-    @OrderBy("serialNumber")
-    private List<DocumentHistoryBpm> documentHistoryBpm;
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @BatchSize(size = 100)
-    @JoinTable(name = "documents_objects",
-            joinColumns = @JoinColumn(name = "document_id"),
-            inverseJoinColumns = @JoinColumn(name = "object_kis_up"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "object_kis_up"}, name = "documents_construction_objects_uc")}
-    )
-    @OrderBy("kisUp")
-    private List<NciObject> nciObjects;
-    @OneToMany(mappedBy = "documentId")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy("pid")
-    private List<NciPid> pids;
-    @OneToMany(mappedBy = "documentId")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy("factoryNumber")
-    private List<NciFactoryNumber> factoryNumber;
-    @Column(name = "barcode")
-    private String barcode;
-    @Column(name = "lkk_document_number")
-    private String lkkDocumentNumber;
-    @Column(name = "lkk_document_date")
-    private LocalDate lkkDocumentDate;
-    @Column(name = "lus_document_number")
-    private String lusDocumentNumber;
+
+
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
@@ -131,8 +187,7 @@ public class Document extends BaseEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "attachment_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"document_id", "attachment_id"}, name = "documents_attachments_uc")})
     private List<NciAttachment> nciAttachments = new ArrayList<>();
-    @Column(name = "customer_id")
-    private String customer;
+
     @Column(name = "supplier_id")
     private String supplier;
     @Column(name = "amount")
@@ -150,9 +205,7 @@ public class Document extends BaseEntity implements Serializable {
     private NciPhase phase;
 
     ////=========================================== other
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "additional_agreement_date")
-    private LocalDate additionalAgreementDate;
+
     @Column(name = "additional_agreement_number")
     private String additionalAgreementNumber;
 
@@ -161,46 +214,11 @@ public class Document extends BaseEntity implements Serializable {
     //   @JoinColumn(name = "id")
     //   private MtrSupplyContract additionalAgreementSpecification;
 
-    @OneToOne
-    @JoinColumn
-    private NciClassContract nciClassContract;
-    @Column(name = "starting_date")
-    private LocalDate startingDate;
-    @Column(name = "end_date")
-    private LocalDate endDate;
-    @Column(name = "date_of_termination")
-    private LocalDate dateOfTermination;
-    @OneToOne
-    @JoinColumn
-    private NciStandardForm nciStandardForm;
-    @Column(name = "framework_agreement")
-    private Boolean frameworkAgreement;
-    @Column(name = "subject_of_the_contract")
-    private String subjectOfTheContract;
-    @OneToOne
-    @JoinColumn
-    private NciTerminationCode nciTerminationCode;
-    @Column(name = "sum_no_vat")
-    private BigDecimal sumNoVat;
-    @Column(name = "sum_vat")
-    private BigDecimal sumVat;
-    @Column(name = "total_including_vat")
-    private BigDecimal totalIncludingVat;
-    @Column(name = "status_zakupki")
-    private String statusZakupki;
-    @OneToOne
-    @JoinColumn
-    private NciOst organization;
-    @Column(name = "role")
-    private String role;
-    @OneToOne
-    @JoinColumn
-    private NciUser responsible;
-    @Column(name = "document_registration_number")
-    private String documentRegistrationNumber;
-    @OneToOne
-    @JoinColumn
-    private NciOst nciOst;
+
+
+
+
+
     @Column(name = "contract_subject")
     private String contractSubject;
     @Column(name = "reg_number")

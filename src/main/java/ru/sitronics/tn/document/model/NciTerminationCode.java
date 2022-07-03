@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "nci_termination_codes")
 public class NciTerminationCode extends BaseEntity{
-    @Column(name = "cancellation_code")
-    private String cancellationCode;
+    @Column(name = "termination_code")
+    private String terminationCode;
     @Column(name = "internal_id")
     private Integer internalId;
 }

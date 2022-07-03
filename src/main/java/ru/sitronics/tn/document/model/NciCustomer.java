@@ -1,32 +1,54 @@
 package ru.sitronics.tn.document.model;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public enum NciCustomer {
-    Customer_1("Организация_1"),
-    Customer_2("Организация_2"),
-    Customer_3("Организация_3"),
-    Customer_4("Организация_4"),
-    Customer_5("Организация_5"),
-    Customer_6("Организация_6"),
-    Customer_7("Организация_7"),
-    Customer_8("Организация_8");
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-    private final String translate;
-
-    NciCustomer(final String translate) {
-        this.translate = translate;
-    }
-
-    public static Map<NciCustomer, String> getEnumValuesWithTranslate() {
-        Map<NciCustomer, String> map = new EnumMap<>(NciCustomer.class);
-        Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
-        return map;
-    }
-
-    public String getTranslate() {
-        return translate;
-    }
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "nci_customers")
+public class NciCustomer extends BaseEntity {
+    @Column(name = "customer")
+    private String customer;
+    @Column(name = "customer_rus")
+    private String customerRus;
+    @Column(name = "internal_id")
+    private Integer internalId;
+    @Column(name = "internal_guid")
+    private Integer internalGuid;
+    @Column(name = "inn")
+    private String inn;
+    @Column(name = "kpp")
+    private String kpp;
+    @Column(name = "okpo")
+    private String okpo;
+    @Column(name = "okdp")
+    private String okdp;
+    @Column(name = "ogrn")
+    private String ogrn;
+    @Column(name = "okved")
+    private String okved;
+    @Column(name = "okato")
+    private String okato;
+    @Column(name = "oktmo")
+    private String oktmo;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "fax")
+    private String fax;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "customer_type")
+    private Integer customerType;
+    @Column(name = "bp_type_lt_id")
+    private Integer bp_typeLtId;
 }

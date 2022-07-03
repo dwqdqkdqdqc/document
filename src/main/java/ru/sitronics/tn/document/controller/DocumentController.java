@@ -113,20 +113,20 @@ public class DocumentController {
                 .map(NciDocumentType.NciDocumentTypeEnum::name).toList();
     }
 
-    @GetMapping("/customers")
+/*    @GetMapping("/customers")
     public List<String> getCustomers() {
         return Stream.of(NciCustomer.values()).map(NciCustomer::name).toList();
-    }
+    }*/
 
-    @GetMapping("/statuses")
+/*    @GetMapping("/statuses")
     public List<String> getStatuses() {
-        return Stream.of(NciStatus.values()).map(NciStatus::name).toList();
-    }
+        return Stream.of(NciStatusesDocument.values()).map(NciStatusesDocument::name).toList();
+    }*/
 
-    @GetMapping("/accessLimitations")
+/*    @GetMapping("/accessLimitations")
     public List<String> getAccessLimitations() {
         return Stream.of(NciAccessLimitation.values()).map(NciAccessLimitation::name).toList();
-    }
+    }*/
 
     @GetMapping("/typesWithTranslate")
     public Map<NciDocumentType.NciDocumentTypeEnum, String> getDocumentTypesWithTranslate() {
@@ -135,10 +135,10 @@ public class DocumentController {
         return map;
     }
 
-    @GetMapping("/customersWithTranslate")
+/*    @GetMapping("/customersWithTranslate")
     public Map<NciCustomer, String> getCustomersWithTranslate() {
         Map<NciCustomer, String> map = new EnumMap<>(NciCustomer.class);
         Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
-    }
+    }*/
 }

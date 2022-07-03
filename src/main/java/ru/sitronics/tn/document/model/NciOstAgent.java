@@ -5,18 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_standard_forms")
-public class NciStandardForm extends BaseEntity {
-    @Column(name = "standard_form")
-    private String standardForm;
+@Table(name = "nci_ost_agents")
+public class NciOstAgent extends BaseEntity{
+    @Column(name = "ost_agent")
+    private String ostAgent;
     @Column(name = "internal_id")
     private Integer internalId;
 }

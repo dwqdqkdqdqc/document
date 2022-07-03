@@ -25,7 +25,7 @@ public class TypeRelation extends BaseEntity {
     @JsonManagedReference
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
-    private List<RelatingDocumentsTable> linkedDocuments;
+    private List<LinkDocumentsTable> linkedDocuments;
 
     public enum TypeRelationEnum {
         KIT, //комплект, позволяющий Системе работать с группой документов в связке. стр.67
