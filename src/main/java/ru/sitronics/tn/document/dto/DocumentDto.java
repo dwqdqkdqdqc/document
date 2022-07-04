@@ -44,6 +44,7 @@ public class DocumentDto implements HasId {
     private String supplier;
     private BigDecimal amount;
     private List<NciDocumentType> types;
+    private Boolean control_prod;
 
 
     ////=========================================== other

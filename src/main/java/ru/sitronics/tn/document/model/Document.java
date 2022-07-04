@@ -265,8 +265,8 @@ public class Document extends BaseEntity implements Serializable {
     private LocalDate dateProduction;
     @Column(name = "date_shipment")
     private LocalDate dateShipment;
-    @Column(name = "production_time")
-    private Integer productionTime;
+    @Column(name = "production_period_days")
+    private Integer productionPeriodDays;
     @Column(name = "set_delivery")
     private Boolean setDelivery;
     @OneToOne
@@ -276,7 +276,6 @@ public class Document extends BaseEntity implements Serializable {
     private LocalDate planDate;
     @Column(name = "control_prod")
     private Boolean controlProd;
-
     @Column(name = "verify_document")
     private String verifyDocument;
 

@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS comment_attachments;
 DROP TABLE IF EXISTS nci_access_limitations;
 DROP TABLE IF EXISTS nci_document_statuses;
 DROP TABLE IF EXISTS nci_ost_agents;
+DROP TABLE IF EXISTS nci_delivery_methods;
 
 
 CREATE TABLE documents
@@ -75,6 +76,7 @@ CREATE TABLE documents
     status_contract                          VARCHAR             NULL,
     position_number                          BIGINT              NULL,
     delivery_method                          BOOLEAN   DEFAULT FALSE,
+    delivery_method_id                       VARCHAR             NULL,
     position_code                            BIGINT              NULL,
     mtr_id                                   VARCHAR             NULL,
     gost_ost_tu                              VARCHAR             NULL,
@@ -116,9 +118,15 @@ CREATE TABLE documents
     inn_insurance_company                    VARCHAR             NULL,
     name_insurance_company                   VARCHAR             NULL,
     mtr_group_id                             VARCHAR             NULL,
-    phase_id                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    control_prod                         boolean             NULL,
-    set_delivery                      boolean             NULL,
+    phase_id                                 VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    control_prod                             boolean             NULL,
+    set_delivery                             boolean             NULL,
+    date_supply                              TIMESTAMP           null,
+    date_specification                       TIMESTAMP           null,
+    number_specification                     BIGINT              null,
+    date_production                          TIMESTAMP           null,
+    date_shipment                            TIMESTAMP           null,
+    production_period_days                   INTEGER             null,
 
 
     content                                  bytea               NULL,
@@ -160,8 +168,8 @@ CREATE TABLE documents
     contract_status                          VARCHAR             NULL,
     nci_consignee_id                         VARCHAR             NULL,
     shipping_details                         integer             null, --какой тип? уточнить
-    nci_units_measurement_id                 VARCHAR             NULL,
-    delivery_method_id                       VARCHAR             NULL
+    nci_units_measurement_id                 VARCHAR             NULL
+
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
 
@@ -466,6 +474,12 @@ CREATE TABLE nci_ost_agents
     internal_id integer      NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
+CREATE TABLE nci_delivery_methods
+(
+    id              VARCHAR      NULL,
+    delivery_method VARCHAR(150) NULL,
+    internal_id     integer      NULL --Внутренний (технический) номер записи SAP MDM
+);
 
 /*
 CREATE TABLE test_table_a

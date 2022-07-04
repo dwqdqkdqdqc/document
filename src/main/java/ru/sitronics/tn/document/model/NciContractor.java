@@ -13,12 +13,12 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_customers")
-public class NciCustomer extends BaseEntity {
-    @Column(name = "customer")
-    private String customer;
-    @Column(name = "customer_rus")
-    private String customerRus;
+@Table(name = "nci_contractors")
+public class NciContractor extends BaseEntity {
+    @Column(name = "contractor")
+    private String contractor;
+    @Column(name = "contractor_rus")
+    private String contractorRus;
     @Column(name = "internal_id")
     private Integer internalId;
     @Column(name = "internal_guid")
@@ -47,7 +47,7 @@ public class NciCustomer extends BaseEntity {
     private String email;
     @Column(name = "address")
     private String address;
-    @Column(name = "customer_type")
+    @Column(name = "contractor_type")
     private Integer customerType;
     @Column(name = "bp_type_lt_id")
     private Integer bp_typeLtId;
