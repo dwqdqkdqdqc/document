@@ -115,6 +115,10 @@ CREATE TABLE documents
     date_policy                              TIMESTAMP           null,
     inn_insurance_company                    VARCHAR             NULL,
     name_insurance_company                   VARCHAR             NULL,
+    mtr_group_id                             VARCHAR             NULL,
+    phase_id                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+    control_prod                         boolean             NULL,
+    set_delivery                      boolean             NULL,
 
 
     content                                  bytea               NULL,
@@ -148,7 +152,7 @@ CREATE TABLE documents
 
     nci_mtr_group_id                         VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     phase_number                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
-    nci_phase_id                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+
     plan_date                                TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     fact_date                                TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     verify_document                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr

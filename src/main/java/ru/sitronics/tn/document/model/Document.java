@@ -171,9 +171,6 @@ public class Document extends BaseEntity implements Serializable {
     private boolean deliveryMethod;
     @Column(name = "position_code")
     private Long positionCode;
-    @ManyToOne
-    @JoinColumn(name = "mtr_id")
-    private NciMtr mtr;
     @Column(name = "gost_ost_tu")
     private String gostOstTu;
     @Column(name = "code")
@@ -252,6 +249,37 @@ public class Document extends BaseEntity implements Serializable {
     private String innInsuranceCompany;
     @Column(name = "name_insurance_company")
     private String nameInsuranceCompany;
+    @OneToOne
+    @JoinColumn(name = "mtr_group_id")
+    private NciMtrGroup mtrGroup;
+    @OneToOne
+    @JoinColumn(name = "mtr_id")
+    private NciMtr mtr;
+    @Column(name = "date_supply")
+    private LocalDate dateSupply;
+    @Column(name = "date_specification")
+    private LocalDate dateSpecification;
+    @Column(name = "number_specification")
+    private Long numberSpecification;
+    @Column(name = "date_production")
+    private LocalDate dateProduction;
+    @Column(name = "date_shipment")
+    private LocalDate dateShipment;
+    @Column(name = "production_time")
+    private Integer productionTime;
+    @Column(name = "set_delivery")
+    private Boolean setDelivery;
+    @OneToOne
+    @JoinColumn(name = "phase_id")
+    private NciPhase phase;
+    @Column(name = "plan_date")
+    private LocalDate planDate;
+    @Column(name = "control_prod")
+    private Boolean controlProd;
+
+    @Column(name = "verify_document")
+    private String verifyDocument;
+
 /*    @Column(name = "")
     private String ;*/
 
@@ -298,9 +326,7 @@ public class Document extends BaseEntity implements Serializable {
     private List<NciDocumentType> nciDocumentTypes;
     @Column(name = "deleted")
     private boolean deleted;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nci_phase_id")
-    private NciPhase phase;
+
 
     ////=========================================== other
 
