@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
@@ -141,7 +142,6 @@ public class DocumentController {
         Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
     }*/
-    }
 
     @PostMapping(value = "/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addAttachment(@PathVariable("id") String docId,

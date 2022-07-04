@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+/*
 
 @Entity
 @Getter
@@ -15,3 +16,4 @@ import javax.persistence.Entity;
 @DiscriminatorValue("KDM_WORKING_DOCUMENTATION")
 public class KmdWorkingDocumentation extends Document{
 }
+*/

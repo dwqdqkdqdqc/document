@@ -185,6 +185,50 @@ public class DocumentService {
             throw new RuntimeException(e);
         }
     }
+
+    @Transactional
+    public ResponseEntity<?> addAttachmentsToDocument(String documentId, MultipartFile[] files, String username) {
+        if (documentId == null || documentId.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid documentId.");
+        }
+        if (!repository.existsById(documentId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Document with id %s doesn't exist.", documentId));
+        }
+        Document documentFromDb = repository.getById(documentId);
+        Map<String, Object> response = new HashMap<>();
+        List<String> failedFileNames = new ArrayList<>();
+        List<DocumentAttachment> attachments = new ArrayList<>();
+
+        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
+        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
+            log.warn("Returned s3FileDtoList from s3-rest-service is null for doc id: {}.", documentId);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Returned s3FileDtoList from s3-rest-service is null.");
+        }
+
+        s3FileDtoList.forEach(dto -> {
+            if (dto.getError() == null || dto.getError().isBlank()) {
+                attachments.add(documentAttachmentRepo
+                        .save(new DocumentAttachment(dto.getName(), dto.getId(), username, documentFromDb)));
+            } else {
+                log.warn("File {} doesn't uploaded for document with id {}. Error from response: {}",
+                        dto.getName(), documentId, dto.getError());
+                failedFileNames.add(dto.getName());
+            }
+        });
+        response.put("notUploaded", failedFileNames);
+        response.put("uploaded", attachments);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    public void deleteDocAttachment(String attachId) {
+        if (attachId == null || attachId.isBlank()) {
+            log.warn("Given invalid comment's attachment's id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid comment's attachId.");
+        }
+        documentAttachmentRepo.deleteById(attachId);
+    }
 }
     /*
     @SuppressWarnings("unchecked")
@@ -440,47 +484,5 @@ public class DocumentService {
     }
     */
 
-    @Transactional
-    public ResponseEntity<?> addAttachmentsToDocument(String documentId, MultipartFile[] files, String username) {
-        if (documentId == null || documentId.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid documentId.");
-        }
-        if (!repository.existsById(documentId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("Document with id %s doesn't exist.", documentId));
-        }
-        Document documentFromDb = repository.getById(documentId);
-        Map<String, Object> response = new HashMap<>();
-        List<String> failedFileNames = new ArrayList<>();
-        List<DocumentAttachment> attachments = new ArrayList<>();
 
-        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
-        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
-            log.warn("Returned s3FileDtoList from s3-rest-service is null for doc id: {}.", documentId);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Returned s3FileDtoList from s3-rest-service is null.");
-        }
 
-        s3FileDtoList.forEach(dto -> {
-            if (dto.getError() == null || dto.getError().isBlank()) {
-                attachments.add(documentAttachmentRepo
-                        .save(new DocumentAttachment(dto.getName(), dto.getId(), username, documentFromDb)));
-            } else {
-                log.warn("File {} doesn't uploaded for document with id {}. Error from response: {}",
-                        dto.getName(), documentId, dto.getError());
-                failedFileNames.add(dto.getName());
-            }
-        });
-        response.put("notUploaded", failedFileNames);
-        response.put("uploaded", attachments);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    public void deleteDocAttachment(String attachId) {
-        if (attachId == null || attachId.isBlank()) {
-            log.warn("Given invalid comment's attachment's id");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid comment's attachId.");
-        }
-        documentAttachmentRepo.deleteById(attachId);
-    }
-}

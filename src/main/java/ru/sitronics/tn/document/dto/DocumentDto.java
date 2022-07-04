@@ -18,7 +18,7 @@ public class DocumentDto implements HasId {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY) // https://stackoverflow.com/a/28025008/548473
     protected String id;
     private String type;
-    private String dType;
+    //private String dType;
     private Long serialNumber;
     private LocalDateTime createDate;
     private LocalDate createDateShort;
