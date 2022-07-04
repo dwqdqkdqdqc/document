@@ -32,6 +32,8 @@ DROP TABLE IF EXISTS nci_access_limitations;
 DROP TABLE IF EXISTS nci_document_statuses;
 DROP TABLE IF EXISTS nci_ost_agents;
 DROP TABLE IF EXISTS nci_delivery_methods;
+DROP TABLE IF EXISTS s3_files;
+DROP TABLE IF EXISTS doc_attachments;
 
 
 CREATE TABLE documents
@@ -434,6 +436,16 @@ CREATE TABLE nci_access_limitations
     access_limitation     VARCHAR             NULL, --Наименование – Грифы доступа
     access_limitation_rus VARCHAR             NULL, --Наименование – Грифы доступа
     code                  VARCHAR             NULL  --Внутренний (технический) номер записи SAP MDM
+);
+
+CREATE TABLE doc_attachments
+(
+    id                  VARCHAR PRIMARY KEY     NOT NULL,
+    date_of_uploading   TIMESTAMP               NULL,
+    file_name           VARCHAR                 NULL,
+    file_id             VARCHAR                 NULL,
+    author              VARCHAR                 NULL,
+    document_id         VARCHAR                 NULL
 );
 
 CREATE TABLE nci_contractors

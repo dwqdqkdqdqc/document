@@ -141,4 +141,19 @@ public class DocumentController {
         Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
     }*/
+    }
+
+    @PostMapping(value = "/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAttachment(@PathVariable("id") String docId,
+                                           @RequestPart String username,
+                                           @RequestPart MultipartFile[] files) {
+
+        return service.addAttachmentsToDocument(docId, files, username);
+    }
+
+    @DeleteMapping("/attachments/{id}")
+    public ResponseEntity<?> deleteAttachment(@PathVariable("id") String attachId) {
+        service.deleteDocAttachment(attachId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

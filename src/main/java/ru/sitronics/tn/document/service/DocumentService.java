@@ -18,11 +18,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.S3FileDto;
 import ru.sitronics.tn.document.model.*;
+import ru.sitronics.tn.document.repository.DocumentAttachmentRepository;
 import ru.sitronics.tn.document.repository.DocumentRepository;
+import ru.sitronics.tn.document.util.S3RestServiceClient;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
@@ -50,6 +55,8 @@ public class DocumentService {
     private String defaultDeleted;
 
     private final DocumentRepository repository;
+    private final DocumentAttachmentRepository documentAttachmentRepo;
+    private final S3RestServiceClient s3RestServiceClient;
 
     public Document get(String id) {
         Optional<Document> document = repository.findById(id);
@@ -396,6 +403,27 @@ public class DocumentService {
                                                 .filter(f -> f.getKey().equalsIgnoreCase("mtrSupplyContract"))
                                                 .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
                     }
+                    case "KDM_WORKING_DOCUMENTATION" -> {
+                        optionalInteger = entitiesList.stream()
+                                .filter(entity -> "KDM_WORKING_DOCUMENTATION".equalsIgnoreCase(entity.getType()))
+                                .map(entitiesList::indexOf).findFirst();
+                        if (optionalInteger.isPresent()) index = optionalInteger.get();
+
+                        json.append(mapper.writeValueAsString((JsonView.with(entitiesList.remove(index))
+                                .onClass(ProgressOfProductionForShipmentOfMtr.class, Match.match().exclude("*").include(selectedFields))
+                                .onClass(Waybill.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("waybill"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(ru.sitronics.tn.document.model.Specification.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("specification"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))
+                                .onClass(MtrSupplyContract.class, Match.match().exclude("*")
+                                        .include(nameClassesWithSelectedFields.entrySet().stream()
+                                                .filter(f -> f.getKey().equalsIgnoreCase("mtrSupplyContract"))
+                                                .flatMap(f -> f.getValue().stream()).toList().toArray(new String[0])))))).append(",");
+                    }
 
                     default -> System.out.println("Ok");
                 }
@@ -412,5 +440,47 @@ public class DocumentService {
     }
     */
 
+    @Transactional
+    public ResponseEntity<?> addAttachmentsToDocument(String documentId, MultipartFile[] files, String username) {
+        if (documentId == null || documentId.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid documentId.");
+        }
+        if (!repository.existsById(documentId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Document with id %s doesn't exist.", documentId));
+        }
+        Document documentFromDb = repository.getById(documentId);
+        Map<String, Object> response = new HashMap<>();
+        List<String> failedFileNames = new ArrayList<>();
+        List<DocumentAttachment> attachments = new ArrayList<>();
 
+        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
+        if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
+            log.warn("Returned s3FileDtoList from s3-rest-service is null for doc id: {}.", documentId);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Returned s3FileDtoList from s3-rest-service is null.");
+        }
 
+        s3FileDtoList.forEach(dto -> {
+            if (dto.getError() == null || dto.getError().isBlank()) {
+                attachments.add(documentAttachmentRepo
+                        .save(new DocumentAttachment(dto.getName(), dto.getId(), username, documentFromDb)));
+            } else {
+                log.warn("File {} doesn't uploaded for document with id {}. Error from response: {}",
+                        dto.getName(), documentId, dto.getError());
+                failedFileNames.add(dto.getName());
+            }
+        });
+        response.put("notUploaded", failedFileNames);
+        response.put("uploaded", attachments);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    public void deleteDocAttachment(String attachId) {
+        if (attachId == null || attachId.isBlank()) {
+            log.warn("Given invalid comment's attachment's id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid comment's attachId.");
+        }
+        documentAttachmentRepo.deleteById(attachId);
+    }
+}

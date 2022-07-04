@@ -352,4 +352,9 @@ public class Document extends BaseEntity implements Serializable {
     private String contractView;
     @Column(name = "frame_contract")
     private Boolean frameContract;
+
+    @OneToMany(mappedBy = "document", cascade = {CascadeType.REMOVE})
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<DocumentAttachment> attachmentFiles;
 }
