@@ -1,12 +1,19 @@
 package ru.sitronics.tn.document.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+/*
 
 @Entity
 @Getter
@@ -14,25 +21,34 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("MTR_SUPPLY_CONTRACT")
 public class MtrSupplyContract extends Document {
-    //  @NotNull
-  /*  @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "date_of_signing"*//*, updatable = false*//*)
+ */
+/*   @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "date_of_signing"
+
+    )
     private LocalDate dateOfSigning;
 
-   // @NotNull
-    @Column(name = "document_registration_number"*//*, updatable = false*//*)
+
+    @Column(name = "document_registration_number"
+
+    )
     private String documentRegistrationNumber;
 
-  //  @NotNull
+
     @OneToOne
-    @JoinColumn(*//*updatable = false*//*)
-    private NciOst nciOst;*/
+    @JoinColumn(
 
-  /*  @OneToMany(mappedBy = "contract")
-    private List<Document> documents;*/
+    )
+    private NciOst nciOst;
 
-    @ManyToOne()
+    @OneToMany(mappedBy = "contract")
+    private List<Document> documents;*//*
+
+
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "specification_id")
     private Specification specification;
 }
+
+*/

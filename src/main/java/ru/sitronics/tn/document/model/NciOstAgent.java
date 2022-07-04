@@ -6,24 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-/*
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@DiscriminatorValue("QUALITY_DOCUMENTS")
-public class QualityDocument extends Document{
-
-
-
-
-//    private RelatingDocumentsTable documentTable;
-
-
-
-
-
+@Table(name = "nci_ost_agents")
+public class NciOstAgent extends BaseEntity{
+    @Column(name = "ost_agent")
+    private String ostAgent;
+    @Column(name = "internal_id")
+    private Integer internalId;
 }
-*/

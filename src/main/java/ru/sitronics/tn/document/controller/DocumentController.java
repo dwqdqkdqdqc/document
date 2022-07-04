@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
@@ -113,20 +114,20 @@ public class DocumentController {
                 .map(NciDocumentType.NciDocumentTypeEnum::name).toList();
     }
 
-    @GetMapping("/customers")
+/*    @GetMapping("/customers")
     public List<String> getCustomers() {
         return Stream.of(NciCustomer.values()).map(NciCustomer::name).toList();
-    }
+    }*/
 
-    @GetMapping("/statuses")
+/*    @GetMapping("/statuses")
     public List<String> getStatuses() {
-        return Stream.of(NciStatus.values()).map(NciStatus::name).toList();
-    }
+        return Stream.of(NciStatusesDocument.values()).map(NciStatusesDocument::name).toList();
+    }*/
 
-    @GetMapping("/accessLimitations")
+/*    @GetMapping("/accessLimitations")
     public List<String> getAccessLimitations() {
         return Stream.of(NciAccessLimitation.values()).map(NciAccessLimitation::name).toList();
-    }
+    }*/
 
     @GetMapping("/typesWithTranslate")
     public Map<NciDocumentType.NciDocumentTypeEnum, String> getDocumentTypesWithTranslate() {
@@ -135,10 +136,24 @@ public class DocumentController {
         return map;
     }
 
-    @GetMapping("/customersWithTranslate")
+/*    @GetMapping("/customersWithTranslate")
     public Map<NciCustomer, String> getCustomersWithTranslate() {
         Map<NciCustomer, String> map = new EnumMap<>(NciCustomer.class);
         Arrays.asList(NciCustomer.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
+    }*/
+
+    @PostMapping(value = "/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAttachment(@PathVariable("id") String docId,
+                                           @RequestPart String username,
+                                           @RequestPart MultipartFile[] files) {
+
+        return service.addAttachmentsToDocument(docId, files, username);
+    }
+
+    @DeleteMapping("/attachments/{id}")
+    public ResponseEntity<?> deleteAttachment(@PathVariable("id") String attachId) {
+        service.deleteDocAttachment(attachId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

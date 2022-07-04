@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "nci_standard_forms")
 public class NciStandardForm extends BaseEntity {
-    @Column(name = "nci_standard_form")
-    private String nciStandardForm;
+    @Column(name = "standard_form")
+    private String standardForm;
     @Column(name = "internal_id")
     private Integer internalId;
 }

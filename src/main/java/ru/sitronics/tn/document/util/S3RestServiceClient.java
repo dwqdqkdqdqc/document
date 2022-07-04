@@ -50,7 +50,7 @@ public class S3RestServiceClient {
                 return objectMapper.readValue(response.getBody(),
                         objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, responseClass));
             } catch (JsonProcessingException e) {
-                log.error("Error while trying parse response from s3Servise. Error message: {}", e.getMessage());
+                log.error("Error while trying parse response from s3-rest-service. Error message: {}", e.getMessage());
                 throw new RuntimeException(e);
             }
         } else throw new ResponseStatusException(response.getStatusCode());

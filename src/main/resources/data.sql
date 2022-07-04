@@ -2,21 +2,18 @@
 DELETE FROM documents;
 DELETE FROM nci_users;
 DELETE FROM documents_curators;
-DELETE FROM type_relation;
-DELETE FROM documents_relating_documents;
-DELETE FROM document_history_bpm;
-DELETE FROM nci_objects;
+DELETE FROM type_links;
+DELETE FROM documents_link_documents;
+DELETE FROM documents_history_bpm;
+DELETE FROM nci_objects_kis_up;
 DELETE FROM documents_objects;
 DELETE FROM nci_objects;
 DELETE FROM documents_construction_objects;
 DELETE FROM nci_osts;
-DELETE FROM nci_pids;
-DELETE FROM nci_factory_numbers;
 DELETE FROM attachments;
 DELETE FROM documents_attachments;
 DELETE FROM nci_customers;
 DELETE FROM nci_document_types;
-
 DELETE FROM nci_mtr_groups;
 DELETE FROM nci_mtrs;
 DELETE FROM nci_phases;
@@ -32,46 +29,43 @@ DELETE FROM nsi_delivery_methods;
 
 */
 
-INSERT INTO documents (id, type_id, d_type, author_id, status, access, contract_id, lot,
-                       specification_id, customer_id, supplier_id, amount, date_of_signing,
-                       document_registration_number, nci_ost_id, date_of_creation)
-VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPPLY_CONTRACT',
-        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', null, null,
-        '123e4567-e89b-12d3-a456-300000000000', 'customer_1',
-        'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1',
-        '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00'),
-       ('123e4567-e89b-12d3-a456-800000000000', 'MTR_SUPPLY_CONTRACT', 'MTR_SUPPLY_CONTRACT',
-        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', null, null,
-        '123e4567-e89b-12d3-a456-400000000000', 'customer_1',
-        'customer_2', '1000.01', '2020-02-21 10:00:00', 'registration_number_1',
-        '123e4567-e89b-12d3-a456-000000001000', '2020-02-21 10:00:00'),
-       ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', 'WAYBILL',
-        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
-        null,
-        '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
-        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
-       ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', 'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
-        'lot_1',
-        '123e4567-e89b-12d3-a456-400000000000', 'customer_5',
-        'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00'),
-       ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION', 'SPECIFICATION',
-        '123e4567-e89b-12d3-a456-040000000000', 'ACCEPTED', 'CONFIDENTIALLY',
+INSERT INTO documents (id, type_id, author_id, status_id, access_limitation_id, contract_id, lot,
+                       specification_id, customer_id, supplier_id, amount, date_signature,
+                       registration_number, ost_id, create_date)
+VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', '123e4567-e89b-12d3-a456-010000000000',
+        '900000000-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-810000000000', null, null, null,
+        '100000000-e89b-12d3-a456-100000000000',
+        'customer_2',
+        '1000.01', '2020-01-31 10:00:00', 'registration_number_1', '123e4567-e89b-12d3-a456-000000001000',
+        '2020-01-31 10:00:00'),
+       ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', '123e4567-e89b-12d3-a456-010000000000',
+        '900000000-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-820000000000', '123e4567-e89b-12d3-a456-100000000000', null,
+        '123e4567-e89b-12d3-a456-300000000000',
+        '100000000-e89b-12d3-a456-200000000000', 'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
+       ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', '123e4567-e89b-12d3-a456-010000000000',
+        '900000000-e89b-12d3-a456-100000000000',
+        '123e4567-e89b-12d3-a456-830000000000', '123e4567-e89b-12d3-a456-100000000000', 'lot_1', null,
+        '200000000-e89b-12d3-a456-100000000000',
+        'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00');
+/*,
+       ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION',
+        '123e4567-e89b-12d3-a456-040000000000', 'ACCEPTED', '123e4567-e89b-12d3-a456-820000000000',
         null, 'lot_1', null, 'customer_7', 'customer_8', '2000',
         null, null, null, '2020-01-21 10:00:00'),
-       ('123e4567-e89b-12d3-a456-500000000000', 'QUALITY_DOCUMENTS', 'QUALITY_DOCUMENTS',
-        '123e4567-e89b-12d3-a456-010000000000', 'APPROVAL_IN_PROGRESS', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
+       ('123e4567-e89b-12d3-a456-500000000000', 'QUALITY_DOCUMENTS',
+        '123e4567-e89b-12d3-a456-010000000000', 'APPROVAL_IN_PROGRESS', '123e4567-e89b-12d3-a456-820000000000',
+        '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
-       ('123e4567-e89b-12d3-a456-600000000000', 'MTR_INSURANCE_POLICY', 'MTR_INSURANCE_POLICY',
+       ('123e4567-e89b-12d3-a456-600000000000', 'MTR_INSURANCE_POLICY',
         '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
         'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
        ('123e4567-e89b-12d3-a456-700000000000', 'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
-        'PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR',
         '123e4567-e89b-12d3-a456-010000000000', 'DRAFT', 'CONFIDENTIALLY', '123e4567-e89b-12d3-a456-100000000000',
         null, '123e4567-e89b-12d3-a456-400000000000', 'customer_3',
-        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00');
+        'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'); */
 
 INSERT INTO nci_users (id, login, password, name, last_name, role, mail)
 VALUES ('123e4567-e89b-12d3-a456-010000000000', 'user_1', '12345', 'user', 'A', 'user', 'user@gmail.com'),
@@ -86,14 +80,14 @@ VALUES ('123e4567-e89b-12d3-a456-200000000000', '123e4567-e89b-12d3-a456-0200000
        ('123e4567-e89b-12d3-a456-400000000000', '123e4567-e89b-12d3-a456-010000000000'),
        ('123e4567-e89b-12d3-a456-400000000000', '123e4567-e89b-12d3-a456-040000000000');
 
-INSERT INTO type_relation (id, type)
+INSERT INTO type_links (id, type)
 VALUES ('123e4567-e89b-12d3-a456-001000000000', 'SINGLE'),
        ('123e4567-e89b-12d3-a456-002000000000', 'OPTIONAL'),
        ('123e4567-e89b-12d3-a456-003000000000', 'MANDATORY'),
        ('123e4567-e89b-12d3-a456-004000000000', 'KIT');
 
-INSERT INTO documents_relating_documents (document_id, relating_document_id, type_relation_id,
-                                          relating_document_serial_number)
+INSERT INTO documents_link_documents (document_id, link_document_id, type_link_id,
+                                          link_document_serial_number)
 VALUES ('123e4567-e89b-12d3-a456-200000000000', '123e4567-e89b-12d3-a456-100000000000',
         '123e4567-e89b-12d3-a456-001000000000', '1'),
        ('123e4567-e89b-12d3-a456-200000000000', '123e4567-e89b-12d3-a456-300000000000',
@@ -103,7 +97,7 @@ VALUES ('123e4567-e89b-12d3-a456-200000000000', '123e4567-e89b-12d3-a456-1000000
        ('123e4567-e89b-12d3-a456-400000000000', '123e4567-e89b-12d3-a456-100000000000',
         '123e4567-e89b-12d3-a456-003000000000', '1');
 
-INSERT INTO document_history_bpm(id, serial_number, document_id, relating_document_id, type_relation)
+INSERT INTO documents_history_bpm(id, serial_number, document_id, link_document_id, type_link)
 VALUES ('123e4567-e89b-12d3-a456-000100000000', '1', '123e4567-e89b-12d3-a456-200000000000',
         '123e4567-e89b-12d3-a456-100000000000', 'MANDATORY'),
        ('123e4567-e89b-12d3-a456-000200000000', '2', '123e4567-e89b-12d3-a456-200000000000',
@@ -111,7 +105,7 @@ VALUES ('123e4567-e89b-12d3-a456-000100000000', '1', '123e4567-e89b-12d3-a456-20
        ('123e4567-e89b-12d3-a456-000300000000', '3', '123e4567-e89b-12d3-a456-200000000000',
         '123e4567-e89b-12d3-a456-400000000000', 'MANDATORY');
 
-INSERT INTO nci_objects (kis_up, kis_up_id)
+INSERT INTO nci_objects_kis_up (kis_up, kis_up_id)
 VALUES ('object_code_1', '1'),
        ('object_code_2', '2'),
        ('object_code_3', '3'),
@@ -129,26 +123,6 @@ VALUES ('123e4567-e89b-12d3-a456-000000001000', 'ost_1', '1'),
        ('123e4567-e89b-12d3-a456-000000003000', 'ost_3', '3'),
        ('123e4567-e89b-12d3-a456-000000004000', 'ost_4', '4');
 
-INSERT INTO nci_pids (id, pid, document_id)
-VALUES ('123e4567-e89b-12d3-a456-000000000100', '123e4567-e89b-12d3-a456-000000100000',
-        '123e4567-e89b-12d3-a456-100000000000'),
-       ('123e4567-e89b-12d3-a456-000000000200', '123e4567-e89b-12d3-a456-000000200000',
-        '123e4567-e89b-12d3-a456-100000000000'),
-       ('123e4567-e89b-12d3-a456-000000000300', '123e4567-e89b-12d3-a456-000000300000',
-        '123e4567-e89b-12d3-a456-200000000000'),
-       ('123e4567-e89b-12d3-a456-000000000400', '123e4567-e89b-12d3-a456-000000400000',
-        '123e4567-e89b-12d3-a456-100000000000');
-
-INSERT INTO nci_factory_numbers (id, factory_number, document_id)
-VALUES ('123e4567-e89b-12d3-a456-000000000010', '123e4567-e89b-12d3-a456-000000010000',
-        '123e4567-e89b-12d3-a456-100000000000'),
-       ('123e4567-e89b-12d3-a456-000000000020', '123e4567-e89b-12d3-a456-000000020000',
-        '123e4567-e89b-12d3-a456-100000000000'),
-       ('123e4567-e89b-12d3-a456-000000000030', '123e4567-e89b-12d3-a456-000000030000',
-        '123e4567-e89b-12d3-a456-200000000000'),
-       ('123e4567-e89b-12d3-a456-000000000040', '123e4567-e89b-12d3-a456-000000040000',
-        '123e4567-e89b-12d3-a456-100000000000');
-
 INSERT INTO nci_attachments (id, serial_number, address)
 VALUES ('123e4567-e89b-12d3-a456-000000000001', '1', 'address_1'),
        ('123e4567-e89b-12d3-a456-000000000002', '2', 'address_2'),
@@ -159,16 +133,6 @@ VALUES ('123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-0000000
        ('123e4567-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-000000000002'),
        ('123e4567-e89b-12d3-a456-300000000000', '123e4567-e89b-12d3-a456-000000000002'),
        ('123e4567-e89b-12d3-a456-200000000000', '123e4567-e89b-12d3-a456-000000000002');
-
-INSERT INTO nci_customers (name, name_rus)
-VALUES ('customer_1', 'Организация_1'),
-       ('customer_2', 'Организация_2'),
-       ('customer_3', 'Организация_3'),
-       ('customer_4', 'Организация_4'),
-       ('customer_5', 'Организация_5'),
-       ('customer_6', 'Организация_6'),
-       ('customer_7', 'Организация_7'),
-       ('customer_8', 'Организация_8');
 
 
 INSERT INTO nci_countries (id, country_name, internal_id)
@@ -215,21 +179,21 @@ VALUES ('123e4567-e89b-12d3-a456-410000000000', 'phase_1', 'этап_1'),
        ('123e4567-e89b-12d3-a456-440000000000', 'phase_4', 'этап_4'),
        ('123e4567-e89b-12d3-a456-450000000000', 'phase_5', 'этап_5');
 
-INSERT INTO nci_class_contracts (id, class_agr, code)
+INSERT INTO nci_class_contracts (id, class_contract, code)
 VALUES ('123e4567-e89b-12d3-a456-510000000000', 'class_agr_1', 'code_1'),
        ('123e4567-e89b-12d3-a456-520000000000', 'class_agr_2', 'code_2'),
        ('123e4567-e89b-12d3-a456-530000000000', 'class_agr_3', 'code_3'),
        ('123e4567-e89b-12d3-a456-540000000000', 'class_agr_4', 'code_4'),
        ('123e4567-e89b-12d3-a456-550000000000', 'class_agr_5', 'code_5');
 
-INSERT INTO nci_standard_forms (id, nci_standard_form, internal_id)
+INSERT INTO nci_standard_forms (id, standard_form, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-610000000000', 'standard_form_1', '1'),
        ('123e4567-e89b-12d3-a456-620000000000', 'standard_form_2', '2'),
        ('123e4567-e89b-12d3-a456-630000000000', 'standard_form_3', '3'),
        ('123e4567-e89b-12d3-a456-640000000000', 'standard_form_4', '4'),
        ('123e4567-e89b-12d3-a456-650000000000', 'standard_form_5', '5');
 
-INSERT INTO nci_termination_codes (id, cancellation_code, internal_id)
+INSERT INTO nci_termination_codes (id, termination_code, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-710000000000', 'cancellation_code_1', '1'),
        ('123e4567-e89b-12d3-a456-720000000000', 'cancellation_code_2', '2'),
        ('123e4567-e89b-12d3-a456-730000000000', 'cancellation_code_3', '3'),
@@ -289,6 +253,55 @@ VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321,
         2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000005000',
         '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000030000', 'some information about belonging to the dsi',
         'some note', '123e4567-e89b-12d3-a456-555000000000');
+
+INSERT INTO nci_delivery_methods (id, delivery_method, internal_id)
+VALUES ('123e4567-e89b-12d3-a456-910000000000', 'delivery_method_1', '1'),
+       ('123e4567-e89b-12d3-a456-920000000000', 'delivery_method_2', '2'),
+       ('123e4567-e89b-12d3-a456-930000000000', 'delivery_method_3', '3'),
+       ('123e4567-e89b-12d3-a456-940000000000', 'delivery_method_4', '4'),
+       ('123e4567-e89b-12d3-a456-950000000000', 'delivery_method_5', '5');
+
+INSERT INTO nci_access_limitations (id, access_limitation, access_limitation_rus, code)
+VALUES ('123e4567-e89b-12d3-a456-810000000000', 'WITHOUT_A_FINGERBOARD', 'Без грифа', 'code_1'),
+       ('123e4567-e89b-12d3-a456-820000000000', 'CONFIDENTIALLY', 'Конфиденциально', 'code_2'),
+       ('123e4567-e89b-12d3-a456-830000000000', 'SUPER_CONFIDENTIAL', 'супер конфиденциально', 'code_3');
+
+INSERT INTO nci_contractors (id, contractor, contractor_rus)
+VALUES ('100000000-e89b-12d3-a456-100000000000', 'customer_1', 'Организация_1'),
+       ('200000000-e89b-12d3-a456-100000000000', 'customer_2', 'Организация_2'),
+       ('300000000-e89b-12d3-a456-100000000000', 'customer_3', 'Организация_3'),
+       ('400000000-e89b-12d3-a456-100000000000', 'customer_4', 'Организация_4'),
+       ('500000000-e89b-12d3-a456-100000000000', 'customer_5', 'Организация_5'),
+       ('600000000-e89b-12d3-a456-100000000000', 'customer_6', 'Организация_6'),
+       ('700000000-e89b-12d3-a456-100000000000', 'customer_7', 'Организация_7'),
+       ('800000000-e89b-12d3-a456-100000000000', 'customer_8', 'Организация_8');
+
+INSERT INTO nci_document_statuses (id, internal_id, status_document, status_document_rus)
+VALUES ('100000000-e89b-12d3-a456-100000000000', '1', 'ACTIVE', 'Активный'),
+       ('200000000-e89b-12d3-a456-100000000000', '2', 'REMARKS_PREPARED', 'Сформированы замечания'),
+       ('300000000-e89b-12d3-a456-100000000000', '3', 'TO_BE_SIGNED_BY_UKEP', 'На подписании УКЭП'),
+       ('400000000-e89b-12d3-a456-100000000000', '4', 'ASSIGNMENT_OF_RESPONSIBLE', 'Назначение ответственных лиц'),
+       ('500000000-e89b-12d3-a456-100000000000', '5', 'TO_BE_FAMILIARIZED', 'На ознакомлении'),
+       ('600000000-e89b-12d3-a456-100000000000', '6', 'AWAITING_FOR_SIGNING', 'Ожидание подписания'),
+       ('700000000-e89b-12d3-a456-100000000000', '7', 'PROJECT_CREATION', 'Создание проекта'),
+       ('800000000-e89b-12d3-a456-100000000000', '8', 'NOT_ACTIVE', 'Неактивный'),
+       ('900000000-e89b-12d3-a456-100000000000', '9', 'DRAFT', 'Черновик'),
+       ('1000000000-e89b-12d3-a456-100000000000', '10', 'APPROVAL_IN_PROGRESS', 'На согласовании'),
+       ('1100000000-e89b-12d3-a456-100000000000', '11', 'APPROVED', 'Согласован'),
+       ('1200000000-e89b-12d3-a456-100000000000', '12', 'ACCEPTED', 'Принят'),
+       ('1300000000-e89b-12d3-a456-100000000000', '13', 'APPROVAL_IN_PROGRESS_IN_SED', 'На согласовании в СЭД'),
+       ('1400000000-e89b-12d3-a456-100000000000', '14', 'FORMED', 'Сформирован'),
+       ('1500000000-e89b-12d3-a456-100000000000', '15', 'WORK_IN_PROGRESS', 'В работе'),
+       ('1600000000-e89b-12d3-a456-100000000000', '16', 'ARCHIVED', 'В архиве');
+
+
+INSERT INTO nci_ost_agents (id, ost_agent, internal_id)
+VALUES ('100000000-e89b-12d3-a456-100000000000', 'ost_agent_1', '1'),
+       ('200000000-e89b-12d3-a456-100000000000', 'ost_agent_2', '2'),
+       ('300000000-e89b-12d3-a456-100000000000', 'ost_agent_3', '3'),
+       ('400000000-e89b-12d3-a456-100000000000', 'ost_agent_4', '4');
+
+
 
 -- select * from documents;
 -- select * from nci_users;

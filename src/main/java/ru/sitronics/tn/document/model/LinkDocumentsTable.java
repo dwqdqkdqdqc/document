@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "documents_relating_documents")
-public class RelatingDocumentsTable {
+@Table(name = "documents_link_documents")
+public class LinkDocumentsTable {
     @EmbeddedId
-    RelatingDocumentId id;
+    LinkDocumentId id;
 
     @ManyToOne
     @JsonBackReference(value = "document_id")
@@ -21,18 +21,18 @@ public class RelatingDocumentsTable {
     Document documentId;
 
     @ManyToOne
-    @JsonBackReference(value = "relating_document_id")
-    @MapsId("relatingDocumentId")
-    @JoinColumn(name = "relating_document_id")
-    Document relatingDocument;
+    @JsonBackReference(value = "link_document_id")
+    @MapsId("linkDocumentId")
+    @JoinColumn(name = "link_document_id")
+    Document linkDocument;
 
     @ManyToOne
     @JsonBackReference
-    @MapsId("typeRelation")
-    @JoinColumn(name = "type_relation_id")
+    @MapsId("typeLink")
+    @JoinColumn(name = "type_link_id")
     TypeRelation typeRelation;
 
-    @Column(name = "relating_document_serial_number")
+    @Column(name = "link_document_serial_number")
     String serialNumber;
 
 }

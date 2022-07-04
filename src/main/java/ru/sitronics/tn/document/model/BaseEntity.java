@@ -15,15 +15,15 @@ import java.util.Objects;
 @Access(AccessType.FIELD) //https://stackoverflow.com/a/6084701/548473
 @Getter
 @Setter
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class BaseEntity implements Persistable<String> {
     @Id
     @Schema(accessMode = Schema.AccessMode.READ_ONLY) // https://stackoverflow.com/a/28025008/548473
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", unique = true)
+    @Column(name = "id", nullable = false, unique = true, insertable = false, updatable = false)
     private String id;
 
     // doesn't work for hibernate lazy proxy

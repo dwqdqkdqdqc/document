@@ -13,10 +13,12 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "nci_factory_numbers")
-public class NciFactoryNumber extends BaseEntity {
-    @Column(name = "factory_number")
-    private String factoryNumber;
-    @Column(name = "document_id")
-    private String documentId;
+@Table(name = "nci_document_statuses")
+public class NciDocumentStatus extends BaseEntity {
+    @Column(name = "internal_id")
+    private Integer internalId;
+    @Column(name = "status_document")
+    private String statusDocument;
+    @Column(name = "status_document_rus")
+    private String statusDocumentRus;
 }

@@ -13,14 +13,14 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "document_history_bpm")
+@Table(name = "documents_history_bpm")
 public class DocumentHistoryBpm extends BaseEntity {
     @Column(name = "serial_number")
     private String serialNumber;
     @Column(name = "document_id")
     private String documentId;
-    @Column(name = "relating_document_id")
+    @Column(name = "link_document_id")
     private String relatingDocumentId;
-    @Column(name = "type_relation")
+    @Column(name = "type_link")
     private String typeRelation;
 }
