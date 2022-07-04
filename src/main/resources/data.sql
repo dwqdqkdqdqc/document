@@ -266,7 +266,7 @@ VALUES ('123e4567-e89b-12d3-a456-810000000000', 'WITHOUT_A_FINGERBOARD', 'Без
        ('123e4567-e89b-12d3-a456-820000000000', 'CONFIDENTIALLY', 'Конфиденциально', 'code_2'),
        ('123e4567-e89b-12d3-a456-830000000000', 'SUPER_CONFIDENTIAL', 'супер конфиденциально', 'code_3');
 
-INSERT INTO nci_customers (id, customer, customer_rus)
+INSERT INTO nci_contractors (id, contractor, contractor_rus)
 VALUES ('100000000-e89b-12d3-a456-100000000000', 'customer_1', 'Организация_1'),
        ('200000000-e89b-12d3-a456-100000000000', 'customer_2', 'Организация_2'),
        ('300000000-e89b-12d3-a456-100000000000', 'customer_3', 'Организация_3'),

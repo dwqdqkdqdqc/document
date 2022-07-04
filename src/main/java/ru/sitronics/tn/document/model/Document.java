@@ -69,26 +69,26 @@ public class Document extends BaseEntity implements Serializable {
     private LocalDate additionalAgreementDate;
     @OneToOne
     @JoinColumn(name = "object_kis_up_id")
-    private NciObjectKisUp objectKisUp;                     //7
+    private NciObjectKisUp objectKisUp;
     @CreatedBy
     @ManyToOne
     @JoinColumn
-    private NciUser author;                          //6
+    private NciUser author;
     @Column(name = "customer_id")
-    private String customer;                       //8
+    private String customer;
     @OneToOne
     @JoinColumn
-    private NciOst ost;                      //9
+    private NciOst ost;
     @OneToOne
     @JoinColumn(name = "access_limitation_id")
-    private NciAccessLimitation accessLimitation;          //11
+    private NciAccessLimitation accessLimitation;
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
     private String comment;
     // @NotNull(message = "Specify the status of the document.")
     @OneToOne
     @JoinColumn(name = "status_id")
-    private NciDocumentStatus status;                 //10
+    private NciDocumentStatus status;
     @OneToOne
     @JoinColumn(name = "ost_agent_id")
     private NciOstAgent ostAgent;
@@ -116,11 +116,11 @@ public class Document extends BaseEntity implements Serializable {
     @JoinColumn(name = "termination_code_id")
     private NciTerminationCode terminationCode;
     @Column(name = "sum_no_vat")
-    private BigDecimal sumNoVat;          //13
+    private BigDecimal sumNoVat;
     @Column(name = "sum_vat")
-    private BigDecimal sumVat;          //14
+    private BigDecimal sumVat;
     @Column(name = "total_sum_vat")
-    private BigDecimal totalSumVat;          //15
+    private BigDecimal totalSumVat;
     @Column(name = "status_zakupki")
     private String statusZakupki;
 
@@ -134,7 +134,7 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "factory_number")
     private String factoryNumber;
     @Column(name = "pid_number")
-    private Integer pidNumber;        //19
+    private Integer pidNumber;
     @Column(name = "barcode")
     private String barcode;
     @Column(name = "lkk_number")
@@ -155,55 +155,93 @@ public class Document extends BaseEntity implements Serializable {
     private List<DocumentHistoryBpm> documentsHistoryBpm;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dop_Contract_id")
-    private Document dopContract;                           //5
+    private Document dopContract;
     @Column(name = "lot_number")
-    private String lotNumber;                         //12
+    private String lotNumber;
     @Column(name = "status_contract")
-    private String statusContract;                        //16
+    private String statusContract;
     @ManyToOne
     @JoinColumn(name = "nci_consignee_id")
-    private NciConsignee nciConsignee;                      //17
+    private NciConsignee nciConsignee;
     @Column(name = "shipping_details")
-    private String shippingDetails;                    //18
+    private String shippingDetails;
     @Column(name = "position_number")
-    private Long positionNumber;        //19
+    private Long positionNumber;
     @Column(name = "delivery_method")
-    private boolean deliveryMethod;     //20
+    private boolean deliveryMethod;
     @Column(name = "position_code")
-    private Long positionCode;             //21
+    private Long positionCode;
     @ManyToOne
     @JoinColumn(name = "mtr_id")
-    private NciMtr mtr;            //22
+    private NciMtr mtr;
     @Column(name = "gost_ost_tu")
-    private String gostOstTu;            //23
+    private String gostOstTu;
     @Column(name = "code")
-    private String code;            //24
+    private String code;
     @ManyToOne
     @JoinColumn(name = "unit_of_measurement_id")
-    private NciUnitsMeasurement unitsOfMeasurement;            //25
+    private NciUnitsMeasurement unitsOfMeasurement;
     @Column(name = "quantity")
-    private Long quantity;            //26
+    private Long quantity;
     @Column(name = "price_no_vat")
-    private BigDecimal priceNoVat;            //27
+    private BigDecimal priceNoVat;
     @Column(name = "vat")
-    private Double vat;            //28
+    private Double vat;
     @Column(name = "amount_with_vat")
-    private BigDecimal amountWithVat;            //29
+    private BigDecimal amountWithVat;
     @Column(name = "contractor_id")
-    private String producer;            //30
+    private String producer;
     @ManyToOne
     @JoinColumn(name = "country_id")
-    private NciCountry country;            //31
+    private NciCountry country;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "delivery_date")
-    private LocalDate deliveryDate; //32
+    private LocalDate deliveryDate;
     @ManyToOne
     @JoinColumn(name = "type_of_transport_id")
-    private NciTypeOfTransport typeOfTransport;  //33
+    private NciTypeOfTransport typeOfTransport;
     @Column(name = "belonging_to_the_dsi")
-    private String belongingToTheDSI;   //34
+    private String belongingToTheDSI;
     @Column(name = "note")
-    private String note;  //35
+    private String note;
+    @Column(name = "customer_inn")
+    private String customerInn;
+    @Column(name = "customer_ogrn")
+    private String customerOgrn;
+    @Column(name = "customer_company_name")
+    private String customerCompanyName;
+    @Column(name = "customer_okved")
+    private String customerOkved;
+    @Column(name = "customer_manager_fio")
+    private String customerManagerFio;
+    @Column(name = "customer_passport_number")
+    private String customerPassportNumber;
+    @Column(name = "contract_number_and_date")
+    private String contractNumberAndDate;
+    @Column(name = "other_essential_conditions")
+    private String otherEssentialConditions;
+    @Column(name = "number_in_order")
+    private Long numberInOrder;
+    @Column(name = "owner_fio")
+    private String ownerFio;
+    @Column(name = "owner_inn")
+    private String ownerInn;
+    @Column(name = "owner_ogrn_ogrni")
+    private String ownerOgrnOgrni;
+    @Column(name = "owner_registration_address")
+    private String ownerRegistrationAddress;
+    @Column(name = "document_of_individual")
+    private String documentOfIndividual;
+    @Column(name = "supporting_document")
+    private String supportingDocument;
+    @Column(name = "legal_entity")
+    private String legalEntity;
+    @Column(name = "owner_manager_fio")
+    private String ownerManagerFio;
+    @Column(name = "information_on_composit_executive_bodies")
+    private String informationOnCompositExecutiveBodies;
+//    @Column(name = "")
+//    private String ;
 
 
 
@@ -222,7 +260,6 @@ public class Document extends BaseEntity implements Serializable {
     )
     @OrderBy("lastName")
     private List<NciUser> curators;
-
 
 
     @Type(type = "org.hibernate.type.BinaryType")
@@ -264,10 +301,6 @@ public class Document extends BaseEntity implements Serializable {
     //  @JsonBackReference(value = "id")
     //   @JoinColumn(name = "id")
     //   private MtrSupplyContract additionalAgreementSpecification;
-
-
-
-
 
 
     @Column(name = "contract_subject")
