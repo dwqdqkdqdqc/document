@@ -164,7 +164,7 @@ public class Document extends BaseEntity implements Serializable {
     @JoinColumn(name = "nci_consignee_id")
     private NciConsignee nciConsignee;
     @Column(name = "shipping_details")
-    private String shippingDetails;
+    private Integer shippingDetails;
     @Column(name = "position_number")
     private Long positionNumber;
     @Column(name = "delivery_method")
