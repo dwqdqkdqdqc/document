@@ -109,6 +109,12 @@ CREATE TABLE documents
     legal_entity                             VARCHAR             NULL,
     owner_manager_fio                        VARCHAR             NULL,
     information_on_composit_executive_bodies VARCHAR             NULL,
+    policy_period_beginning                  TIMESTAMP           null,
+    policy_period_end                        TIMESTAMP           null,
+    number_policy                            VARCHAR             NULL,
+    date_policy                              TIMESTAMP           null,
+    inn_insurance_company                    VARCHAR             NULL,
+    name_insurance_company                   VARCHAR             NULL,
 
 
     content                                  bytea               NULL,
@@ -140,9 +146,6 @@ CREATE TABLE documents
 
     termination_code_id                      VARCHAR             NULL, --contract
 
-
-    number_policy                            VARCHAR             NULL, --MtrInsurancePolicy
-    data_policy                              TIMESTAMP           null, --MtrInsurancePolicy
     nci_mtr_group_id                         VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     phase_number                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     nci_phase_id                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr

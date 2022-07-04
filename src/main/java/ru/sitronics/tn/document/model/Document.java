@@ -240,10 +240,20 @@ public class Document extends BaseEntity implements Serializable {
     private String ownerManagerFio;
     @Column(name = "information_on_composit_executive_bodies")
     private String informationOnCompositExecutiveBodies;
-//    @Column(name = "")
-//    private String ;
-
-
+    @Column(name = "policy_period_beginning")
+    private LocalDate policyPeriodBeginning;
+    @Column(name = "policy_period_end")
+    private LocalDate policyPeriodEnd;
+    @Column(name = "number_policy")
+    private String numberPolicy;
+    @Column(name = "date_policy")
+    private LocalDate datePolicy;
+    @Column(name = "inn_insurance_company")
+    private String innInsuranceCompany;
+    @Column(name = "name_insurance_company")
+    private String nameInsuranceCompany;
+/*    @Column(name = "")
+    private String ;*/
 
 
 
