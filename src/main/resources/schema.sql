@@ -131,6 +131,7 @@ CREATE TABLE documents
     production_period_days                   INTEGER             null,
     number_phase                             bigint              null,
     confirming_doc                           VARCHAR             NULL,
+    carrier                                  VARCHAR             NULL,
 
 
 ------------------------------------------------------------------------ниже старое

@@ -282,7 +282,8 @@ public class Document extends BaseEntity implements Serializable {
     private String confirmingDoc;
     @Column(name = "number_phase")
     private String numberPhase;
-
+    @Column(name = "carrier")
+    private String carrier;
 
 /*    @Column(name = "")
     private String ;*/
