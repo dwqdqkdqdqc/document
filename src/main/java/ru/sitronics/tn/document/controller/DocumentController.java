@@ -119,10 +119,10 @@ public class DocumentController {
         return Stream.of(NciCustomer.values()).map(NciCustomer::name).toList();
     }*/
 
-/*    @GetMapping("/statuses")
+    @GetMapping("/statuses")
     public List<String> getStatuses() {
-        return Stream.of(NciStatusesDocument.values()).map(NciStatusesDocument::name).toList();
-    }*/
+        return Stream.of(NciStatuses.values()).map(NciStatuses::name).toList();
+    }
 
 /*    @GetMapping("/accessLimitations")
     public List<String> getAccessLimitations() {

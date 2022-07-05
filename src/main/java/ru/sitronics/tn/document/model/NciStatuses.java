@@ -4,7 +4,18 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
-public enum NciStatus {
+/*@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "nci_document_statuses")*/
+public enum NciStatuses {
+    /*    @Column(name = "internal_id")
+        private Integer internalId;
+        @Column(name = "status_document")
+        private String statusDocument;
+        @Column(name = "status_document_rus")
+        private String statusDocumentRus;*/
     NO_VIEWED("не просмотрено"), //
     DRAFT("черновик"), //
     APPROVAL_IN_PROGRESS("на согласовании"), //
@@ -39,13 +50,13 @@ public enum NciStatus {
 
     private final String translate;
 
-    NciStatus(final String translate) {
+    NciStatuses(final String translate) {
         this.translate = translate;
     }
 
-    public static Map<NciStatus, String> getEnumValuesWithTranslate() {
-        Map<NciStatus, String> map = new EnumMap<>(NciStatus.class);
-        Arrays.asList(NciStatus.values()).forEach(value -> map.put(value, value.getTranslate()));
+    public static Map<NciStatusss, String> getEnumValuesWithTranslate() {
+        Map<NciStatusss, String> map = new EnumMap<>(NciStatusss.class);
+        Arrays.asList(NciStatusss.values()).forEach(value -> map.put(value, value.getTranslate()));
         return map;
     }
 

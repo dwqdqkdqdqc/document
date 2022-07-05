@@ -25,7 +25,7 @@ public class DocumentDto implements HasId {
     private NciUser author;
     private List<NciUser> curators;
     private byte[] content;
-    private NciDocumentStatus status;
+    private NciStatuses status;
     private NciAccessLimitation accessLimitation;
     private String comment;
     private Document contract;

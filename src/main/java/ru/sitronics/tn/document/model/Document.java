@@ -86,9 +86,10 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "comment")
     private String comment;
     // @NotNull(message = "Specify the status of the document.")
-    @OneToOne
-    @JoinColumn(name = "status_id")
-    private NciDocumentStatus status;
+    // @NotNull(message = "Specify the status of the document.")
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private NciStatuses status;
     @OneToOne
     @JoinColumn(name = "ost_agent_id")
     private NciOstAgent ostAgent;

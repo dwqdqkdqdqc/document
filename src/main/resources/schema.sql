@@ -51,7 +51,7 @@ CREATE TABLE documents
     author_id                                VARCHAR             NULL,
     ost_id                                   VARCHAR             NULL, --contract
     access_limitation_id                     VARCHAR             NULL,
-    status_id                                VARCHAR             NULL,
+    status                             VARCHAR             NULL,
     comment                                  VARCHAR             NULL,
     ost_agent_id                             VARCHAR             NULL,
     class_contract_id                        VARCHAR             NULL, --contract
