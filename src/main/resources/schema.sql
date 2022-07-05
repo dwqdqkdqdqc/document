@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS documents_link_documents;
 DROP TABLE IF EXISTS documents_history_bpm;
 DROP TABLE IF EXISTS contracts;
 DROP TABLE IF EXISTS nci_objects_kis_up;
-DROP TABLE IF EXISTS documents_objects;
+DROP TABLE IF EXISTS documents_objects; --на удаление
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
@@ -129,8 +129,11 @@ CREATE TABLE documents
     date_production                          TIMESTAMP           null,
     date_shipment                            TIMESTAMP           null,
     production_period_days                   INTEGER             null,
+    number_phase                             bigint              null,
+    confirming_doc                           VARCHAR             NULL,
 
 
+------------------------------------------------------------------------ниже старое
     content                                  bytea               NULL,
     contract_id                              VARCHAR             NULL,
     customer_id                              VARCHAR             NULL,
@@ -160,12 +163,11 @@ CREATE TABLE documents
 
     termination_code_id                      VARCHAR             NULL, --contract
 
-    nci_mtr_group_id                         VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     phase_number                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
 
     plan_date                                TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     fact_date                                TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
-    verify_document                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+
 
     contract_status                          VARCHAR             NULL,
     nci_consignee_id                         VARCHAR             NULL,
@@ -234,14 +236,6 @@ CREATE TABLE nci_objects_kis_up
     kis_up_id integer NULL  --Уникальный идентификатор ID КИС УП
 );
 
-CREATE TABLE documents_objects
-(
-    document_id   VARCHAR NULL,
-    object_kis_up VARCHAR NULL
-);
---CREATE UNIQUE INDEX document_id_construction_object_id_idx ON documents_construction_objects (document_id, construction_object_id);
-
-
 CREATE TABLE nci_osts
 (
     id            VARCHAR      NULL,
@@ -272,7 +266,7 @@ CREATE TABLE nci_document_types
 CREATE TABLE nci_mtr_groups
 (
     id          VARCHAR NOT NULL,
-    mtr_group   VARCHAR NOT NULL, --Код Группы МТР+ Наименование Группы МТР
+    mtr_group   VARCHAR NULL, --Код Группы МТР+ Наименование Группы МТР
     internal_id Integer NULL
 );
 
@@ -440,12 +434,12 @@ CREATE TABLE nci_access_limitations
 
 CREATE TABLE doc_attachments
 (
-    id                  VARCHAR PRIMARY KEY     NOT NULL,
-    date_of_uploading   TIMESTAMP               NULL,
-    file_name           VARCHAR                 NULL,
-    file_id             VARCHAR                 NULL,
-    author              VARCHAR                 NULL,
-    document_id         VARCHAR                 NULL
+    id                VARCHAR PRIMARY KEY NOT NULL,
+    date_of_uploading TIMESTAMP           NULL,
+    file_name         VARCHAR             NULL,
+    file_id           VARCHAR             NULL,
+    author            VARCHAR             NULL,
+    document_id       VARCHAR             NULL
 );
 
 CREATE TABLE nci_contractors

@@ -111,12 +111,6 @@ VALUES ('object_code_1', '1'),
        ('object_code_3', '3'),
        ('object_code_4', '4');
 
-INSERT INTO documents_objects (document_id, object_kis_up)
-VALUES ('123e4567-e89b-12d3-a456-100000000000', 'object_code_2'),
-       ('123e4567-e89b-12d3-a456-100000000000', 'object_code_4'),
-       ('123e4567-e89b-12d3-a456-200000000000', 'object_code_4'),
-       ('123e4567-e89b-12d3-a456-200000000000', 'object_code_1');
-
 INSERT INTO nci_osts (id, display_value, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-000000001000', 'ost_1', '1'),
        ('123e4567-e89b-12d3-a456-000000002000', 'ost_2', '2'),

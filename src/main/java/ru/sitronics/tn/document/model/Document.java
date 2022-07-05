@@ -239,22 +239,22 @@ public class Document extends BaseEntity implements Serializable {
     private String informationOnCompositExecutiveBodies;
     @Column(name = "policy_period_beginning")
     private LocalDate policyPeriodBeginning;
-      @Column(name = "policy_period_end")
-      private LocalDate policyPeriodEnd;
-      @Column(name = "number_policy")
-      private String numberPolicy;
-      @Column(name = "date_policy")
-      private LocalDate datePolicy;
-      @Column(name = "inn_insurance_company")
-      private String innInsuranceCompany;
-      @Column(name = "name_insurance_company")
-      private String nameInsuranceCompany;
-/*       @OneToOne
-      @JoinColumn(name = "mtr_group_id")
-      private NciMtrGroup mtrGroup;*/
-/*      @OneToOne
-      @JoinColumn(name = "mtr_id")
-      private NciMtr mtr;*/
+    @Column(name = "policy_period_end")
+    private LocalDate policyPeriodEnd;
+    @Column(name = "number_policy")
+    private String numberPolicy;
+    @Column(name = "date_policy")
+    private LocalDate datePolicy;
+    @Column(name = "inn_insurance_company")
+    private String innInsuranceCompany;
+    @Column(name = "name_insurance_company")
+    private String nameInsuranceCompany;
+/*    @OneToOne
+    @JoinColumn(name = "mtr_group_id")
+    private NciMtrGroup mtrGroup;*/
+    /*      @OneToOne
+          @JoinColumn(name = "mtr_id")
+          private NciMtr mtr;*/
     @Column(name = "date_supply")
     private LocalDate dateSupply;
     @Column(name = "date_specification")
@@ -274,20 +274,20 @@ public class Document extends BaseEntity implements Serializable {
     private NciPhase phase;
     @Column(name = "plan_date")
     private LocalDate planDate;
+    @Column(name = "fact_date")
+    private LocalDate factDate;
     @Column(name = "control_prod")
     private Boolean controlProd;
-    @Column(name = "verify_document")
-    private String verifyDocument;
+    @Column(name = "confirming_doc")
+    private String confirmingDoc;
+    @Column(name = "number_phase")
+    private String numberPhase;
 
 
 /*    @Column(name = "")
     private String ;*/
 
-
-
-
-
-
+////////////////////////////////////////////////////////////////// ниже старое
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)

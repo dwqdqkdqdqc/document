@@ -45,6 +45,7 @@ public class DocumentDto implements HasId {
     private BigDecimal amount;
     private List<NciDocumentType> types;
     private Boolean control_prod;
+    private NciMtrGroup mtrGroup;
 
 
     ////=========================================== other
