@@ -250,6 +250,7 @@ public class Document extends BaseEntity implements Serializable {
     private String innInsuranceCompany;
     @Column(name = "name_insurance_company")
     private String nameInsuranceCompany;
+
 /*    @OneToOne
     @JoinColumn(name = "mtr_group_id")
     private NciMtrGroup mtrGroup;*/
