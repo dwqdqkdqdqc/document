@@ -125,7 +125,7 @@ public class DocumentController {
 
     @GetMapping("/statuses")
     public List<String> getStatuses() {
-        return Stream.of(NciStatuses.values()).map(NciStatuses::name).toList();
+        return Stream.of(NciStatus.values()).map(NciStatus::name).toList();
     }
 
 /*    @GetMapping("/accessLimitations")

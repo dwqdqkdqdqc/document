@@ -89,7 +89,7 @@ public class Document extends BaseEntity implements Serializable {
     // @NotNull(message = "Specify the status of the document.")
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private NciStatuses status;
+    private NciStatus status;
     @OneToOne
     @JoinColumn(name = "ost_agent_id")
     private NciOstAgent ostAgent;
