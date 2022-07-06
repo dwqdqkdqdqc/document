@@ -48,8 +48,8 @@ server:
     include-message: always
 
 s3RestService:
-  url: ${S3_REST_SERVICE_URI:http://localhost:8081}
-  postMultipartFilesEndpoint: ${POST_MP_FILES_ENDPOINT:/file}
+  url: ${S3_REST_SERVICE_URI:http://213.108.129.175:8094}
+  postMultipartFilesEndpoint: ${POST_MP_FILES_ENDPOINT:/s3}
 
 rsql:
   defaultSort: ${DEFAULT_SORT:createDate,asc}
