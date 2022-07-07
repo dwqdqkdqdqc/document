@@ -6,8 +6,6 @@ DELETE FROM type_links;
 DELETE FROM documents_link_documents;
 DELETE FROM documents_history_bpm;
 DELETE FROM nci_objects_kis_up;
-DELETE FROM documents_objects;
-DELETE FROM nci_objects;
 DELETE FROM documents_construction_objects;
 DELETE FROM nci_osts;
 DELETE FROM attachments;
@@ -110,12 +108,6 @@ VALUES ('object_code_1', '1'),
        ('object_code_2', '2'),
        ('object_code_3', '3'),
        ('object_code_4', '4');
-
-INSERT INTO documents_objects (document_id, object_kis_up)
-VALUES ('123e4567-e89b-12d3-a456-100000000000', 'object_code_2'),
-       ('123e4567-e89b-12d3-a456-100000000000', 'object_code_4'),
-       ('123e4567-e89b-12d3-a456-200000000000', 'object_code_4'),
-       ('123e4567-e89b-12d3-a456-200000000000', 'object_code_1');
 
 INSERT INTO nci_osts (id, display_value, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-000000001000', 'ost_1', '1'),

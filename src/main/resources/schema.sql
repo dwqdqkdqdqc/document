@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS documents_link_documents;
 DROP TABLE IF EXISTS documents_history_bpm;
 DROP TABLE IF EXISTS contracts;
 DROP TABLE IF EXISTS nci_objects_kis_up;
-DROP TABLE IF EXISTS documents_objects;
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
@@ -232,14 +231,6 @@ CREATE TABLE nci_objects_kis_up
     kis_up    VARCHAR NULL, --Код объекта КИС УП
     kis_up_id integer NULL  --Уникальный идентификатор ID КИС УП
 );
-
-CREATE TABLE documents_objects
-(
-    document_id   VARCHAR NULL,
-    object_kis_up VARCHAR NULL
-);
---CREATE UNIQUE INDEX document_id_construction_object_id_idx ON documents_construction_objects (document_id, construction_object_id);
-
 
 CREATE TABLE nci_osts
 (
