@@ -6,8 +6,6 @@ DELETE FROM type_links;
 DELETE FROM documents_link_documents;
 DELETE FROM documents_history_bpm;
 DELETE FROM nci_objects_kis_up;
-DELETE FROM documents_objects;
-DELETE FROM nci_objects;
 DELETE FROM documents_construction_objects;
 DELETE FROM nci_osts;
 DELETE FROM attachments;
