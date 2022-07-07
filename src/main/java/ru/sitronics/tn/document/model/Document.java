@@ -87,7 +87,7 @@ public class Document extends BaseEntity implements Serializable {
     private String comment;
     // @NotNull(message = "Specify the status of the document.")
     @OneToOne
-    @JoinColumn(name = "status_id")
+    @JoinColumn(name = "status")
     private NciDocumentStatus status;
     @OneToOne
     @JoinColumn(name = "ost_agent_id")
@@ -249,12 +249,12 @@ public class Document extends BaseEntity implements Serializable {
     private String innInsuranceCompany;
     @Column(name = "name_insurance_company")
     private String nameInsuranceCompany;
-    @OneToOne
+/*    @OneToOne
     @JoinColumn(name = "mtr_group_id")
     private NciMtrGroup mtrGroup;
     @OneToOne
     @JoinColumn(name = "mtr_id")
-    private NciMtr mtr;
+    private NciMtr mtr;*/
     @Column(name = "date_supply")
     private LocalDate dateSupply;
     @Column(name = "date_specification")
