@@ -49,7 +49,7 @@ CREATE TABLE documents
     author_id                                VARCHAR             NULL,
     ost_id                                   VARCHAR             NULL, --contract
     access_limitation_id                     VARCHAR             NULL,
-    status_id                                VARCHAR             NULL,
+    status                                   VARCHAR             NULL,
     comment                                  VARCHAR             NULL,
     ost_agent_id                             VARCHAR             NULL,
     class_contract_id                        VARCHAR             NULL, --contract
@@ -430,12 +430,12 @@ CREATE TABLE nci_access_limitations
 
 CREATE TABLE doc_attachments
 (
-    id                  VARCHAR PRIMARY KEY     NOT NULL,
-    date_of_uploading   TIMESTAMP               NULL,
-    file_name           VARCHAR                 NULL,
-    file_id             VARCHAR                 NULL,
-    author              VARCHAR                 NULL,
-    document_id         VARCHAR                 NULL
+    id                VARCHAR PRIMARY KEY NOT NULL,
+    date_of_uploading TIMESTAMP           NULL,
+    file_name         VARCHAR             NULL,
+    file_id           VARCHAR             NULL,
+    author            VARCHAR             NULL,
+    document_id       VARCHAR             NULL
 );
 
 CREATE TABLE nci_contractors
