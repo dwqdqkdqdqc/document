@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class S3FileDto {
     String id;
-    String name;
+    String fileName;
     String error;
 }

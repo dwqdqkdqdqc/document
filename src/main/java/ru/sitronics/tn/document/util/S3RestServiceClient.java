@@ -31,7 +31,7 @@ public class S3RestServiceClient {
     private String postMultipartFilesEndpoint;
     private final RestTemplate restTemplate;
 
-    public <T> List<T> postMultipartFiles(MultipartFile[] files, Class<T> responseClass) {
+    public <T> List<T> postMultipartFiles(MultipartFile[] files, String createdBy, Class<T> responseClass) {
         ObjectMapper objectMapper = new ObjectMapper();
         String url = s3RestServiceUri + postMultipartFilesEndpoint;
         HttpHeaders headers = new HttpHeaders();
@@ -39,6 +39,7 @@ public class S3RestServiceClient {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         Arrays.stream(files).forEach(file -> body.add("files", file.getResource()));
+        body.add("createdBy", createdBy);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
