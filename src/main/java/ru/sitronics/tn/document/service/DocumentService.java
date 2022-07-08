@@ -200,7 +200,7 @@ public class DocumentService {
         List<String> failedFileNames = new ArrayList<>();
         List<DocumentAttachment> attachments = new ArrayList<>();
 
-        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, S3FileDto.class);
+        List<S3FileDto> s3FileDtoList = s3RestServiceClient.postMultipartFiles(files, username, S3FileDto.class);
         if (s3FileDtoList == null || s3FileDtoList.isEmpty()) {
             log.warn("Returned s3FileDtoList from s3-rest-service is null for doc id: {}.", documentId);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -210,11 +210,11 @@ public class DocumentService {
         s3FileDtoList.forEach(dto -> {
             if (dto.getError() == null || dto.getError().isBlank()) {
                 attachments.add(documentAttachmentRepo
-                        .save(new DocumentAttachment(dto.getName(), dto.getId(), username, documentFromDb)));
+                        .save(new DocumentAttachment(dto.getFileName(), dto.getId(), username, documentFromDb)));
             } else {
                 log.warn("File {} doesn't uploaded for document with id {}. Error from response: {}",
-                        dto.getName(), documentId, dto.getError());
-                failedFileNames.add(dto.getName());
+                        dto.getFileName(), documentId, dto.getError());
+                failedFileNames.add(dto.getFileName());
             }
         });
         response.put("notUploaded", failedFileNames);
