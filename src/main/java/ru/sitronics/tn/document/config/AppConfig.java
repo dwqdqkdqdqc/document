@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNullApi;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,7 +28,11 @@ public class AppConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/documents/**").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/documents/**")
+                        .allowedOriginPatterns("http://localhost:3000:[*]",
+                                "https://lkk.dnc.su:[*]", "http://213.108.129.175:[*]",
+                                "https://lkkdemo.sitronics.com:[*]", "http://213.108.129.247:[*]")
+                        .allowedMethods("*");
             }
         };
     }
