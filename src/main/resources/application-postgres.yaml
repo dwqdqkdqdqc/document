@@ -14,10 +14,12 @@ spring:
         ApplicationName: "Microservice: ${spring.application.name} (${USERNAME})"
 
   jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update
-
-#  sql:
-#    init:
-#      mode: embedded  #script-based (data, schema) initialization is performed by default only for embedded databases
+      ddl-auto: none
+  sql:
+    init:
+      mode: embedded  #script-based (data, schema) initialization is performed by default only for embedded databases
