@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "type_relation")
+@Table(name = "type_links")
 public class TypeRelation extends BaseEntity {
 
     @Enumerated(EnumType.STRING)

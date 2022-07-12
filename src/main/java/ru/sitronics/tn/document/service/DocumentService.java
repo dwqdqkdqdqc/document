@@ -229,6 +229,27 @@ public class DocumentService {
         }
         documentAttachmentRepo.deleteById(attachId);
     }
+
+    public List<Document> getDocumentsById(List<String> listId) {
+
+        var listContainsNull = listId.stream().anyMatch(Objects::isNull);
+        if (listContainsNull || listId == null)
+            throw new RuntimeException("A list cannot contain null or be null.");
+
+        var documents = repository.findAllById(listId);
+        log.debug(documents.toString());
+
+        if (documents.isEmpty()) throw new NotFoundException("Documents with such IDs were not found.");
+
+        var documentsCount = documents.stream().count();
+        var listIdCount = listId.stream().count();
+        if (documentsCount != listIdCount)
+            log.warn("The number of id documents transmitted does not match the number of documents found.");
+
+        return documents;
+    }
+
+    ;
 }
     /*
     @SuppressWarnings("unchecked")
