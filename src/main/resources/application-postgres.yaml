@@ -14,12 +14,10 @@ spring:
         ApplicationName: "Microservice: ${spring.application.name} (${USERNAME})"
 
   jpa:
-    properties:
-      hibernatc:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        show-sql: true
-        ddl-auto: none #с none нет автогенерации. Используем только data.sql и schema.sql.  https://www.baeldung.com/spring-boot-data-sql-and-schema-sql
-     # defer-datasource-initialization: true #гарантирует и автогерерацию, а после поикс изменний по schema и заполнение data
-  sql:
-    init:
-      mode: embedded  #script-based (data, schema) initialization is performed by default only for embedded databases
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+#  sql:
+#    init:
+#      mode: embedded  #script-based (data, schema) initialization is performed by default only for embedded databases

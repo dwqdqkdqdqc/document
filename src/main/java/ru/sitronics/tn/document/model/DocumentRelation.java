@@ -1,7 +1,7 @@
 package ru.sitronics.tn.document.model;
 
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -9,12 +9,14 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "relation_document")
+@Table(name = "relation_document",
+        uniqueConstraints = { @UniqueConstraint(name = "DocumentUniqueRelationConstraint",
+                columnNames = { "document_id", "link_document_id", "type_relation_id" }) })
 public class DocumentRelation {
 
     @Id
     @GeneratedValue
-    private String id;
+    private UUID id;
 
     @Column(name = "document_id")
     private String documentId;
@@ -24,9 +26,4 @@ public class DocumentRelation {
 
     @Column(name = "type_relation_id")
     private String typeRelation;
-
-
-
-
 }
-

@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class DocumentRelationDto {
 
-    private String id;
+    private UUID id;
 
     private String documentId;
 
