@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    #  url: jdbc:postgresql://localhost:5432/transneftpua_db
+    #  username: postgres
+    #  password: admin
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DATABASE:transneftpua_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:admin}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimumIdle: 1
+      maximumPoolSize: 2
+      dataSourceProperties:
+        ApplicationName: "Microservice: ${spring.application.name} (${USERNAME})"
+
+  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: embedded  #script-based (data, schema) initialization is performed by default only for embedded databases
