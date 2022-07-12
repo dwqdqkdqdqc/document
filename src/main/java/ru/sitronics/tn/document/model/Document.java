@@ -25,6 +25,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)  //https://stackoverflow.com/a/6084701/548473
@@ -143,16 +144,21 @@ public class Document extends BaseEntity implements Serializable {
     private LocalDate lkkDate;
     @Column(name = "lus_number")
     private String lusNumber;
-    @OneToMany(mappedBy = "documentId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+
+
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+            orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
-    @OrderBy("serialNumber")
-    private List<LinkDocumentsTable> linkDocuments;
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    private List<DocumentRelation> relation;
+
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
     @OrderBy("serialNumber")
     private List<DocumentHistoryBpm> documentsHistoryBpm;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dop_Contract_id")
     private Document dopContract;
@@ -320,12 +326,15 @@ public class Document extends BaseEntity implements Serializable {
     private String supplier;
     @Column(name = "amount")
     private BigDecimal amount;
+
     @OneToMany
     @JoinColumn(name = "name_rus")
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
     @OrderBy("nameRus")
     private List<NciDocumentType> nciDocumentTypes;
+
+    // TODO: 11.07.2022 Не удалять
     @Column(name = "deleted")
     private boolean deleted;
 

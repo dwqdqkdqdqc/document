@@ -41,7 +41,9 @@ public enum NciStatus {
     AWAITING_FOR_SIGNING("Ожидание подписания"),
     NOT_ACTIVE("Неактивный"),
     APPROVAL_IN_PROGRESS_IN_SED("На согласовании в СЭД"),
-    REMARKS_PREPARED("Сформированы замечания");
+    REMARKS_PREPARED("Сформированы замечания"),
+    TO_BE_SIGNED_BY_UKEP(" на подписании УКЭП"),
+    TO_BE_FAMILIARIZED("На ознакомлении");
 
     private final String translate;
 
