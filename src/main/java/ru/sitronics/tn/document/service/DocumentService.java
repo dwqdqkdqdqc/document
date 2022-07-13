@@ -59,8 +59,8 @@ public class DocumentService {
     private final S3RestServiceClient s3RestServiceClient;
 
     public Document get(String id) {
-        Optional<Document> document = repository.findById(id);
-        return document.filter(d -> !d.isDeleted()).orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
+        Optional<Document> document = repository.findByIdAndDeleted(id, false);
+        return document.orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
     }
 
     public List<Document> getAll() {
@@ -248,8 +248,6 @@ public class DocumentService {
 
         return documents;
     }
-
-    ;
 }
     /*
     @SuppressWarnings("unchecked")

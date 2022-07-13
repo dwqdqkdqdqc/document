@@ -25,7 +25,7 @@ public class DocumentDto implements HasId {
     private NciUser author;
     private List<NciUser> curators;
     private byte[] content;
-    private NciDocumentStatus status;
+    private NciStatus status;
     private NciAccessLimitation accessLimitation;
     private String comment;
     private Document contract;
@@ -45,6 +45,7 @@ public class DocumentDto implements HasId {
     private BigDecimal amount;
     private List<NciDocumentType> types;
     private Boolean control_prod;
+    private NciMtrGroup mtrGroup;
 
 
     ////=========================================== other

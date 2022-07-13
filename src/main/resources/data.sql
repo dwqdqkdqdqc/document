@@ -27,25 +27,18 @@ DELETE FROM nsi_delivery_methods;
 
 */
 
-INSERT INTO documents (id, type_id, author_id, status, access_limitation_id, contract_id, lot,
+INSERT INTO documents (id, type_id, author_id, status, access_limitation_id, contract_id, lot_number,
                        specification_id, customer_id, supplier_id, amount, date_signature,
                        registration_number, ost_id, create_date)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', '123e4567-e89b-12d3-a456-010000000000',
-        '900000000-e89b-12d3-a456-100000000000', '123e4567-e89b-12d3-a456-810000000000', null, null, null,
-        '100000000-e89b-12d3-a456-100000000000',
-        'customer_2',
-        '1000.01', '2020-01-31 10:00:00', 'registration_number_1', '123e4567-e89b-12d3-a456-000000001000',
-        '2020-01-31 10:00:00'),
+        'DRAFT', '123e4567-e89b-12d3-a456-810000000000', null, null, null,
+        'customer_1', 'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1', '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00'),
        ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', '123e4567-e89b-12d3-a456-010000000000',
-        '900000000-e89b-12d3-a456-100000000000',
-        '123e4567-e89b-12d3-a456-820000000000', '123e4567-e89b-12d3-a456-100000000000', null,
-        '123e4567-e89b-12d3-a456-300000000000',
-        '100000000-e89b-12d3-a456-200000000000', 'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
+        'DRAFT', '123e4567-e89b-12d3-a456-820000000000', '123e4567-e89b-12d3-a456-100000000000', null,
+        '123e4567-e89b-12d3-a456-300000000000', 'customer_3', 'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
        ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', '123e4567-e89b-12d3-a456-010000000000',
-        '900000000-e89b-12d3-a456-100000000000',
-        '123e4567-e89b-12d3-a456-830000000000', '123e4567-e89b-12d3-a456-100000000000', 'lot_1', null,
-        '200000000-e89b-12d3-a456-100000000000',
-        'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00');
+        'ACCEPTED', '123e4567-e89b-12d3-a456-830000000000', '123e4567-e89b-12d3-a456-100000000000', 'lot_1', null,
+        'customer_5', 'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00');
 /*,
        ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION',
         '123e4567-e89b-12d3-a456-040000000000', 'ACCEPTED', '123e4567-e89b-12d3-a456-820000000000',
@@ -253,10 +246,10 @@ VALUES ('123e4567-e89b-12d3-a456-910000000000', 'delivery_method_1', '1'),
        ('123e4567-e89b-12d3-a456-940000000000', 'delivery_method_4', '4'),
        ('123e4567-e89b-12d3-a456-950000000000', 'delivery_method_5', '5');
 
-INSERT INTO nci_access_limitations (id, access_limitation, access_limitation_rus, code)
-VALUES ('123e4567-e89b-12d3-a456-810000000000', 'WITHOUT_A_FINGERBOARD', 'Без грифа', 'code_1'),
-       ('123e4567-e89b-12d3-a456-820000000000', 'CONFIDENTIALLY', 'Конфиденциально', 'code_2'),
-       ('123e4567-e89b-12d3-a456-830000000000', 'SUPER_CONFIDENTIAL', 'супер конфиденциально', 'code_3');
+INSERT INTO nci_access_limitations (id, access_limitation, code)
+VALUES ('123e4567-e89b-12d3-a456-810000000000', 'WITHOUT_A_FINGERBOARD',  'code_1'),
+       ('123e4567-e89b-12d3-a456-820000000000', 'CONFIDENTIALLY', 'code_2'),
+       ('123e4567-e89b-12d3-a456-830000000000', 'SUPER_CONFIDENTIAL', 'code_3');
 
 INSERT INTO nci_contractors (id, contractor, contractor_rus)
 VALUES ('100000000-e89b-12d3-a456-100000000000', 'customer_1', 'Организация_1'),
