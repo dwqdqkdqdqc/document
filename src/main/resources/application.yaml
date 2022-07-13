@@ -2,7 +2,7 @@
 spring:
   application.name: document-service
   profiles:
-    active: dev, dev-postgres
+    active: local, local-postgres
 
   jackson:
     default-property-inclusion: NON_NULL

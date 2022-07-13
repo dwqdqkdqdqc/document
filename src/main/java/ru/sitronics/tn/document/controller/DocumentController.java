@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.DocumentRelationDto;
 import ru.sitronics.tn.document.model.*;
+import ru.sitronics.tn.document.service.DocumentRelationService;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
@@ -26,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @Tag(name = "Document controller")
 @RequiredArgsConstructor
 @RestController
@@ -34,6 +38,7 @@ public class DocumentController {
     static final String REST_URL = "/documents";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private final DocumentRelationService documentRelationService;
     @Autowired
     private DocumentService service;
     @Autowired
@@ -159,5 +164,13 @@ public class DocumentController {
     public ResponseEntity<?> deleteAttachment(@PathVariable("id") String attachId) {
         service.deleteDocAttachment(attachId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(value = "/relation/create", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createLink(@RequestBody DocumentRelationDto relationDto) {
+
+        var relatedDocument = documentRelationService.create(relationDto);
+
+        return new ResponseEntity<>(relatedDocument, HttpStatus.CREATED);
     }
 }
