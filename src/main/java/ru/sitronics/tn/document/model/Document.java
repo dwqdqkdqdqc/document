@@ -87,9 +87,9 @@ public class Document extends BaseEntity implements Serializable {
     @Column(name = "comment")
     private String comment;
     // @NotNull(message = "Specify the status of the document.")
-    @OneToOne
-    @JoinColumn(name = "status")
-    private NciDocumentStatus status;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private NciStatus status;
     @OneToOne
     @JoinColumn(name = "ost_agent_id")
     private NciOstAgent ostAgent;
@@ -255,12 +255,13 @@ public class Document extends BaseEntity implements Serializable {
     private String innInsuranceCompany;
     @Column(name = "name_insurance_company")
     private String nameInsuranceCompany;
-    /*    @OneToOne
-        @JoinColumn(name = "mtr_group_id")
-        private NciMtrGroup mtrGroup;
-        @OneToOne
-        @JoinColumn(name = "mtr_id")
-        private NciMtr mtr;*/
+
+/*    @OneToOne
+    @JoinColumn(name = "mtr_group_id")
+    private NciMtrGroup mtrGroup;*/
+    /*      @OneToOne
+          @JoinColumn(name = "mtr_id")
+          private NciMtr mtr;*/
     @Column(name = "date_supply")
     private LocalDate dateSupply;
     @Column(name = "date_specification")
@@ -280,15 +281,21 @@ public class Document extends BaseEntity implements Serializable {
     private NciPhase phase;
     @Column(name = "plan_date")
     private LocalDate planDate;
+    @Column(name = "fact_date")
+    private LocalDate factDate;
     @Column(name = "control_prod")
     private Boolean controlProd;
-    @Column(name = "verify_document")
-    private String verifyDocument;
+    @Column(name = "confirming_doc")
+    private String confirmingDoc;
+    @Column(name = "number_phase")
+    private Long numberPhase;
+    @Column(name = "carrier")
+    private String carrier;
 
 /*    @Column(name = "")
     private String ;*/
 
-
+////////////////////////////////////////////////////////////////// ниже старое
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)

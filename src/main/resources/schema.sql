@@ -127,8 +127,12 @@ CREATE TABLE documents
     date_production                          TIMESTAMP           null,
     date_shipment                            TIMESTAMP           null,
     production_period_days                   INTEGER             null,
+    number_phase                             bigint              null,
+    confirming_doc                           VARCHAR             NULL,
+    carrier                                  VARCHAR             NULL,
 
 
+------------------------------------------------------------------------ниже старое
     content                                  bytea               NULL,
     contract_id                              VARCHAR             NULL,
     customer_id                              VARCHAR             NULL,
@@ -158,12 +162,11 @@ CREATE TABLE documents
 
     termination_code_id                      VARCHAR             NULL, --contract
 
-    nci_mtr_group_id                         VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
     phase_number                             VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
 
     plan_date                                TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
     fact_date                                TIMESTAMP           null, --ProgressOfProductionForShipmentOfMtr
-    verify_document                          VARCHAR             NULL, --ProgressOfProductionForShipmentOfMtr
+
 
     contract_status                          VARCHAR             NULL,
     nci_consignee_id                         VARCHAR             NULL,
@@ -262,7 +265,7 @@ CREATE TABLE nci_document_types
 CREATE TABLE nci_mtr_groups
 (
     id          VARCHAR NOT NULL,
-    mtr_group   VARCHAR NOT NULL, --Код Группы МТР+ Наименование Группы МТР
+    mtr_group   VARCHAR NULL, --Код Группы МТР+ Наименование Группы МТР
     internal_id Integer NULL
 );
 

@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
-
+import ru.sitronics.tn.document.util.exception.NotFoundException;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -40,9 +40,13 @@ public class DocumentController {
     private NciDocumentTypeService documentTypeService;
 
     @GetMapping("/{id}")
-    public Document get(@PathVariable String id) {
+    public ResponseEntity<?> get(@PathVariable String id) {
         log.info("get document {}", id);
-        return service.get(id);
+        try {
+            return ResponseEntity.ok(service.get(id));
+        } catch(NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
