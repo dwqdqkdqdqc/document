@@ -248,8 +248,6 @@ public class DocumentService {
 
         return documents;
     }
-
-    ;
 }
     /*
     @SuppressWarnings("unchecked")
