@@ -36,6 +36,11 @@ logging:
     root: WARN
     ru.sitronics.tn: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
+  logback:
+    rollingpolicy:
+      max-history: 0
+      max-file-size: 25MB
+
 
 server.servlet:
   encoding:
