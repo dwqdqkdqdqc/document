@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS documents_link_documents;
 DROP TABLE IF EXISTS documents_history_bpm;
 DROP TABLE IF EXISTS contracts;
 DROP TABLE IF EXISTS nci_objects_kis_up;
-DROP TABLE IF EXISTS documents_objects; --на удаление
 DROP TABLE IF EXISTS nci_osts;
 DROP TABLE IF EXISTS nci_attachments;
 DROP TABLE IF EXISTS documents_attachments;
@@ -50,7 +49,7 @@ CREATE TABLE documents
     author_id                                VARCHAR             NULL,
     ost_id                                   VARCHAR             NULL, --contract
     access_limitation_id                     VARCHAR             NULL,
-    status                             VARCHAR             NULL,
+    status                                   VARCHAR             NULL,
     comment                                  VARCHAR             NULL,
     ost_agent_id                             VARCHAR             NULL,
     class_contract_id                        VARCHAR             NULL, --contract
@@ -487,6 +486,23 @@ CREATE TABLE nci_delivery_methods
     internal_id     integer      NULL --Внутренний (технический) номер записи SAP MDM
 );
 
+-- DROP TABLE public.relation_document;
+
+CREATE TABLE relation_document
+(
+    id               uuid NOT NULL,
+    document_id      varchar(255) NULL,
+    link_document_id varchar(255) NULL,
+    type_relation_id varchar(255) NULL,
+    CONSTRAINT documentuniquerelationconstraint UNIQUE (document_id, link_document_id, type_relation_id),
+    CONSTRAINT relation_document_pkey PRIMARY KEY (id)
+);
+
+
+-- public.relation_document foreign keys
+
+ALTER TABLE relation_document
+    ADD CONSTRAINT fka0aorcug62nh992t24nvd62d9 FOREIGN KEY (document_id) REFERENCES documents (id);
 /*
 CREATE TABLE test_table_a
 (
