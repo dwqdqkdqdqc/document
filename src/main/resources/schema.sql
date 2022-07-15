@@ -284,208 +284,7 @@ CREATE TABLE nci_class_contracts
     code           VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
 );
 
-CREATE TABLE nci_standard_forms
-(
-    id            VARCHAR NULL,
-    standard_form VARCHAR NULL, --Наименование - Типовая форма
-    internal_id   integer NULL  --Внутренний (технический) номер записи SAP MDM
-);
 
-CREATE TABLE nci_termination_codes
-(
-    id               VARCHAR NULL,
-    termination_code VARCHAR NULL, --Наименование – Код расторжения
-    internal_id      VARCHAR NULL  --Внутренний (технический) номер записи SAP MDM
-);
-
-
-
-CREATE TABLE nci_units_measurement
-(
-    id          VARCHAR NOT NULL,
-    unit        VARCHAR NULL, --Наименование ЕИ по ОКЕИ
-    internal_id integer NULL  --Внутренний номер записи SAP MDM
-);
-
-CREATE TABLE nci_countries
-(
-    id           VARCHAR      NOT NULL,
-    country_name VARCHAR(150) NULL,
-    internal_id  integer      NULL
-);
-
-CREATE TABLE nci_types_of_transport
-(
-    id                VARCHAR      NOT NULL,
-    type_of_transport VARCHAR(150) NULL,
-    internal_id       integer      NULL
-);
-
-CREATE TABLE nci_mtrs
-(
-    id           VARCHAR NULL,
-    name         VARCHAR NULL,
-    internal_id  integer NULL,
-    control_prod BOOLEAN DEFAULT FALSE
-);
-
-CREATE TABLE nci_consignees
-(
-    id                        VARCHAR NOT NULL,
-    bukrs                     VARCHAR NULL,
-    external_consignee_id     VARCHAR NULL,
-    first_consignee_name      VARCHAR NULL,
-    second_consignee_name     VARCHAR NULL,
-    third_consignee_name      VARCHAR NULL,
-    fourth_consignee_name     VARCHAR NULL,
-    inn                       VARCHAR NULL,
-    kpp                       VARCHAR NULL,
-    okpo                      VARCHAR NULL,
-    first_railway_code        VARCHAR NULL,
-    first_freight_yard        VARCHAR NULL,
-    first_station_code        VARCHAR NULL,
-    first_customer_code       VARCHAR NULL,
-    second_railway_code       VARCHAR NULL,
-    second_station_code       VARCHAR NULL,
-    second_freight_yard       VARCHAR NULL,
-    second_customer_code      VARCHAR NULL,
-    third_railway_code        VARCHAR NULL,
-    third_station_code        VARCHAR NULL,
-    third_customer_code       VARCHAR NULL,
-    fourth_railway_code       VARCHAR NULL,
-    fourth_station_code       VARCHAR NULL,
-    fourth_customer_code      VARCHAR NULL,
-    fifth_railway_code        VARCHAR NULL,
-    fifth_station_code        VARCHAR NULL,
-    fifth_customer_code       VARCHAR NULL,
-    first_post_code           VARCHAR NULL,
-    first_country             VARCHAR NULL,
-    first_region              VARCHAR NULL,
-    first_city                VARCHAR NULL,
-    first_street              VARCHAR NULL,
-    first_street_suppl        VARCHAR NULL,
-    first_house_number        VARCHAR NULL,
-    first_house_number_suppl  VARCHAR NULL,
-    second_post_code          VARCHAR NULL,
-    second_country            VARCHAR NULL,
-    second_region             VARCHAR NULL,
-    second_city               VARCHAR NULL,
-    second_street             VARCHAR NULL,
-    second_street_suppl       VARCHAR NULL,
-    second_house_number       VARCHAR NULL,
-    second_house_number_suppl VARCHAR NULL,
-    sixth_railway_code        VARCHAR NULL,
-    sixth_station_code        VARCHAR NULL,
-    sixth_customer_code       VARCHAR NULL,
-    department                VARCHAR NULL,
-    function                  VARCHAR NULL,
-    last_name                 VARCHAR NULL,
-    first_name                VARCHAR NULL,
-    tel_number                VARCHAR NULL,
-    tel_extension             VARCHAR NULL,
-    fax_number                VARCHAR NULL,
-    fax_extension             VARCHAR NULL,
-    fourth_country            VARCHAR NULL,
-    fourth_region             VARCHAR NULL,
-    fourth_district           VARCHAR NULL,
-    fourth_city               VARCHAR NULL
-);
-
-CREATE TABLE specification_table_entities
-(
-    id                         VARCHAR PRIMARY KEY NOT NULL,
-    pid                        VARCHAR             NULL,
-    position_number            BIGINT              NULL,
-    delivery_method            BOOLEAN DEFAULT FALSE,
-    position_code              BIGINT              NULL,
-    nci_mtr_id                 VARCHAR             NULL,
-    gost_ost_tu                VARCHAR             NULL,
-    code                       VARCHAR             NULL,
-    nci_unit_of_measurement_id VARCHAR             NULL,
-    quantity                   BIGINT              NULL,
-    price_no_vat               NUMERIC DEFAULT 0   NULL,
-    sum_no_vat                 NUMERIC DEFAULT 0   NULL,
-    vat                        NUMERIC DEFAULT 0   NULL,
-    sum_vat                    NUMERIC DEFAULT 0   NULL,
-    amount_with_vat            NUMERIC DEFAULT 0   NULL,
-    contractor_id              VARCHAR             NULL,
-    nci_country_id             VARCHAR             NULL,
-    delivery_date              TIMESTAMP           NULL,
-    nci_type_of_transport_id   VARCHAR             NULL,
-    belonging_to_the_dsi       VARCHAR             NULL,
-    specification_id           VARCHAR             NULL,
-    note                       VARCHAR             NULL
-);
-
-CREATE TABLE nsi_delivery_methods
-(
-    id              VARCHAR PRIMARY KEY NOT NULL,
-    delivery_method VARCHAR             NULL, --Наименование – Способ доставки
-    internal_id     integer             null  --Внутренний (технический) номер записи SAP MDM
-);
-
-CREATE TABLE nci_access_limitations
-(
-    id                    VARCHAR PRIMARY KEY NOT NULL,
-    access_limitation     VARCHAR             NULL, --Наименование – Грифы доступа
-    access_limitation_rus VARCHAR             NULL, --Наименование – Грифы доступа
-    code                  VARCHAR             NULL  --Внутренний (технический) номер записи SAP MDM
-);
-
-CREATE TABLE doc_attachments
-(
-    id                VARCHAR PRIMARY KEY NOT NULL,
-    date_of_uploading TIMESTAMP           NULL,
-    file_name         VARCHAR             NULL,
-    file_id           VARCHAR             NULL,
-    author            VARCHAR             NULL,
-    document_id       VARCHAR             NULL
-);
-
-CREATE TABLE nci_contractors
-(
-    id              VARCHAR PRIMARY KEY NOT NULL,
-    contractor      VARCHAR             NULL, --Наименование Контрагента
-    contractor_rus  VARCHAR             NULL, --Наименование Контрагента
-    internal_id     integer             null, --Внутренний номер записи SAP MDM
-    internal_guid   integer             null, --GUID делового партнера
-    inn             VARCHAR             NULL,
-    kpp             VARCHAR             NULL,
-    okpo            VARCHAR             NULL,
-    okdp            VARCHAR             NULL,
-    ogrn            VARCHAR             NULL,
-    okved           VARCHAR             NULL,
-    okato           VARCHAR             NULL,
-    oktmo           VARCHAR             NULL,
-    phone           VARCHAR             NULL,
-    fax             VARCHAR             NULL,
-    email           VARCHAR             NULL,
-    address         VARCHAR             NULL,
-    contractor_type integer             null, --Значение из справочника «Тип контрагента»
-    bp_type_lt_id   integer             null  --Тип Контрагента
-);
-
-CREATE TABLE nci_document_statuses
-(
-    id                  VARCHAR PRIMARY KEY NOT NULL,
-    internal_id         INTEGER             null, --Id Статусы документов
-    status_document     VARCHAR             NULL, --Наименование – Статусы документов
-    status_document_rus VARCHAR             NULL
-);
-
-CREATE TABLE nci_ost_agents
-(
-    id          VARCHAR      NULL,
-    ost_agent   VARCHAR(150) NULL, --Наименование ОСТ агента
-    internal_id integer      NULL  --Внутренний (технический) номер записи SAP MDM
-);
-
-CREATE TABLE nci_delivery_methods
-(
-    id              VARCHAR      NULL,
-    delivery_method VARCHAR(150) NULL,
-    internal_id     integer      NULL --Внутренний (технический) номер записи SAP MDM
-);
 
 /*
 CREATE TABLE test_table_a
@@ -514,3 +313,18 @@ VALUES ('b_1'),
 DROP TABLE IF EXISTS test_table_a;
 DROP TABLE IF EXISTS test_table_b;
 */
+create table nci_doc_type
+(
+    id          bigint generated always as identity
+        constraint nci_doc_type_pkey
+            primary key,
+    code        varchar(255)          not null,
+    full_value  varchar(255)          not null,
+    short_value varchar(255),
+    active      boolean default false not null,
+    ord         integer               not null,
+    created_by  varchar(255)          not null,
+    created_at  timestamp             not null,
+    modified_by varchar(255),
+    modified_at timestamp
+);

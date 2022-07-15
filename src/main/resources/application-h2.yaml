@@ -19,5 +19,5 @@ spring:
     # https://stackoverflow.com/a/67678945/548473
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
