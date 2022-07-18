@@ -128,10 +128,16 @@ public class Document extends BaseEntity implements Serializable {
     // Nci_organization - непонятно, что это (Дог. МТР) //28      ???????????????????
 
     @Column(name = "role_id")
-    private String role;                   // (тип должен быть Role)
-    @ManyToOne
-    @JoinColumn(name = "responsible_id")
-    private NciUser responsible;
+    private String role;// (тип должен быть Role)
+
+
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+            orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    private List<DocumentResponsible> responsibles;
+
     @Column(name = "factory_number")
     private String factoryNumber;
     @Column(name = "pid_number")

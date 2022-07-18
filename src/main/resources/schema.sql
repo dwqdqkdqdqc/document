@@ -503,6 +503,22 @@ CREATE TABLE relation_document
 
 ALTER TABLE relation_document
     ADD CONSTRAINT fka0aorcug62nh992t24nvd62d9 FOREIGN KEY (document_id) REFERENCES documents (id);
+
+
+
+CREATE TABLE public.document_responsible (
+                                             id uuid NOT NULL,
+                                             document_id varchar(255) NULL,
+                                             type_relation_id varchar(255) NULL,
+                                             user_login varchar(255) NULL,
+                                             CONSTRAINT document_responsible_pkey PRIMARY KEY (id),
+                                             CONSTRAINT documentuniqueresponsibleconstraint UNIQUE (document_id, user_login, type_relation_id)
+);
+
+
+-- public.document_responsible foreign keys
+
+ALTER TABLE public.document_responsible ADD CONSTRAINT fk6ofexfnsl27goiyfiptx7kito FOREIGN KEY (document_id) REFERENCES public.documents(id);
 /*
 CREATE TABLE test_table_a
 (

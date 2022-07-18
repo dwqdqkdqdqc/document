@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.dto.DocumentRelationDto;
+import ru.sitronics.tn.document.dto.DocumentResponsibleDto;
 import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.service.DocumentRelationService;
+import ru.sitronics.tn.document.service.DocumentResponsibleService;
 import ru.sitronics.tn.document.service.DocumentService;
 import ru.sitronics.tn.document.service.NciDocumentTypeService;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
@@ -29,6 +31,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.ResponseEntity.noContent;
 
 @Tag(name = "Document controller")
 @RequiredArgsConstructor
@@ -39,9 +42,9 @@ public class DocumentController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final DocumentRelationService documentRelationService;
-    @Autowired
+    private final DocumentResponsibleService documentResponsibleService;
     private DocumentService service;
-    @Autowired
+
     private NciDocumentTypeService documentTypeService;
 
     @GetMapping("/{id}")
@@ -98,7 +101,7 @@ public class DocumentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDocument(@PathVariable String id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return noContent().build();
     }
 
     public static class PersistenceUtils {
@@ -172,5 +175,15 @@ public class DocumentController {
         var relatedDocument = documentRelationService.create(relationDto);
 
         return new ResponseEntity<>(relatedDocument, HttpStatus.CREATED);
+    }
+
+
+
+    @PostMapping(value = "/responsible/create", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createResponsible(@RequestBody DocumentResponsibleDto responsibleDto) {
+
+        var documentResponsible = documentResponsibleService.create(responsibleDto);
+
+        return new ResponseEntity<>(documentResponsible, HttpStatus.CREATED);
     }
 }

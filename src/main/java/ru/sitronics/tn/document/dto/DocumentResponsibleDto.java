@@ -3,15 +3,14 @@ package ru.sitronics.tn.document.dto;
 import lombok.Data;
 
 import java.util.UUID;
-
 @Data
-public class DocumentRelationDto {
+public class DocumentResponsibleDto {
 
     private UUID id;
 
-    private String documentId;
+    private String userLogin;
 
-    private String linkDocument;
+    private String documentId;
 
     private String typeRelation;
 
