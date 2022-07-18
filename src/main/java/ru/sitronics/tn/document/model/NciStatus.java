@@ -5,6 +5,12 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public enum NciStatus {
+    /*    @Column(name = "internal_id")
+    private Integer internalId;
+    @Column(name = "status_document")
+    private String statusDocument;
+    @Column(name = "status_document_rus")
+    private String statusDocumentRus;*/
     NO_VIEWED("не просмотрено"), //
     DRAFT("черновик"), //
     APPROVAL_IN_PROGRESS("на согласовании"), //

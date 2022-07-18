@@ -12,6 +12,7 @@ import com.monitorjbl.json.Match;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ import ru.sitronics.tn.document.model.*;
 import ru.sitronics.tn.document.repository.DocumentAttachmentRepository;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.util.S3RestServiceClient;
+import ru.sitronics.tn.document.util.exception.BlankException;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
@@ -247,6 +249,16 @@ public class DocumentService {
             log.warn("The number of id documents transmitted does not match the number of documents found.");
 
         return documents;
+    }
+
+    public Boolean existById(String documentId){
+
+        var documentIdIsEmpty = StringUtils.isBlank(documentId);
+        if (documentIdIsEmpty)
+            throw new BlankException("Document ID is not be empty or null");
+
+
+        return repository.existsById(documentId);
     }
 }
     /*
