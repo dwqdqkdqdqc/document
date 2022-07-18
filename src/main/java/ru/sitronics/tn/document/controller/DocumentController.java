@@ -43,9 +43,9 @@ public class DocumentController {
 
     private final DocumentRelationService documentRelationService;
     private final DocumentResponsibleService documentResponsibleService;
-    private DocumentService service;
+    private final DocumentService service;
 
-    private NciDocumentTypeService documentTypeService;
+    private final NciDocumentTypeService documentTypeService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {
