@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS nci_document_statuses;
 DROP TABLE IF EXISTS nci_ost_agents;
 DROP TABLE IF EXISTS nci_delivery_methods;
 DROP TABLE IF EXISTS doc_attachments;
+DROP TABLE IF EXISTS relation_document;
 
 
 CREATE TABLE documents
