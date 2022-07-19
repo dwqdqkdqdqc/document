@@ -41,10 +41,11 @@ public class DocumentResponsibleService {
         if (!documentIdExist) throw
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Documents with such IDs were not found.");
 
-        var responsibleByThisDocumentIdAlreadyExist = repository.existsDocumentResponsibleByDocumentId(documentId);
-        if (responsibleByThisDocumentIdAlreadyExist) throw
-            new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "The responsible is already linked to the submitted document");
+//        var responsibleByThisDocumentIdAlreadyExist =
+//                repository.existsDocumentResponsibleByDocumentId(documentId);
+//        if (responsibleByThisDocumentIdAlreadyExist) throw
+//            new ResponseStatusException(HttpStatus.BAD_REQUEST,
+//                    "The responsible is already linked to the submitted document");
 
         var documentResponsibleEntity =
                 ObjectUtils.convertObject(responsibleDto, new DocumentResponsible());
