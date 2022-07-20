@@ -54,7 +54,8 @@ public class NciDocumentType extends BaseEntity implements Serializable {
         WAYBILL("Транспортная накладная"),
         SPECIFICATION("Спецификация"),
         QUALITY_DOCUMENTS("Документы о качестве(проставление отметки ТН)"),  //Документы о качестве(проставление отметки ТН); //;
-        PASSPORT_OR_CERTIFICATE ("Паспорт или сертификат качества");
+        PASSPORT_OR_CERTIFICATE ("Паспорт или сертификат качества"),
+        RAILWAY_WAYBILL("Транспортная железнодорожная накладная (копия) ГУ-27");  //Транспортная железнодорожная накладная (копия) ГУ-27;
         /*  RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза
           AIR_WAYBILL, //Авиа-накладная
           RECEIPT_OF_POSTAL_ITEMS, //Квитанция о приеме почтовых отправлений
@@ -84,7 +85,7 @@ public class NciDocumentType extends BaseEntity implements Serializable {
           TNL_ORDER_PLUS_COST_APPROVAL_PROTOCOL,  //Поручение ТНЛ+Протокол согласования стоимости
           ACT_OF_SERVICES_RENDERED,  //Акт оказанных услуг
           PAYMENT_INVOICE,  //Счёт на оплату
-          RAILWAY_WAYBILL,  //Транспортная железнодорожная накладная (копия) ГУ-27
+
           SPECIAL_PERMISSION_FOR_CTG,  //Спецразрешение на КТГ
           APPLICATION_FOR_CARGO_TRANSPORTATION_GU_12_FORM,  //Заявка на перевозку грузов (форма ГУ-12)
           INSTRUCTION_TO_ACCEPT_MTR_FOR_STORAGE,  //Поручение на прием МТР на хранение
