@@ -19,5 +19,4 @@ import javax.persistence.Entity;
 public class ActsOnDetectedDefects1 extends Document {
 
 
-
 }
