@@ -15,7 +15,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@DiscriminatorValue("ACTS_ON_DETECTED_DEFECTS")
+@DiscriminatorValue("ACTS_OF_DETECTED_DEFECTS_OR_PRODUCT_FAILURES_WITHIN_THE_SCOPE_OF_THE_WARRANTY_CASE")
 
 public class ActsOnDetectedDefects extends Document {
 
