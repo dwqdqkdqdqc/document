@@ -30,6 +30,7 @@ DELETE FROM nsi_delivery_methods;
 INSERT INTO documents (id, type_id, author_id, status, access_limitation_id, contract_id, lot_number,
                        specification_id, customer_id, supplier_id, amount, date_signature,
                        registration_number, ost_id, create_date)
+
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', '123e4567-e89b-12d3-a456-010000000000',
         'DRAFT', '123e4567-e89b-12d3-a456-810000000000', null, null, null,
         'customer_1', 'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1', '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00'),
