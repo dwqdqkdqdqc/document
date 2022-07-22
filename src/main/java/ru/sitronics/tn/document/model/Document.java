@@ -25,7 +25,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
+//@ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)  //https://stackoverflow.com/a/6084701/548473
@@ -43,7 +43,7 @@ public class Document extends BaseEntity implements Serializable {
     private String type;                              //1
     /*  @Column(name = "d_type", insertable = false, updatable = false)
       private String dType;*/
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn
     private Document contract;                           //4
     @OneToOne
