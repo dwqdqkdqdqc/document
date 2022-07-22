@@ -224,21 +224,6 @@ VALUES ('123e4567-e89b-12d3-a456-555000000000', 'Спецификация',  'SP
         '123456789', '1676265.55, 1255.4, 1675010.15', 'contract status',
         '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');
 */
-INSERT INTO specification_table_entities (id, pid, position_number, delivery_method, position_code, nci_mtr_id,
-                                          gost_ost_tu, code, nci_unit_of_measurement_id, quantity, price_no_vat,
-                                          sum_no_vat, vat, sum_vat, amount_with_vat, contractor_id, nci_country_id,
-                                          delivery_date, nci_type_of_transport_id, belonging_to_the_dsi,
-                                          note, specification_id)
-VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, '123e4567-e89b-12d3-a456-310000000000',
-        'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
-        2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000003000',
-        '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000040000', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-555000000000'),
-       ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, '123e4567-e89b-12d3-a456-320000000000',
-        'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
-        2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000005000',
-        '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000030000', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-555000000000');
 
 INSERT INTO nci_delivery_methods (id, delivery_method, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-910000000000', 'delivery_method_1', '1'),

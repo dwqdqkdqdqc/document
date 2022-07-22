@@ -22,7 +22,6 @@ DROP TABLE IF EXISTS nci_termination_codes;
 DROP TABLE IF EXISTS nci_countries;
 DROP TABLE IF EXISTS nci_types_of_transport;
 DROP TABLE IF EXISTS nci_consignees;
-DROP TABLE IF EXISTS specification_table_entities;
 DROP TABLE IF EXISTS nci_units_measurement;
 DROP TABLE IF EXISTS nsi_delivery_methods;
 DROP TABLE IF EXISTS comments CASCADE;
@@ -390,32 +389,6 @@ CREATE TABLE nci_consignees
     fourth_region             VARCHAR NULL,
     fourth_district           VARCHAR NULL,
     fourth_city               VARCHAR NULL
-);
-
-CREATE TABLE specification_table_entities
-(
-    id                         VARCHAR PRIMARY KEY NOT NULL,
-    pid                        VARCHAR             NULL,
-    position_number            BIGINT              NULL,
-    delivery_method            BOOLEAN DEFAULT FALSE,
-    position_code              BIGINT              NULL,
-    nci_mtr_id                 VARCHAR             NULL,
-    gost_ost_tu                VARCHAR             NULL,
-    code                       VARCHAR             NULL,
-    nci_unit_of_measurement_id VARCHAR             NULL,
-    quantity                   BIGINT              NULL,
-    price_no_vat               NUMERIC DEFAULT 0   NULL,
-    sum_no_vat                 NUMERIC DEFAULT 0   NULL,
-    vat                        NUMERIC DEFAULT 0   NULL,
-    sum_vat                    NUMERIC DEFAULT 0   NULL,
-    amount_with_vat            NUMERIC DEFAULT 0   NULL,
-    contractor_id              VARCHAR             NULL,
-    nci_country_id             VARCHAR             NULL,
-    delivery_date              TIMESTAMP           NULL,
-    nci_type_of_transport_id   VARCHAR             NULL,
-    belonging_to_the_dsi       VARCHAR             NULL,
-    specification_id           VARCHAR             NULL,
-    note                       VARCHAR             NULL
 );
 
 CREATE TABLE nsi_delivery_methods
