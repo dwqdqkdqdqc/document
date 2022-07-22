@@ -55,7 +55,9 @@ public class NciDocumentType extends BaseEntity implements Serializable {
         SPECIFICATION("Спецификация"),
         QUALITY_DOCUMENTS("Документы о качестве(проставление отметки ТН)"),  //Документы о качестве(проставление отметки ТН); //;
         PASSPORT_OR_CERTIFICATE ("Паспорт или сертификат качества"),
-        RAILWAY_WAYBILL("Транспортная железнодорожная накладная (копия) ГУ-27");  //Транспортная железнодорожная накладная (копия) ГУ-27;
+        RAILWAY_WAYBILL("Транспортная железнодорожная накладная (копия) ГУ-27"), //Транспортная железнодорожная накладная (копия) ГУ-27;
+        INSTRUCTION_TO_ACCEPT_MTR_FOR_STORAGE("Поручение на прием МТР на хранение"),  //Поручение на прием МТР на хранение
+        UNIT_RATE_CONTRACT("Договор по единичным расценкам");
         /*  RECEIPT_OF_CARGO_RECEPTION, //Квитанция о приеме груза
           AIR_WAYBILL, //Авиа-накладная
           RECEIPT_OF_POSTAL_ITEMS, //Квитанция о приеме почтовых отправлений
