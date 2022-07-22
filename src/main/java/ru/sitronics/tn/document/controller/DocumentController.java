@@ -8,26 +8,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
 import ru.sitronics.tn.document.dto.DocumentRelationDto;
 import ru.sitronics.tn.document.dto.DocumentResponsibleDto;
 import ru.sitronics.tn.document.model.*;
-import ru.sitronics.tn.document.service.DocumentRelationService;
-import ru.sitronics.tn.document.service.DocumentResponsibleService;
-import ru.sitronics.tn.document.service.DocumentService;
-import ru.sitronics.tn.document.service.NciDocumentTypeService;
+import ru.sitronics.tn.document.service.*;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
 import java.beans.FeatureDescriptor;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -45,7 +39,8 @@ public class DocumentController {
     private final DocumentResponsibleService documentResponsibleService;
     private final DocumentService service;
 
-    private final NciDocumentTypeService documentTypeService;
+    //private final NciDocumentTypeService documentTypeService;
+    private final TableEntityService tableEntityService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {
@@ -185,5 +180,23 @@ public class DocumentController {
         var documentResponsible = documentResponsibleService.create(responsibleDto);
 
         return new ResponseEntity<>(documentResponsible, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}/tableEntities")
+    public ResponseEntity<?> createTableEntity(@PathVariable("id") String docId,
+                                                  @RequestBody BaseTableEntityDto tableEntityDto) {
+        return ResponseEntity.ok(tableEntityService.create(docId, tableEntityDto));
+    }
+
+    @PatchMapping("/tableEntities/{id}")
+    public ResponseEntity<?> updateTableEntity(@PathVariable("id") UUID tableEntityId,
+                                                  @RequestBody BaseTableEntityDto tableEntityDto) {
+        return ResponseEntity.ok(tableEntityService.update(tableEntityId, tableEntityDto));
+    }
+
+    @DeleteMapping("/tableEntities/{id}")
+    public ResponseEntity<?> deleteTableEntity(@PathVariable("id") UUID tableEntityId) {
+        tableEntityService.delete(tableEntityId);
+        return ResponseEntity.noContent().build();
     }
 }
