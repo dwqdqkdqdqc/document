@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS nci_users;
-DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS documents CASCADE;
 DROP TABLE IF EXISTS documents_curators;
 DROP INDEX IF EXISTS document_id_curators_id_idx;
 --DROP INDEX IF EXISTS doc_id_data_id_name_data_type_idx;
@@ -33,6 +33,9 @@ DROP TABLE IF EXISTS nci_ost_agents;
 DROP TABLE IF EXISTS nci_delivery_methods;
 DROP TABLE IF EXISTS doc_attachments;
 DROP TABLE IF EXISTS relation_document;
+DROP TABLE IF EXISTS document_responsible;
+DROP TABLE IF EXISTS table_entities;
+
 
 
 CREATE TABLE documents
@@ -391,30 +394,34 @@ CREATE TABLE nci_consignees
     fourth_city               VARCHAR NULL
 );
 
-CREATE TABLE specification_table_entities
+CREATE TABLE table_entities
 (
-    id                         VARCHAR PRIMARY KEY NOT NULL,
+    table_entity_type          VARCHAR             NULL,
+    id                         uuid PRIMARY KEY NOT NULL,
+    created_at                 TIMESTAMP           NULL,
+    modified_at                TIMESTAMP           NULL,
     pid                        VARCHAR             NULL,
     position_number            BIGINT              NULL,
     delivery_method            BOOLEAN DEFAULT FALSE,
     position_code              BIGINT              NULL,
-    nci_mtr_id                 VARCHAR             NULL,
+    mtr                        VARCHAR             NULL,
     gost_ost_tu                VARCHAR             NULL,
     code                       VARCHAR             NULL,
-    nci_unit_of_measurement_id VARCHAR             NULL,
+    unit_of_measurement        VARCHAR             NULL,
     quantity                   BIGINT              NULL,
     price_no_vat               NUMERIC DEFAULT 0   NULL,
     sum_no_vat                 NUMERIC DEFAULT 0   NULL,
     vat                        NUMERIC DEFAULT 0   NULL,
     sum_vat                    NUMERIC DEFAULT 0   NULL,
     amount_with_vat            NUMERIC DEFAULT 0   NULL,
-    contractor_id              VARCHAR             NULL,
-    nci_country_id             VARCHAR             NULL,
+    producer                   VARCHAR             NULL,
+    country                    VARCHAR             NULL,
     delivery_date              TIMESTAMP           NULL,
-    nci_type_of_transport_id   VARCHAR             NULL,
+    type_of_transport          VARCHAR             NULL,
     belonging_to_the_dsi       VARCHAR             NULL,
-    specification_id           VARCHAR             NULL,
-    note                       VARCHAR             NULL
+    note                       VARCHAR             NULL,
+    doc_id                     VARCHAR             NULL
+
 );
 
 CREATE TABLE nsi_delivery_methods

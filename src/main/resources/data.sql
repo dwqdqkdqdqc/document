@@ -29,16 +29,28 @@ DELETE FROM nsi_delivery_methods;
 
 INSERT INTO documents (id, type_id, author_id, status, access_limitation_id, contract_id, lot_number,
                        specification_id, customer_id, supplier_id, amount, date_signature,
-                       registration_number, ost_id, create_date)
+                       registration_number, ost_id, create_date, pid_number)
 VALUES ('123e4567-e89b-12d3-a456-100000000000', 'MTR_SUPPLY_CONTRACT', '123e4567-e89b-12d3-a456-010000000000',
         'DRAFT', '123e4567-e89b-12d3-a456-810000000000', null, null, null,
-        'customer_1', 'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1', '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00'),
+        'customer_1', 'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1',
+        '123e4567-e89b-12d3-a456-000000001000', '2020-01-31 10:00:00', null),
        ('123e4567-e89b-12d3-a456-200000000000', 'WAYBILL', '123e4567-e89b-12d3-a456-010000000000',
         'DRAFT', '123e4567-e89b-12d3-a456-820000000000', '123e4567-e89b-12d3-a456-100000000000', null,
-        '123e4567-e89b-12d3-a456-300000000000', 'customer_3', 'customer_4', '5000.00', null, null, null, '2020-02-02 10:00:00'),
+        '123e4567-e89b-12d3-a456-300000000000', 'customer_3', 'customer_4', '5000.00', null, null, null,
+        '2020-02-02 10:00:00', null),
        ('123e4567-e89b-12d3-a456-300000000000', 'SPECIFICATION', '123e4567-e89b-12d3-a456-010000000000',
         'ACCEPTED', '123e4567-e89b-12d3-a456-830000000000', '123e4567-e89b-12d3-a456-100000000000', 'lot_1', null,
-        'customer_5', 'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00');
+        'customer_5', 'customer_6', '3000.0002', null, null, null, '2020-01-25 10:00:00', 123),
+       ('123e4567-e89b-12d3-a456-400000000000', 'MTR_SUPPLY_CONTRACT', '123e4567-e89b-12d3-a456-010000000000',
+        'ACCEPTED', '123e4567-e89b-12d3-a456-810000000000', null, null, '123e4567-e89b-12d3-a456-500000000000',
+        'customer_1', 'customer_2', '1000.01', '2020-01-31 10:00:00', 'registration_number_1', '123e4567-e89b-12d3-a456-000000001000',
+        '2020-01-31 10:00:00', null),
+       ('123e4567-e89b-12d3-a456-500000000000', 'SPECIFICATION', '123e4567-e89b-12d3-a456-010000000000',
+        'ACCEPTED', '123e4567-e89b-12d3-a456-830000000000', null, 'lot_1', null,
+        'customer_5', 'customer_6', '3000.0002', null, null, '123e4567-e89b-12d3-a456-000000001000', '2020-01-25 10:00:00', 123),
+       ('123e4567-e89b-12d3-a456-600000000000', 'KMD_WORKING_DOCUMENTATION', '123e4567-e89b-12d3-a456-010000000000',
+        'DRAFT', '123e4567-e89b-12d3-a456-830000000000', '123e4567-e89b-12d3-a456-400000000000', null, null,
+        null, null, null, null, null, null, '2020-01-25 10:00:00', null);
 /*,
        ('123e4567-e89b-12d3-a456-400000000000', 'SPECIFICATION',
         '123e4567-e89b-12d3-a456-040000000000', 'ACCEPTED', '123e4567-e89b-12d3-a456-820000000000',
@@ -223,21 +235,22 @@ VALUES ('123e4567-e89b-12d3-a456-555000000000', 'Спецификация',  'SP
         '123456789', '1676265.55, 1255.4, 1675010.15', 'contract status',
         '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');
 */
-INSERT INTO specification_table_entities (id, pid, position_number, delivery_method, position_code, nci_mtr_id,
-                                          gost_ost_tu, code, nci_unit_of_measurement_id, quantity, price_no_vat,
-                                          sum_no_vat, vat, sum_vat, amount_with_vat, contractor_id, nci_country_id,
-                                          delivery_date, nci_type_of_transport_id, belonging_to_the_dsi,
-                                          note, specification_id)
-VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, '123e4567-e89b-12d3-a456-310000000000',
-        'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
-        2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000003000',
-        '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000040000', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-555000000000'),
-       ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, '123e4567-e89b-12d3-a456-320000000000',
-        'some GOST', 'some code', '123e4567-e89b-12d3-a456-000000700000', 42, 50.5,
-        2121, 20, 424.2, 2545.2, 'Contractor_1', '123e4567-e89b-12d3-a456-000000005000',
-        '2022-10-20 10:00:00', '123e4567-e89b-12d3-a456-000000030000', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-555000000000');
+
+INSERT INTO doc_table_entities (id, pid, position_number, delivery_method, position_code, mtr,
+                                          gost_ost_tu, code, unit_of_measurement, quantity, price_no_vat,
+                                          sum_no_vat, vat, sum_vat, amount_with_vat, producer, country,
+                                          delivery_date, type_of_transport, belonging_to_the_dsi,
+                                          note, doc_id)
+VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, 'mtr',
+        'some GOST', 'some code', 'm', 42, 50.5,
+        2121, 20, 424.2, 2545.2, 'producer_1', 'RUSSIA',
+        '2022-10-20 10:00:00', 'автомобильная грузоперевозка', 'some information about belonging to the dsi',
+        'some note', '123e4567-e89b-12d3-a456-300000000000'),
+       ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, 'mtr',
+        'some GOST', 'some code', 'kg', 42, 50.5,
+        2121, 20, 424.2, 2545.2, 'producer_2', 'USA',
+        '2022-10-20 10:00:00', 'авиаперевозка', 'some information about belonging to the dsi',
+        'some note', '123e4567-e89b-12d3-a456-300000000000');
 
 INSERT INTO nci_delivery_methods (id, delivery_method, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-910000000000', 'delivery_method_1', '1'),
