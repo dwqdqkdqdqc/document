@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
+import ru.sitronics.tn.document.model.InfoSupplierChainTableEntity;
 import ru.sitronics.tn.document.model.TableEntityFactory;
 import ru.sitronics.tn.document.model.base.BaseTableEntity;
 import ru.sitronics.tn.document.repository.DocumentRepository;
@@ -30,9 +31,20 @@ public class TableEntityService {
         if (!documentRepo.existsById(docId)) {
             throw new EntityNotFoundException(String.format("Document with id: %s doesn't exist.", docId));
         }
+        String docType = documentRepo.getDocumentTypeById(docId);
+        if (!docType.equals(tableEntityDto.getDocumentType().name())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Types doesn't match between given tableEntity and document with id: %s. "
+                                    + "Document type: %s. TableEntity type: %s"
+                            , docId, docType, tableEntityDto.getDocumentType().name()));
+        }
         BaseTableEntity baseTableEntity = ObjectUtils.convertObject(tableEntityDto,
                 TableEntityFactory.getTableEntity(tableEntityDto.getDocumentType()));
         baseTableEntity.setDocumentId(docId);
+
+        if (baseTableEntity instanceof InfoSupplierChainTableEntity) {
+            setInfoSupplierChainTableEntityFields((InfoSupplierChainTableEntity) baseTableEntity);
+        }
         return tableEntityRepo.save(baseTableEntity);
     }
 
@@ -44,6 +56,11 @@ public class TableEntityService {
                 .findById(tableEntityId).orElseThrow(() -> new EntityNotFoundException(String
                         .format("docTableEntity with id: %s doesn't exist.", tableEntityId)));
 
+        if (!entityFromDb.getTableEntityType().equals(tableEntityDto.getDocumentType().name())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Given wrong documentType in tableEntityDto for tableEntity with id: %s. " +
+                            "Right type: %s", tableEntityId, entityFromDb.getTableEntityType()));
+        }
         return tableEntityRepo.save(ObjectUtils.partialUpdate(entityFromDb,
                 ObjectUtils.convertObject(tableEntityDto,
                         TableEntityFactory.getTableEntity(tableEntityDto.getDocumentType()))));
@@ -54,5 +71,11 @@ public class TableEntityService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Given docTableEntityId is null");
         }
         tableEntityRepo.deleteById(tableEntityId);
+    }
+
+    private void setInfoSupplierChainTableEntityFields(InfoSupplierChainTableEntity tableEntity) {
+        Long maxNumberInOrder = tableEntityRepo
+                .findMaxNumberInOrderByDocId(tableEntity.getDocumentId()).orElse(0L);
+        tableEntity.setNumberInOrder(++maxNumberInOrder);
     }
 }

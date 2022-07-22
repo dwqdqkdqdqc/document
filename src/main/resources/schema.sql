@@ -396,6 +396,7 @@ CREATE TABLE nci_consignees
 
 CREATE TABLE table_entities
 (
+    -- specificationTableEntity fields
     table_entity_type          VARCHAR             NULL,
     id                         uuid PRIMARY KEY NOT NULL,
     created_at                 TIMESTAMP           NULL,
@@ -420,8 +421,31 @@ CREATE TABLE table_entities
     type_of_transport          VARCHAR             NULL,
     belonging_to_the_dsi       VARCHAR             NULL,
     note                       VARCHAR             NULL,
-    doc_id                     VARCHAR             NULL
-
+    doc_id                     VARCHAR             NULL,
+    -- infoSupplierChainTableEntity fields
+    inn                                VARCHAR             NULL,
+    ogrn                               VARCHAR             NULL,
+    customer_company_name              VARCHAR             NULL,
+    customer_okvd_code                 VARCHAR             NULL,
+    customer_manager_fio               VARCHAR             NULL,
+    customer_manager_passport_number   VARCHAR             NULL,
+    contract_number_and_date           VARCHAR             NULL,
+    contract_subject                   VARCHAR             NULL,
+    total_including_vat                NUMERIC DEFAULT 0   NULL,
+    start_date                         TIMESTAMP           NULL,
+    end_date                           TIMESTAMP           NULL,
+    other_essential_conditions         VARCHAR             NULL,
+    number_in_order                    BIGINT              NULL,
+    role                               VARCHAR             NULL,
+    owner_name                         VARCHAR             NULL,
+    owner_inn                          VARCHAR             NULL,
+    owner_ogrn_or_ogrni                VARCHAR             NULL,
+    owner_registration_address         VARCHAR             NULL,
+    document_of_an_individual          VARCHAR             NULL,
+    supporting_documents               VARCHAR             NULL,
+    legal_entity                       VARCHAR             NULL,
+    manager                            VARCHAR             NULL,
+    info_compos_exec_bodies            VARCHAR             NULL
 );
 
 CREATE TABLE nsi_delivery_methods

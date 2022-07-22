@@ -1,8 +1,9 @@
 package ru.sitronics.tn.document.dto.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import ru.sitronics.tn.document.dto.InfoSupplierChainTableEntityDto;
 import ru.sitronics.tn.document.dto.SpecificationTableEntityDto;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public abstract class BaseTableEntityDto {
     @NotNull
     private NciDocumentType.NciDocumentTypeEnum documentType;
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
 }
