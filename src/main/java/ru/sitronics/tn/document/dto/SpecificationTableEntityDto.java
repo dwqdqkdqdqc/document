@@ -13,11 +13,9 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class SpecificationTableEntityDto extends BaseTableEntityDto {
-    private String pid;
     private Long positionNumber;
     private boolean deliveryMethod;
     private Long positionCode;
-    private String mtr;
     private String gostOstTu;
     private String code;
     private String unitOfMeasurement;
@@ -27,7 +25,6 @@ public class SpecificationTableEntityDto extends BaseTableEntityDto {
     private Double vat;
     private BigDecimal sumVat;
     private BigDecimal amountWithVat;
-    private String producer;
     private String country;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate deliveryDate;

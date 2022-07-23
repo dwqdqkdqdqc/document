@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.sitronics.tn.document.model.base.BaseTableEntity;
@@ -16,17 +17,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @DiscriminatorValue("SPECIFICATION")
+@JsonIgnoreProperties(value = {"tableEntityAttachments"})
 public class SpecificationTableEntity extends BaseTableEntity {
-    @Column(name = "pid")
-    private String pid;
     @Column(name = "position_number")
     private Long positionNumber;
     @Column(name = "delivery_method")
     private boolean deliveryMethod;
     @Column(name = "position_code")
     private Long positionCode;
-    @Column(name = "mtr")
-    private String mtr;
     @Column(name = "gost_ost_tu")
     private String gostOstTu;
     @Column(name = "code")
@@ -45,8 +43,7 @@ public class SpecificationTableEntity extends BaseTableEntity {
     private BigDecimal sumVat;
     @Column(name = "amount_with_vat")
     private BigDecimal amountWithVat;
-    @Column(name = "producer")
-    private String producer;
+
     @Column(name = "country")
     private String country;
     @DateTimeFormat(pattern = "dd-MM-yyyy")

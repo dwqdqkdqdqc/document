@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @DiscriminatorValue("INFORMATION_ABOUT_SUPPLIERS_CHAIN_OF_OWNERSHIP")
+@JsonIgnoreProperties(value = {"pid", "producer", "mtrName", "tableEntityAttachments"})
 public class InfoSupplierChainTableEntity extends BaseTableEntity {
     // customer fields
     @Column(name = "inn")

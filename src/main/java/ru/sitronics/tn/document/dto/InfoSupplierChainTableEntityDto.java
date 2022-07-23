@@ -1,5 +1,6 @@
 package ru.sitronics.tn.document.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonIgnoreProperties(value = {"pid", "producer", "mtrName"})
 public class InfoSupplierChainTableEntityDto extends BaseTableEntityDto {
     // customer fields
     private String inn;

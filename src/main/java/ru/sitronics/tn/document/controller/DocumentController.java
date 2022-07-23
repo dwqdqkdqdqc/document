@@ -184,13 +184,13 @@ public class DocumentController {
 
     @PostMapping("/{id}/tableEntities")
     public ResponseEntity<?> createTableEntity(@PathVariable("id") String docId,
-                                                  @RequestBody BaseTableEntityDto tableEntityDto) {
+                                               @RequestBody BaseTableEntityDto tableEntityDto) {
         return ResponseEntity.ok(tableEntityService.create(docId, tableEntityDto));
     }
 
     @PatchMapping("/tableEntities/{id}")
     public ResponseEntity<?> updateTableEntity(@PathVariable("id") UUID tableEntityId,
-                                                  @RequestBody BaseTableEntityDto tableEntityDto) {
+                                               @RequestBody BaseTableEntityDto tableEntityDto) {
         return ResponseEntity.ok(tableEntityService.update(tableEntityId, tableEntityDto));
     }
 
@@ -198,5 +198,19 @@ public class DocumentController {
     public ResponseEntity<?> deleteTableEntity(@PathVariable("id") UUID tableEntityId) {
         tableEntityService.delete(tableEntityId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/tableEntities/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAttachmentToTableEntity(@PathVariable("id") UUID tableEntityId,
+                                                        @RequestPart String username,
+                                                        @RequestPart MultipartFile[] files) {
+
+        return tableEntityService.addAttachments(tableEntityId, files, username);
+    }
+
+    @DeleteMapping("/tableEntities/attachments/{id}")
+    public ResponseEntity<?> deleteTableEntityAttachment(@PathVariable("id") String attachId) {
+        tableEntityService.deleteAttachment(attachId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

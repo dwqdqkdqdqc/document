@@ -5,10 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import ru.sitronics.tn.document.model.TableEntityAttachment;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -31,6 +36,18 @@ public class BaseTableEntity extends BaseEntityUUID implements Serializable {
     @Column(name = "table_entity_type", insertable = false, updatable = false)
     @JsonIgnore
     private String tableEntityType;
+    @Column(name = "pid")
+    private String pid;
+    @Column(name = "producer")
+    private String producer;
+    @Column(name = "mtr_name")
+    private String mtrName;
+
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @JoinColumn(name = "table_entity_id", referencedColumnName = "id")
+    private List<TableEntityAttachment> tableEntityAttachments;
 
 }
 

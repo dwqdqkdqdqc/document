@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS doc_attachments;
 DROP TABLE IF EXISTS relation_document;
 DROP TABLE IF EXISTS document_responsible;
 DROP TABLE IF EXISTS table_entities;
+DROP TABLE IF EXISTS table_entity_attachments;
 
 
 
@@ -396,16 +397,19 @@ CREATE TABLE nci_consignees
 
 CREATE TABLE table_entities
 (
-    -- specificationTableEntity fields
+    -- common fields
     table_entity_type          VARCHAR             NULL,
     id                         uuid PRIMARY KEY NOT NULL,
     created_at                 TIMESTAMP           NULL,
     modified_at                TIMESTAMP           NULL,
     pid                        VARCHAR             NULL,
+    producer                   VARCHAR             NULL,
+    mtr_name                   VARCHAR             NULL,
+    doc_id                     VARCHAR             NULL,
+    -- specificationTableEntity fields
     position_number            BIGINT              NULL,
     delivery_method            BOOLEAN DEFAULT FALSE,
     position_code              BIGINT              NULL,
-    mtr                        VARCHAR             NULL,
     gost_ost_tu                VARCHAR             NULL,
     code                       VARCHAR             NULL,
     unit_of_measurement        VARCHAR             NULL,
@@ -415,13 +419,11 @@ CREATE TABLE table_entities
     vat                        NUMERIC DEFAULT 0   NULL,
     sum_vat                    NUMERIC DEFAULT 0   NULL,
     amount_with_vat            NUMERIC DEFAULT 0   NULL,
-    producer                   VARCHAR             NULL,
     country                    VARCHAR             NULL,
     delivery_date              TIMESTAMP           NULL,
     type_of_transport          VARCHAR             NULL,
     belonging_to_the_dsi       VARCHAR             NULL,
     note                       VARCHAR             NULL,
-    doc_id                     VARCHAR             NULL,
     -- infoSupplierChainTableEntity fields
     inn                                VARCHAR             NULL,
     ogrn                               VARCHAR             NULL,
@@ -445,7 +447,14 @@ CREATE TABLE table_entities
     supporting_documents               VARCHAR             NULL,
     legal_entity                       VARCHAR             NULL,
     manager                            VARCHAR             NULL,
-    info_compos_exec_bodies            VARCHAR             NULL
+    info_compos_exec_bodies            VARCHAR             NULL,
+    -- ProgressOfProductionForShipmentOfMtrTableEntity fields
+    factory_number                     VARCHAR             NULL,
+    mtr_group                          VARCHAR             NULL,
+    number_phase                       BIGINT              NULL,
+    phase_name                         VARCHAR             NULL,
+    plan_date                          TIMESTAMP           NULL,
+    fact_date                          TIMESTAMP           NULL
 );
 
 CREATE TABLE nsi_delivery_methods
@@ -471,6 +480,16 @@ CREATE TABLE doc_attachments
     file_id           VARCHAR             NULL,
     author            VARCHAR             NULL,
     document_id       VARCHAR             NULL
+);
+
+CREATE TABLE table_entity_attachments
+(
+    id                VARCHAR PRIMARY KEY NOT NULL,
+    date_of_uploading TIMESTAMP           NULL,
+    file_name         VARCHAR             NULL,
+    file_id           VARCHAR             NULL,
+    author            VARCHAR             NULL,
+    table_entity_id   uuid                NULL
 );
 
 CREATE TABLE nci_contractors
