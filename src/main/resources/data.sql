@@ -236,22 +236,6 @@ VALUES ('123e4567-e89b-12d3-a456-555000000000', 'Спецификация',  'SP
         '123e4567-e89b-12d3-a456-000000100000', 'some shipping details', 'some barcode', '12345', '54321', 'some comment');
 */
 
-INSERT INTO doc_table_entities (id, pid, position_number, delivery_method, position_code, mtr,
-                                          gost_ost_tu, code, unit_of_measurement, quantity, price_no_vat,
-                                          sum_no_vat, vat, sum_vat, amount_with_vat, producer, country,
-                                          delivery_date, type_of_transport, belonging_to_the_dsi,
-                                          note, doc_id)
-VALUES ('123e4567-e89b-12d3-a456-010000000000', 'some pid', 12345, FALSE, 54321, 'mtr',
-        'some GOST', 'some code', 'm', 42, 50.5,
-        2121, 20, 424.2, 2545.2, 'producer_1', 'RUSSIA',
-        '2022-10-20 10:00:00', 'автомобильная грузоперевозка', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-300000000000'),
-       ('123e4567-e89b-12d3-a456-020000000000', 'some pid', 12345, TRUE, 54321, 'mtr',
-        'some GOST', 'some code', 'kg', 42, 50.5,
-        2121, 20, 424.2, 2545.2, 'producer_2', 'USA',
-        '2022-10-20 10:00:00', 'авиаперевозка', 'some information about belonging to the dsi',
-        'some note', '123e4567-e89b-12d3-a456-300000000000');
-
 INSERT INTO nci_delivery_methods (id, delivery_method, internal_id)
 VALUES ('123e4567-e89b-12d3-a456-910000000000', 'delivery_method_1', '1'),
        ('123e4567-e89b-12d3-a456-920000000000', 'delivery_method_2', '2'),

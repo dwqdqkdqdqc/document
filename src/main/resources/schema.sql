@@ -36,6 +36,8 @@ DROP TABLE IF EXISTS relation_document;
 DROP TABLE IF EXISTS document_responsible;
 DROP TABLE IF EXISTS table_entities;
 DROP TABLE IF EXISTS table_entity_attachments;
+DROP TABLE IF EXISTS pid_entity;
+DROP TABLE IF EXISTS production_phase;
 
 
 
@@ -406,21 +408,23 @@ CREATE TABLE table_entities
     producer                   VARCHAR             NULL,
     mtr_name                   VARCHAR             NULL,
     doc_id                     VARCHAR             NULL,
+    number_in_order            BIGINT              NULL,
+    mtr_group                  VARCHAR             NULL,
+    unit_of_measurement        VARCHAR             NULL,
+    quantity                   BIGINT              NULL,
+    delivery_date              TIMESTAMP           NULL,
     -- specificationTableEntity fields
     position_number            BIGINT              NULL,
-    delivery_method            BOOLEAN DEFAULT FALSE,
+    tnl_delivery               BOOLEAN DEFAULT FALSE,
     position_code              BIGINT              NULL,
     gost_ost_tu                VARCHAR             NULL,
     code                       VARCHAR             NULL,
-    unit_of_measurement        VARCHAR             NULL,
-    quantity                   BIGINT              NULL,
     price_no_vat               NUMERIC DEFAULT 0   NULL,
     sum_no_vat                 NUMERIC DEFAULT 0   NULL,
     vat                        NUMERIC DEFAULT 0   NULL,
     sum_vat                    NUMERIC DEFAULT 0   NULL,
     amount_with_vat            NUMERIC DEFAULT 0   NULL,
     country                    VARCHAR             NULL,
-    delivery_date              TIMESTAMP           NULL,
     type_of_transport          VARCHAR             NULL,
     belonging_to_the_dsi       VARCHAR             NULL,
     note                       VARCHAR             NULL,
@@ -437,7 +441,6 @@ CREATE TABLE table_entities
     start_date                         TIMESTAMP           NULL,
     end_date                           TIMESTAMP           NULL,
     other_essential_conditions         VARCHAR             NULL,
-    number_in_order                    BIGINT              NULL,
     role                               VARCHAR             NULL,
     owner_name                         VARCHAR             NULL,
     owner_inn                          VARCHAR             NULL,
@@ -450,11 +453,39 @@ CREATE TABLE table_entities
     info_compos_exec_bodies            VARCHAR             NULL,
     -- ProgressOfProductionForShipmentOfMtrTableEntity fields
     factory_number                     VARCHAR             NULL,
-    mtr_group                          VARCHAR             NULL,
     number_phase                       BIGINT              NULL,
     phase_name                         VARCHAR             NULL,
     plan_date                          TIMESTAMP           NULL,
-    fact_date                          TIMESTAMP           NULL
+    fact_date                          TIMESTAMP           NULL,
+    -- ProgressOfProductionForShipmentOfMtrTableEntity fields
+    specification_date                 TIMESTAMP           NULL,
+    specification_number               BIGINT              NULL,
+    production_start_date              TIMESTAMP           NULL,
+    shipment_date                      TIMESTAMP           NULL,
+    production_time_days               BIGINT              NULL,
+    set_delivery                       BOOLEAN             NULL,
+    control_prod                       BOOLEAN             NULL,
+    delivery_method                    VARCHAR             NULL
+);
+
+CREATE TABLE pid_entity
+(
+    id                         uuid PRIMARY KEY NOT NULL,
+    created_at                 TIMESTAMP            NULL,
+    modified_at                TIMESTAMP            NULL,
+    factory_number             VARCHAR              NULL,
+    table_entity_id            uuid                 NULL
+);
+
+CREATE TABLE production_phase
+(
+    id                         uuid PRIMARY KEY NOT NULL,
+    created_at                 TIMESTAMP            NULL,
+    modified_at                TIMESTAMP            NULL,
+    order_num                  integer              NULL,
+    phase_name                 VARCHAR              NULL,
+    plan_date                  TIMESTAMP            NULL,
+    pid_entity_id              uuid                 NULL
 );
 
 CREATE TABLE nsi_delivery_methods

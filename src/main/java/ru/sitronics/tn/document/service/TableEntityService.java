@@ -10,11 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.dto.S3FileDto;
 import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
-import ru.sitronics.tn.document.model.InfoSupplierChainTableEntity;
 import ru.sitronics.tn.document.model.NciDocumentType;
 import ru.sitronics.tn.document.model.TableEntityAttachment;
-import ru.sitronics.tn.document.model.TableEntityFactory;
 import ru.sitronics.tn.document.model.base.BaseTableEntity;
+import ru.sitronics.tn.document.model.tableEntity.InfoSupplierChainTableEntity;
+import ru.sitronics.tn.document.model.tableEntity.MtrProductionAndShipmentPlanTableEntity;
+import ru.sitronics.tn.document.model.tableEntity.TableEntityFactory;
 import ru.sitronics.tn.document.repository.DocumentRepository;
 import ru.sitronics.tn.document.repository.TableEntityAttachmentRepository;
 import ru.sitronics.tn.document.repository.TableEntityRepository;
@@ -32,6 +33,7 @@ public class TableEntityService {
     private final DocumentRepository documentRepo;
     private final TableEntityAttachmentRepository tableEntityAttachmentRepo;
     private final S3RestServiceClient s3RestServiceClient;
+    private final PidEntityService pidEntityService;
 
 
     @Transactional
@@ -53,8 +55,11 @@ public class TableEntityService {
                 TableEntityFactory.getTableEntity(tableEntityDto.getDocumentType()));
         baseTableEntity.setDocumentId(docId);
 
-        if (baseTableEntity instanceof InfoSupplierChainTableEntity) {
-            setInfoSupplierChainTableEntityFields((InfoSupplierChainTableEntity) baseTableEntity);
+        if (baseTableEntity instanceof InfoSupplierChainTableEntity ||
+                baseTableEntity instanceof MtrProductionAndShipmentPlanTableEntity) {
+            Long maxNumberInOrder = tableEntityRepo
+                    .findMaxNumberInOrderByDocIdAndDocType(docId, docType).orElse(0L);
+            baseTableEntity.setNumberInOrder(++maxNumberInOrder);
         }
         return tableEntityRepo.save(baseTableEntity);
     }
@@ -136,10 +141,21 @@ public class TableEntityService {
         tableEntityAttachmentRepo.deleteById(attachId);
     }
 
+    @Transactional
+    public MtrProductionAndShipmentPlanTableEntity decomposePID(UUID tableEntityId) {
+        if (tableEntityId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Given docTableEntityId is null");
+        }
+        BaseTableEntity entityFromDb = tableEntityRepo
+                .findById(tableEntityId).orElseThrow(() -> new EntityNotFoundException(String
+                        .format("docTableEntity with id: %s doesn't exist.", tableEntityId)));
 
-    private void setInfoSupplierChainTableEntityFields(InfoSupplierChainTableEntity tableEntity) {
-        Long maxNumberInOrder = tableEntityRepo
-                .findMaxNumberInOrderByDocId(tableEntity.getDocumentId()).orElse(0L);
-        tableEntity.setNumberInOrder(++maxNumberInOrder);
+        if (entityFromDb instanceof MtrProductionAndShipmentPlanTableEntity entity) {
+            entity.setPidEntities(pidEntityService.createList(entity));
+            return entity;
+
+        } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String
+                .format("docTableEntity with id: %s not instance of MtrProductionAndShipmentPlanTableEntity",
+                        tableEntityId));
     }
 }

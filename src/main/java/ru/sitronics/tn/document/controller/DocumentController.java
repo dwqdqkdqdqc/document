@@ -208,6 +208,13 @@ public class DocumentController {
         return tableEntityService.addAttachments(tableEntityId, files, username);
     }
 
+    @PostMapping("/mtrProductionAndShipmentPlanTableEntity/{id}/decomposePID")
+    public ResponseEntity<?> decomposePID(@PathVariable("id") UUID tableEntityId) {
+        return ResponseEntity.ok(tableEntityService.decomposePID(tableEntityId));
+    }
+
+
+
     @DeleteMapping("/tableEntities/attachments/{id}")
     public ResponseEntity<?> deleteTableEntityAttachment(@PathVariable("id") String attachId) {
         tableEntityService.deleteAttachment(attachId);

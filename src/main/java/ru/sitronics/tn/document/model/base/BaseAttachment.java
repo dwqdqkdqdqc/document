@@ -8,10 +8,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.sitronics.tn.document.model.BaseEntity;
-import ru.sitronics.tn.document.model.Document;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;

@@ -1,5 +1,6 @@
-package ru.sitronics.tn.document.model;
+package ru.sitronics.tn.document.model.tableEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @DiscriminatorValue("PROGRESS_OF_PRODUCTION_AND_PREPARATION_FOR_SHIPMENT_OF_MTR")
+@JsonIgnoreProperties(value = {"numberInOrder"})
 public class ProgressOfProductionForShipmentOfMtrTableEntity extends BaseTableEntity {
     @Column(name = "factory_number")
     private String factoryNumber;
-    @Column(name = "mtr_group")
-    private String mtrGroup;
     @Column(name = "number_phase")
     private Long numberPhase;
     @Column(name = "phase_name")

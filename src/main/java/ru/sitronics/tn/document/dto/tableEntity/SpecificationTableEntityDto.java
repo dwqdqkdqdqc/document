@@ -1,33 +1,29 @@
-package ru.sitronics.tn.document.dto;
+package ru.sitronics.tn.document.dto.tableEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonIgnoreProperties(value = {"mtrGroup"})
 public class SpecificationTableEntityDto extends BaseTableEntityDto {
     private Long positionNumber;
-    private boolean deliveryMethod;
+    private boolean tnlDelivery;
     private Long positionCode;
     private String gostOstTu;
     private String code;
-    private String unitOfMeasurement;
-    private Long quantity;
     private BigDecimal priceNoVat;
     private BigDecimal sumNoVat;
     private Double vat;
     private BigDecimal sumVat;
     private BigDecimal amountWithVat;
     private String country;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate deliveryDate;
     private String typeOfTransport;
     private String belongingToTheDSI;
     private String note;

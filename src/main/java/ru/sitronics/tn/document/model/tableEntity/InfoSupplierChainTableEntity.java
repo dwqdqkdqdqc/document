@@ -1,4 +1,4 @@
-package ru.sitronics.tn.document.model;
+package ru.sitronics.tn.document.model.tableEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -48,8 +48,6 @@ public class InfoSupplierChainTableEntity extends BaseTableEntity {
     @Column(name = "other_essential_conditions")
     private String otherEssentialConditions;
     // info supp chain fields
-    @Column(name = "number_in_order")
-    private Long numberInOrder;
     @Column(name = "role")
     private String role;
     @Column(name = "owner_name")
