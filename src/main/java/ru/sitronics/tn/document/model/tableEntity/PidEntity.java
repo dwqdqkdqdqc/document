@@ -1,4 +1,4 @@
-package ru.sitronics.tn.document.model;
+package ru.sitronics.tn.document.model.tableEntity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,11 +10,9 @@ import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import ru.sitronics.tn.document.model.base.BaseEntityUUID;
-import ru.sitronics.tn.document.model.tableEntity.MtrProductionAndShipmentPlanTableEntity;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter

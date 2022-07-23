@@ -1,11 +1,11 @@
 package ru.sitronics.tn.document.dto.tableEntity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,4 +19,6 @@ public class MtrProductionAndShipmentPlanTableEntityDto extends BaseTableEntityD
     private boolean setDelivery;
     private boolean controlProd;
     private String deliveryMethod;
+    @JsonProperty("pidEntities")
+    private List<PidEntityDto> pidEntityDtoList;
 }

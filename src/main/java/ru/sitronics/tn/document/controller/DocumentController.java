@@ -14,12 +14,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
 import ru.sitronics.tn.document.dto.DocumentRelationDto;
 import ru.sitronics.tn.document.dto.DocumentResponsibleDto;
-import ru.sitronics.tn.document.model.*;
-import ru.sitronics.tn.document.service.*;
+import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
+import ru.sitronics.tn.document.model.Document;
+import ru.sitronics.tn.document.model.NciDocumentType;
+import ru.sitronics.tn.document.service.DocumentRelationService;
+import ru.sitronics.tn.document.service.DocumentResponsibleService;
+import ru.sitronics.tn.document.service.DocumentService;
+import ru.sitronics.tn.document.service.TableEntityService;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
+
 import java.beans.FeatureDescriptor;
 import java.util.*;
 import java.util.stream.Stream;
@@ -212,8 +217,6 @@ public class DocumentController {
     public ResponseEntity<?> decomposePID(@PathVariable("id") UUID tableEntityId) {
         return ResponseEntity.ok(tableEntityService.decomposePID(tableEntityId));
     }
-
-
 
     @DeleteMapping("/tableEntities/attachments/{id}")
     public ResponseEntity<?> deleteTableEntityAttachment(@PathVariable("id") String attachId) {

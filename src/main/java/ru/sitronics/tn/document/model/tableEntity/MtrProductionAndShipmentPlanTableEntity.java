@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import ru.sitronics.tn.document.model.PidEntity;
 import ru.sitronics.tn.document.model.base.BaseTableEntity;
 
 import javax.persistence.*;

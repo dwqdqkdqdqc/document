@@ -1,6 +1,7 @@
-package ru.sitronics.tn.document.model;
+package ru.sitronics.tn.document.model.tableEntity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class ProductionPhase extends BaseEntityUUID {
     @Column(name = "phase_name")
     private String phaseName;
     @Column(name = "plan_date")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate planDate;
 
 
@@ -43,9 +45,8 @@ public class ProductionPhase extends BaseEntityUUID {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProductionPhase)) return false;
+        if (!(o instanceof ProductionPhase that)) return false;
         if (!super.equals(o)) return false;
-        ProductionPhase that = (ProductionPhase) o;
         return orderNum == that.orderNum && Objects.equals(phaseName, that.phaseName) && Objects.equals(planDate, that.planDate);
     }
 

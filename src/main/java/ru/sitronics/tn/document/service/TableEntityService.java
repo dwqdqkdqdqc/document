@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.sitronics.tn.document.dto.S3FileDto;
 import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
+import ru.sitronics.tn.document.dto.tableEntity.MtrProductionAndShipmentPlanTableEntityDto;
 import ru.sitronics.tn.document.model.NciDocumentType;
 import ru.sitronics.tn.document.model.TableEntityAttachment;
 import ru.sitronics.tn.document.model.base.BaseTableEntity;
@@ -78,9 +79,21 @@ public class TableEntityService {
                     String.format("Given wrong documentType in tableEntityDto for tableEntity with id: %s. " +
                             "Right type: %s", tableEntityId, entityFromDb.getTableEntityType()));
         }
-        return tableEntityRepo.save(ObjectUtils.partialUpdate(entityFromDb,
-                ObjectUtils.convertObject(tableEntityDto,
-                        TableEntityFactory.getTableEntity(tableEntityDto.getDocumentType()))));
+        BaseTableEntity baseTableEntity = ObjectUtils.partialUpdate(entityFromDb, ObjectUtils.
+                convertObject(tableEntityDto, TableEntityFactory.getTableEntity(tableEntityDto.getDocumentType())));
+
+        if (baseTableEntity instanceof MtrProductionAndShipmentPlanTableEntity entity) {
+            if (tableEntityDto instanceof MtrProductionAndShipmentPlanTableEntityDto dto) {
+                if ((entity.getPidEntities() != null && !entity.getPidEntities().isEmpty()) &&
+                        (dto.getPidEntityDtoList() != null && !dto.getPidEntityDtoList().isEmpty())) {
+
+                    entity.setPidEntities(pidEntityService.updatePidEntities(entity.getPidEntities(),
+                            dto.getPidEntityDtoList()));
+                    return tableEntityRepo.save(entity);
+                }
+            }
+        }
+        return tableEntityRepo.save(baseTableEntity);
     }
 
     @Transactional

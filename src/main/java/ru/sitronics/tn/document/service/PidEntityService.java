@@ -3,11 +3,14 @@ package ru.sitronics.tn.document.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sitronics.tn.document.model.PidEntity;
-import ru.sitronics.tn.document.model.ProductionPhase;
+import ru.sitronics.tn.document.dto.tableEntity.PidEntityDto;
+import ru.sitronics.tn.document.dto.tableEntity.ProductPhaseDto;
 import ru.sitronics.tn.document.model.tableEntity.MtrProductionAndShipmentPlanTableEntity;
+import ru.sitronics.tn.document.model.tableEntity.PidEntity;
+import ru.sitronics.tn.document.model.tableEntity.ProductionPhase;
 import ru.sitronics.tn.document.repository.PidEntityRepository;
 import ru.sitronics.tn.document.repository.ProductionPhaseRepository;
+import ru.sitronics.tn.document.util.ObjectUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -42,6 +45,25 @@ public class PidEntityService {
         return pidEntityRepo.save(pidEntity);
     }
 
+    public List<PidEntity> updatePidEntities(List<PidEntity> pidEntityList, List<PidEntityDto> pidEntityDtoList) {
+        pidEntityList.forEach(pidEntity -> {
+            pidEntityDtoList.forEach(pidEntityDto -> {
+                if (pidEntity.getId().equals(pidEntityDto.getId())) {
+                    ObjectUtils.partialUpdate(pidEntity, pidEntityDto);
+                    if (pidEntity.getProductionPhases() != null
+                            && !pidEntity.getProductionPhases().isEmpty()
+                            && pidEntityDto.getProductPhaseDtoList() != null
+                            && !pidEntityDto.getProductPhaseDtoList().isEmpty()) {
+                        pidEntity.setProductionPhases(updateProductionPhases(pidEntity.getProductionPhases(),
+                                pidEntityDto.getProductPhaseDtoList()));
+                        pidEntityRepo.save(pidEntity);
+                    }
+                }
+            });
+        });
+        return pidEntityList;
+    }
+
     private List<ProductionPhase> createProductionPhasesList(PidEntity pidEntity, String mtrGroup) {
         List<String> phaseNames = productionPhaseRepo.getPhaseNamesByMtrGroup(mtrGroup);
         if (phaseNames.isEmpty()) {
@@ -52,5 +74,18 @@ public class PidEntityService {
         phaseNames.forEach(phaseName -> phaseList.add(productionPhaseRepo
                 .save(new ProductionPhase(orderNum.getAndIncrement(), phaseName, pidEntity))));
         return phaseList;
+    }
+
+    private List<ProductionPhase> updateProductionPhases(List<ProductionPhase> productionPhases,
+                                                         List<ProductPhaseDto> productPhaseDtos) {
+        productionPhases.forEach(productionPhase -> {
+            productPhaseDtos.forEach(productPhaseDto -> {
+                if (productionPhase.getId().equals(productPhaseDto.getId())) {
+                    ObjectUtils.partialUpdate(productionPhase, productPhaseDto);
+                    productionPhaseRepo.save(productionPhase);
+                }
+            });
+        });
+        return productionPhases;
     }
 }
