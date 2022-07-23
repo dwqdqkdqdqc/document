@@ -24,7 +24,6 @@ DELETE FROM nci_consignees;
 DELETE FROM specification_table_entities;
 DELETE FROM nci_units_measurement;
 DELETE FROM nsi_delivery_methods;
-
 */
 
 INSERT INTO documents (id, type_id, author_id, status, access_limitation_id, contract_id, lot_number,
