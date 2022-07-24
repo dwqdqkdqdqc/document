@@ -15,4 +15,10 @@ public class DocumentRelationDto {
 
     private String typeRelation;
 
+
+    public DocumentRelationDto(String documentId, String linkDocument, String typeRelation) {
+        this.documentId = documentId;
+        this.linkDocument = linkDocument;
+        this.typeRelation = typeRelation;
+    }
 }

@@ -12,7 +12,6 @@ spring:
       maximumPoolSize: 2
       dataSourceProperties:
         ApplicationName: "Microservice: ${spring.application.name} (${USERNAME})"
-
   jpa:
 #    properties:
 #      hibernate:

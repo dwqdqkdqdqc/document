@@ -60,7 +60,7 @@ public class DocumentController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Document> create(@RequestBody Document document) {
         log.info("creating document: {}", document.toString());
-        return new ResponseEntity<>(service.createOrUpdate(document), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(document), HttpStatus.CREATED);
     }
 
  /*   @DeleteMapping("/{id}")
@@ -91,10 +91,8 @@ public class DocumentController {
     }
 
     @PatchMapping("/{id}")
-    public Document updateDocument(@PathVariable String id, @RequestBody Document document) {
-        Document currentDocument = service.get(id);
-        document = (Document) PersistenceUtils.partialUpdate(currentDocument, document);
-        return service.createOrUpdate(document);
+    public ResponseEntity<Document> updateDocument(@PathVariable String id, @RequestBody Document document) {
+        return new ResponseEntity<>(service.update(id, document), HttpStatus.CREATED);
 
     }
 
@@ -104,21 +102,6 @@ public class DocumentController {
         return noContent().build();
     }
 
-    public static class PersistenceUtils {
-        public static Object partialUpdate(Object dbObject, Object partialUpdateObject) {
-            String[] ignoredProperties = getNullPropertyNames(partialUpdateObject);
-            BeanUtils.copyProperties(partialUpdateObject, dbObject, ignoredProperties);
-            return dbObject;
-        }
-
-        private static String[] getNullPropertyNames(Object object) {
-            final BeanWrapper wrappedSource = new BeanWrapperImpl(object);
-            return Stream.of(wrappedSource.getPropertyDescriptors())
-                    .map(FeatureDescriptor::getName)
-                    .filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
-                    .toArray(String[]::new);
-        }
-    }
 
     @GetMapping("/types")
     public List<String> getDocumentTypes() {
