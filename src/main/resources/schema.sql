@@ -22,7 +22,6 @@ DROP TABLE IF EXISTS nci_termination_codes;
 DROP TABLE IF EXISTS nci_countries;
 DROP TABLE IF EXISTS nci_types_of_transport;
 DROP TABLE IF EXISTS nci_consignees;
-DROP TABLE IF EXISTS specification_table_entities;
 DROP TABLE IF EXISTS nci_units_measurement;
 DROP TABLE IF EXISTS nsi_delivery_methods;
 DROP TABLE IF EXISTS comments CASCADE;
