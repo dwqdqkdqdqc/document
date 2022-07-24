@@ -61,19 +61,9 @@ public class ObjectUtils {
         return target;
     }
 
-    public static <T> T partialUpdate(T dbObject, T partialUpdateObject) {
-        String[] ignoredProperties = getNullPropertyNames(partialUpdateObject);
-        BeanUtils.copyProperties(partialUpdateObject, dbObject, ignoredProperties);
-        return dbObject;
-    }
 
-    private static String[] getNullPropertyNames(Object object) {
-        final BeanWrapper wrappedSource = new BeanWrapperImpl(object);
-        return Stream.of(wrappedSource.getPropertyDescriptors())
-                .map(FeatureDescriptor::getName)
-                .filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
-                .toArray(String[]::new);
-    }
+
+
 /*
     public static <T, D> D convertObject(T source, D target, String fields) {
         if (fields != null) {

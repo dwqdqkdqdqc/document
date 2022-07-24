@@ -141,56 +141,56 @@ public class DocumentService {
         return repository.save(newDocument);
     }
 
-    public Document createOrUpdate(Document document) {
-
-        var documentId = document.getId();
-        if (documentId != null) {
-            var existDocumentAndContractNotNull =
-                    repository.existsDocumentByIdAndContractNotNull(documentId);
-            var newDocumentContract = document.getContract();
-
-            if (existDocumentAndContractNotNull && newDocumentContract != null) {
-                var oldDocument = repository.getById(documentId);
-                var oldDocumentId = oldDocument.getId();
-                var oldContractId = oldDocument.getContract().getId();
-                var newContractId = newDocumentContract.getId();
-
-                if (!(oldContractId.equals(newContractId))) {
-                    var docRelation = relationRepo
-                            .findDocumentRelationByDocumentIdAndLinkDocument(oldDocumentId, oldContractId);
-                    var reverseDocRelation = relationRepo
-                            .findDocumentRelationByDocumentIdAndLinkDocument(oldContractId, oldDocumentId);
-
-                    var relations = List.of(docRelation, reverseDocRelation);
-                    relationRepo.deleteAll(relations);
-
-                    var documentRelationDto = new DocumentRelationDto(documentId, newContractId, "SINGLE");
-                    relationService.create(documentRelationDto);
-                }
-
-            }
-
-        }
-
-        String id = repository.save(document).getId();
-        if (id == null || id.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "returned id from DB is null");
-        }
-
-
-//        var documentContract = document.getContract();
-//        if (documentContract != null) {
-//            var documentId = document.getId();
-//            var contractId = documentContract.getId();
-//            // TODO: 21.07.2022 Уточнить про выбор связи при автоматическом связывании
-//            var typeRelation = "SINGLE";
+//    public Document createOrUpdate(Document document) {
 //
-//            var documentRelationDto =  new DocumentRelationDto(documentId, contractId, typeRelation);
-//            documentRelationService.create(documentRelationDto);
+//        var documentId = document.getId();
+//        if (documentId != null) {
+//            var existDocumentAndContractNotNull =
+//                    repository.existsDocumentByIdAndContractNotNull(documentId);
+//            var newDocumentContract = document.getContract();
+//
+//            if (existDocumentAndContractNotNull && newDocumentContract != null) {
+//                var oldDocument = repository.getById(documentId);
+//                var oldDocumentId = oldDocument.getId();
+//                var oldContractId = oldDocument.getContract().getId();
+//                var newContractId = newDocumentContract.getId();
+//
+//                if (!(oldContractId.equals(newContractId))) {
+//                    var docRelation = relationRepo
+//                            .findDocumentRelationByDocumentIdAndLinkDocument(oldDocumentId, oldContractId);
+//                    var reverseDocRelation = relationRepo
+//                            .findDocumentRelationByDocumentIdAndLinkDocument(oldContractId, oldDocumentId);
+//
+//                    var relations = List.of(docRelation, reverseDocRelation);
+//                    relationRepo.deleteAll(relations);
+//
+//                    var documentRelationDto = new DocumentRelationDto(documentId, newContractId, "SINGLE");
+//                    relationService.create(documentRelationDto);
+//                }
+//
+//            }
+//
 //        }
-// TODO: 22.07.2022 Уточнить насчёт выбора такой обработки
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + id));
-    }
+//
+//        String id = repository.save(document).getId();
+//        if (id == null || id.isBlank()) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "returned id from DB is null");
+//        }
+//
+//
+////        var documentContract = document.getContract();
+////        if (documentContract != null) {
+////            var documentId = document.getId();
+////            var contractId = documentContract.getId();
+////
+////            var typeRelation = "SINGLE";
+////
+////            var documentRelationDto =  new DocumentRelationDto(documentId, contractId, typeRelation);
+////            documentRelationService.create(documentRelationDto);
+////        }
+////
+//        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + id));
+//    }
 
     @Transactional
     public void delete(String id) {
