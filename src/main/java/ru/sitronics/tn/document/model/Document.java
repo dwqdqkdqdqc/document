@@ -45,8 +45,7 @@ public class Document extends BaseEntity implements Serializable {
     /*  @Column(name = "d_type", insertable = false, updatable = false)
       private String dType;*/
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn
     private Document contract;                           //4
     @OneToOne
