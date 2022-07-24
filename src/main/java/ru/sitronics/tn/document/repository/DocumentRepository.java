@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.sitronics.tn.document.model.Document;
+
 import java.util.Optional;
 
 @Repository
@@ -15,7 +16,4 @@ public interface DocumentRepository extends JpaRepository<Document, String>, Jpa
     void markDocumentAsDeletedById(String id);
 
     Optional<Document> findByIdAndDeleted(String id, boolean deleted);
-
-    Boolean existsDocumentByIdAndContractNotNull(String id);
-
 }

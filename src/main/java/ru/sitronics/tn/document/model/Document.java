@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.sitronics.tn.document.model.base.BaseTableEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -377,4 +378,10 @@ public class Document extends BaseEntity implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<DocumentAttachment> attachmentFiles;
+
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @JoinColumn(name = "doc_id", referencedColumnName = "id")
+    private List<BaseTableEntity> tableEntities;
 }
