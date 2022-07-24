@@ -15,4 +15,7 @@ public interface DocumentRepository extends JpaRepository<Document, String>, Jpa
     void markDocumentAsDeletedById(String id);
 
     Optional<Document> findByIdAndDeleted(String id, boolean deleted);
+
+    Boolean existsDocumentByIdAndContractNotNull(String id);
+
 }

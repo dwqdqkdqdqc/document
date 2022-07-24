@@ -26,4 +26,7 @@ public class DocumentResponsible {
 
     @Column(name = "type_relation_id")
     private String typeRelation;
+
+    @Column(name = "author")
+    private String author;
 }
