@@ -29,7 +29,7 @@ public class PidEntityService {
             throw new IllegalArgumentException("Was given nul MtrProductionAndShipmentPlanTableEntity");
         }
         if (entity.getQuantity() == null || entity.getQuantity() < 1) {
-            throw new IllegalArgumentException("Quantity can't be less then 1");
+            throw new IllegalArgumentException("Quantity in MtrProductionAndShipmentPlanTableEntity can't be less then 1");
         }
         List<PidEntity> pidEntities = new ArrayList<>();
         for (int i = 0; i < entity.getQuantity().intValue(); i++) {
@@ -39,6 +39,10 @@ public class PidEntityService {
     }
 
     public PidEntity create(MtrProductionAndShipmentPlanTableEntity entity) {
+        if (entity.getMtrGroup() == null || entity.getMtrGroup().isBlank()) {
+            throw new IllegalArgumentException("mtrGroup is null in MtrProductionAndShipmentPlanTableEntity with id: "
+                    + entity.getId());
+        }
         PidEntity pidEntity = new PidEntity();
         pidEntity.setMtrProductionAndShipmentPlanTableEntity(entity);
         pidEntity.setProductionPhases(createProductionPhasesList(pidEntity, entity.getMtrGroup()));
