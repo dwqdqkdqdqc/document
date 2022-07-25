@@ -177,7 +177,8 @@ CREATE TABLE documents
     contract_status                          VARCHAR             NULL,
     nci_consignee_id                         VARCHAR             NULL,
     shipping_details                         integer             null, --какой тип? уточнить
-    nci_units_measurement_id                 VARCHAR             NULL
+    nci_units_measurement_id                 VARCHAR             NULL,
+    request_number                           VARCHAR             NULL
 
 );
 create unique index documents_serial_number_uindex on documents (serial_number);
