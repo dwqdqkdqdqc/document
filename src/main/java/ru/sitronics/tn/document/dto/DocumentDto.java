@@ -22,8 +22,8 @@ public class DocumentDto implements HasId {
     private Long serialNumber;
     private LocalDateTime createDate;
     private LocalDate createDateShort;
-    private NciUser author;
-    private List<NciUser> curators;
+    private String author;
+    private List<String> curators;
     private byte[] content;
     private NciStatus status;
     private NciAccessLimitation accessLimitation;
