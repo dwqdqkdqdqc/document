@@ -145,7 +145,8 @@ public class NciDocumentType extends BaseEntity implements Serializable {
         NOTICE_OF_OFFSET_OF_COLLATERAL_AMOUNT("Уведомление о зачете суммы обеспечения"),
         NOTIFICATION_OF_OFFSET_OF_AMOUNT_OF_ADVANCE_PAYMENT_ISSUED("Уведомление о зачете суммы выданного аванса"),
         NOTICE_OF_SECURITY_RETAINER_IN_LIEU_OF_CONTRACT_SECURITY("Уведомление о гарантийном удержании взамен обеспечения по контракту"),
-        STATEMENT_OF_THE_COST_OF_WORK_AND_SERVICES_PERFORMED_MATERIALS_AND_EQUIPMENT_DELIVERED("Справка о стоимости выполненных работ и услуг, поставленных материалов и оборудования");
+        STATEMENT_OF_THE_COST_OF_WORK_AND_SERVICES_PERFORMED_MATERIALS_AND_EQUIPMENT_DELIVERED("Справка о стоимости выполненных работ и услуг, поставленных материалов и оборудования"),
+        SPECIFICATION_FOR_SPARE_PARTS("Спецификация по запасным частям");
 
         private final String translate;
 
