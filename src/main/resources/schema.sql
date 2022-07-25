@@ -136,6 +136,8 @@ CREATE TABLE documents
     number_phase                             bigint              null,
     confirming_doc                           VARCHAR             NULL,
     carrier                                  VARCHAR             NULL,
+    date_card                                TIMESTAMP           null,
+    producer                                 VARCHAR             NULL,
 
 
 ------------------------------------------------------------------------ниже старое
@@ -400,92 +402,92 @@ CREATE TABLE nci_consignees
 CREATE TABLE table_entities
 (
     -- common fields
-    table_entity_type          VARCHAR             NULL,
-    id                         uuid PRIMARY KEY NOT NULL,
-    created_at                 TIMESTAMP           NULL,
-    modified_at                TIMESTAMP           NULL,
-    pid                        VARCHAR             NULL,
-    producer                   VARCHAR             NULL,
-    mtr_name                   VARCHAR             NULL,
-    doc_id                     VARCHAR             NULL,
-    number_in_order            BIGINT              NULL,
-    mtr_group                  VARCHAR             NULL,
-    unit_of_measurement        VARCHAR             NULL,
-    quantity                   BIGINT              NULL,
-    delivery_date              TIMESTAMP           NULL,
+    table_entity_type                VARCHAR           NULL,
+    id                               uuid PRIMARY KEY  NOT NULL,
+    created_at                       TIMESTAMP         NULL,
+    modified_at                      TIMESTAMP         NULL,
+    pid                              VARCHAR           NULL,
+    producer                         VARCHAR           NULL,
+    mtr_name                         VARCHAR           NULL,
+    doc_id                           VARCHAR           NULL,
+    number_in_order                  BIGINT            NULL,
+    mtr_group                        VARCHAR           NULL,
+    unit_of_measurement              VARCHAR           NULL,
+    quantity                         BIGINT            NULL,
+    delivery_date                    TIMESTAMP         NULL,
     -- specificationTableEntity fields
-    position_number            BIGINT              NULL,
-    tnl_delivery               BOOLEAN DEFAULT FALSE,
-    position_code              BIGINT              NULL,
-    gost_ost_tu                VARCHAR             NULL,
-    code                       VARCHAR             NULL,
-    price_no_vat               NUMERIC DEFAULT 0   NULL,
-    sum_no_vat                 NUMERIC DEFAULT 0   NULL,
-    vat                        NUMERIC DEFAULT 0   NULL,
-    sum_vat                    NUMERIC DEFAULT 0   NULL,
-    amount_with_vat            NUMERIC DEFAULT 0   NULL,
-    country                    VARCHAR             NULL,
-    type_of_transport          VARCHAR             NULL,
-    belonging_to_the_dsi       VARCHAR             NULL,
-    note                       VARCHAR             NULL,
+    position_number                  BIGINT            NULL,
+    tnl_delivery                     BOOLEAN DEFAULT FALSE,
+    position_code                    BIGINT            NULL,
+    gost_ost_tu                      VARCHAR           NULL,
+    code                             VARCHAR           NULL,
+    price_no_vat                     NUMERIC DEFAULT 0 NULL,
+    sum_no_vat                       NUMERIC DEFAULT 0 NULL,
+    vat                              NUMERIC DEFAULT 0 NULL,
+    sum_vat                          NUMERIC DEFAULT 0 NULL,
+    amount_with_vat                  NUMERIC DEFAULT 0 NULL,
+    country                          VARCHAR           NULL,
+    type_of_transport                VARCHAR           NULL,
+    belonging_to_the_dsi             VARCHAR           NULL,
+    note                             VARCHAR           NULL,
     -- infoSupplierChainTableEntity fields
-    inn                                VARCHAR             NULL,
-    ogrn                               VARCHAR             NULL,
-    customer_company_name              VARCHAR             NULL,
-    customer_okvd_code                 VARCHAR             NULL,
-    customer_manager_fio               VARCHAR             NULL,
-    customer_manager_passport_number   VARCHAR             NULL,
-    contract_number_and_date           VARCHAR             NULL,
-    contract_subject                   VARCHAR             NULL,
-    total_including_vat                NUMERIC DEFAULT 0   NULL,
-    start_date                         TIMESTAMP           NULL,
-    end_date                           TIMESTAMP           NULL,
-    other_essential_conditions         VARCHAR             NULL,
-    role                               VARCHAR             NULL,
-    owner_name                         VARCHAR             NULL,
-    owner_inn                          VARCHAR             NULL,
-    owner_ogrn_or_ogrni                VARCHAR             NULL,
-    owner_registration_address         VARCHAR             NULL,
-    document_of_an_individual          VARCHAR             NULL,
-    supporting_documents               VARCHAR             NULL,
-    legal_entity                       VARCHAR             NULL,
-    manager                            VARCHAR             NULL,
-    info_compos_exec_bodies            VARCHAR             NULL,
+    inn                              VARCHAR           NULL,
+    ogrn                             VARCHAR           NULL,
+    customer_company_name            VARCHAR           NULL,
+    customer_okvd_code               VARCHAR           NULL,
+    customer_manager_fio             VARCHAR           NULL,
+    customer_manager_passport_number VARCHAR           NULL,
+    contract_number_and_date         VARCHAR           NULL,
+    contract_subject                 VARCHAR           NULL,
+    total_including_vat              NUMERIC DEFAULT 0 NULL,
+    start_date                       TIMESTAMP         NULL,
+    end_date                         TIMESTAMP         NULL,
+    other_essential_conditions       VARCHAR           NULL,
+    role                             VARCHAR           NULL,
+    owner_name                       VARCHAR           NULL,
+    owner_inn                        VARCHAR           NULL,
+    owner_ogrn_or_ogrni              VARCHAR           NULL,
+    owner_registration_address       VARCHAR           NULL,
+    document_of_an_individual        VARCHAR           NULL,
+    supporting_documents             VARCHAR           NULL,
+    legal_entity                     VARCHAR           NULL,
+    manager                          VARCHAR           NULL,
+    info_compos_exec_bodies          VARCHAR           NULL,
     -- ProgressOfProductionForShipmentOfMtrTableEntity fields
-    factory_number                     VARCHAR             NULL,
-    number_phase                       BIGINT              NULL,
-    phase_name                         VARCHAR             NULL,
-    plan_date                          TIMESTAMP           NULL,
-    fact_date                          TIMESTAMP           NULL,
+    factory_number                   VARCHAR           NULL,
+    number_phase                     BIGINT            NULL,
+    phase_name                       VARCHAR           NULL,
+    plan_date                        TIMESTAMP         NULL,
+    fact_date                        TIMESTAMP         NULL,
     -- ProgressOfProductionForShipmentOfMtrTableEntity fields
-    specification_date                 TIMESTAMP           NULL,
-    specification_number               BIGINT              NULL,
-    production_start_date              TIMESTAMP           NULL,
-    shipment_date                      TIMESTAMP           NULL,
-    production_time_days               BIGINT              NULL,
-    set_delivery                       BOOLEAN             NULL,
-    control_prod                       BOOLEAN             NULL,
-    delivery_method                    VARCHAR             NULL
+    specification_date               TIMESTAMP         NULL,
+    specification_number             BIGINT            NULL,
+    production_start_date            TIMESTAMP         NULL,
+    shipment_date                    TIMESTAMP         NULL,
+    production_time_days             BIGINT            NULL,
+    set_delivery                     BOOLEAN           NULL,
+    control_prod                     BOOLEAN           NULL,
+    delivery_method                  VARCHAR           NULL
 );
 
 CREATE TABLE pid_entity
 (
-    id                         uuid PRIMARY KEY NOT NULL,
-    created_at                 TIMESTAMP            NULL,
-    modified_at                TIMESTAMP            NULL,
-    factory_number             VARCHAR              NULL,
-    table_entity_id            uuid                 NULL
+    id              uuid PRIMARY KEY NOT NULL,
+    created_at      TIMESTAMP        NULL,
+    modified_at     TIMESTAMP        NULL,
+    factory_number  VARCHAR          NULL,
+    table_entity_id uuid             NULL
 );
 
 CREATE TABLE production_phase
 (
-    id                         uuid PRIMARY KEY NOT NULL,
-    created_at                 TIMESTAMP            NULL,
-    modified_at                TIMESTAMP            NULL,
-    order_num                  integer              NULL,
-    phase_name                 VARCHAR              NULL,
-    plan_date                  TIMESTAMP            NULL,
-    pid_entity_id              uuid                 NULL
+    id            uuid PRIMARY KEY NOT NULL,
+    created_at    TIMESTAMP        NULL,
+    modified_at   TIMESTAMP        NULL,
+    order_num     integer          NULL,
+    phase_name    VARCHAR          NULL,
+    plan_date     TIMESTAMP        NULL,
+    pid_entity_id uuid             NULL
 );
 
 CREATE TABLE nsi_delivery_methods
@@ -572,7 +574,7 @@ CREATE TABLE nci_delivery_methods
 
 CREATE TABLE relation_document
 (
-    id               uuid NOT NULL,
+    id               uuid         NOT NULL,
     document_id      varchar(255) NULL,
     link_document_id varchar(255) NULL,
     type_relation_id varchar(255) NULL,
@@ -588,19 +590,21 @@ ALTER TABLE relation_document
 
 
 
-CREATE TABLE public.document_responsible (
-                                             id uuid NOT NULL,
-                                             document_id varchar(255) NULL,
-                                             type_relation_id varchar(255) NULL,
-                                             user_login varchar(255) NULL,
-                                             CONSTRAINT document_responsible_pkey PRIMARY KEY (id),
-                                             CONSTRAINT documentuniqueresponsibleconstraint UNIQUE (document_id, user_login, type_relation_id)
+CREATE TABLE public.document_responsible
+(
+    id               uuid         NOT NULL,
+    document_id      varchar(255) NULL,
+    type_relation_id varchar(255) NULL,
+    user_login       varchar(255) NULL,
+    CONSTRAINT document_responsible_pkey PRIMARY KEY (id),
+    CONSTRAINT documentuniqueresponsibleconstraint UNIQUE (document_id, user_login, type_relation_id)
 );
 
 
 -- public.document_responsible foreign keys
 
-ALTER TABLE public.document_responsible ADD CONSTRAINT fk6ofexfnsl27goiyfiptx7kito FOREIGN KEY (document_id) REFERENCES public.documents(id);
+ALTER TABLE public.document_responsible
+    ADD CONSTRAINT fk6ofexfnsl27goiyfiptx7kito FOREIGN KEY (document_id) REFERENCES public.documents (id);
 /*
 CREATE TABLE test_table_a
 (

@@ -193,7 +193,7 @@ public class Document extends BaseEntity implements Serializable {
     private Double vat;
     @Column(name = "amount_with_vat")
     private BigDecimal amountWithVat;
-    @Column(name = "contractor_id")
+    @Column(name = "producer")
     private String producer;
     @Column(name = "country_id")
     private String country;
@@ -288,6 +288,9 @@ public class Document extends BaseEntity implements Serializable {
     private Long numberPhase;
     @Column(name = "carrier")
     private String carrier;
+    @Column(name = "date_card")
+    private LocalDate dateCard;
+
 
 /*    @Column(name = "")
     private String ;*/
