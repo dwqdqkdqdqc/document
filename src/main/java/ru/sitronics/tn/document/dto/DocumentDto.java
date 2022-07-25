@@ -6,77 +6,133 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.sitronics.tn.document.HasId;
 import ru.sitronics.tn.document.model.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentDto implements HasId {
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY) // https://stackoverflow.com/a/28025008/548473
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     protected String id;
     private String type;
-    //private String dType;
+    private Document contract;
+    private Document specification;
     private Long serialNumber;
     private LocalDateTime createDate;
     private LocalDate createDateShort;
+    private String registrationNumber;
+    private LocalDate dateSignature;
+    private LocalDate additionalAgreementDate;
+    private NciObjectKisUp objectKisUp;
     private NciUser author;
-    private List<NciUser> curators;
-    private byte[] content;
-    private NciStatus status;
+    private String customer;
+    private NciOst ost;
     private NciAccessLimitation accessLimitation;
     private String comment;
-    private Document contract;
-    private Document specification;
-    private List<LinkDocumentsTable> relatingDocuments;
-    private List<DocumentHistoryBpm> historyBpm;
-    private List<NciObjectKisUp> objectKisUps;
-    private Integer pidNumber;
-    private String factoryNumber;
-    private String barcode;
-    private String lkkDocumentNumber;
-    private LocalDate lkkDocumentDate;
-    private String lusDocumentNumber;
-    private List<NciAttachment> attachments;
-    private String customer;
-    private String supplier;
-    private BigDecimal amount;
-    private List<NciDocumentType> types;
-    private Boolean control_prod;
-    private NciMtrGroup mtrGroup;
-
-
-    ////=========================================== other
-    private LocalDate additionalAgreementDate;
-    private String additionalAgreementNumber;
-
-/*    @OneToOne
-    @JsonBackReference(value = "id")
-    @JoinColumn(name = "id")
-    private MtrSupplyContract additionalAgreementSpecification;*/  //////////
+    private NciStatus status;
+    private NciOstAgent ostAgent;
     private NciClassContract classContract;
-    private LocalDate startingDate;
-    private LocalDate endDate;
-    private LocalDate dateOfTermination;
     private NciStandardForm standardForm;
     private Boolean frameworkAgreement;
     private String subjectOfTheContract;
+    private LocalDate startingDate;
+    private LocalDate endDate;
+    private LocalDate startingDateWork;
+    private LocalDate endDateWork;
+    private LocalDate dateOfTermination;
     private NciTerminationCode terminationCode;
     private BigDecimal sumNoVat;
     private BigDecimal sumVat;
-    private BigDecimal totalIncludingVat;
+    private BigDecimal totalSumVat;
     private String statusZakupki;
-    private NciOst organization;
     private String role;
     private NciUser responsible;
-    private String documentRegistrationNumber;
-    private NciOst ost;
+    private String factoryNumber;
+    private Integer pidNumber;
+    private String barcode;
+    private String lkkNumber;
+    private LocalDate lkkDate;
+    private String lusNumber;
+    private List<DocumentRelation> relation;
+    private List<DocumentHistoryBpm> documentsHistoryBpm;
+    private Document dopContract;
+    private String lotNumber;
+    private String statusContract;
+    private NciConsignee nciConsignee;
+    private Integer shippingDetails;
+    private Long positionNumber;
+    private boolean deliveryMethod;
+    private Long positionCode;
+    private String gostOstTu;
+    private String code;
+    private NciUnitsMeasurement unitsOfMeasurement;
+    private Long quantity;
+    private BigDecimal priceNoVat;
+    private Double vat;
+    private BigDecimal amountWithVat;
+    private String producer;
+    private NciCountry country;
+    private LocalDate deliveryDate;
+    private NciTypeOfTransport typeOfTransport;
+    private String belongingToTheDSI;
+    private String note;
+    private String customerInn;
+    private String customerOgrn;
+    private String customerCompanyName;
+    private String customerOkved;
+    private String customerManagerFio;
+    private String customerPassportNumber;
+    private String contractNumberAndDate;
+    private String otherEssentialConditions;
+    private Long numberInOrder;
+    private String ownerFio;
+    private String ownerInn;
+    private String ownerOgrnOgrni;
+    private String ownerRegistrationAddress;
+    private String documentOfIndividual;
+    private String supportingDocument;
+    private String legalEntity;
+    private String ownerManagerFio;
+    private String informationOnCompositExecutiveBodies;
+    private LocalDate policyPeriodBeginning;
+    private LocalDate policyPeriodEnd;
+    private String numberPolicy;
+    private LocalDate datePolicy;
+    private String innInsuranceCompany;
+    private String nameInsuranceCompany;
+    private LocalDate dateSupply;
+    private LocalDate dateSpecification;
+    private Long numberSpecification;
+    private LocalDate dateProduction;
+    private LocalDate dateShipment;
+    private Integer productionPeriodDays;
+    private Boolean setDelivery;
+    private NciPhase phase;
+    private LocalDate planDate;
+    private LocalDate factDate;
+    private Boolean controlProd;
+    private String confirmingDoc;
+    private Long numberPhase;
+    private String carrier;
+    private List<NciUser> curators;
+    private byte[] content;
+    private List<NciAttachment> nciAttachments = new ArrayList<>();
+    private String supplier;
+    private BigDecimal amount;
+    private List<NciDocumentType> nciDocumentTypes;
+    private boolean deleted;
+    private String additionalAgreementNumber;
     private String contractSubject;
+    private String regNumber;
     private String inn;
     private String contractClass;
     private String typicalForm;
     private String contractView;
     private Boolean frameContract;
+    private List<DocumentAttachment> attachmentFiles;
 }
