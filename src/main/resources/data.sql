@@ -1,4 +1,5 @@
 /*
+
 DELETE FROM documents;
 DELETE FROM nci_users;
 DELETE FROM documents_curators;
