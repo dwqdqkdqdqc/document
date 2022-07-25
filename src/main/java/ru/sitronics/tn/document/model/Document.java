@@ -150,6 +150,12 @@ public class Document extends BaseEntity implements Serializable {
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private List<DocumentRelation> relation;
 
+    @OneToMany(mappedBy = "docId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 20)
+    @OrderBy("createdAt")
+    private List<DocStatusHistory> docStatusHistory;
+
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)

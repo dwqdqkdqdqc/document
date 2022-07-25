@@ -67,6 +67,8 @@ public class DocumentService {
     private final DocumentRelationService relationService;
     private final DocumentRelationRepository relationRepo;
     private final S3RestServiceClient s3RestServiceClient;
+    private final DocStatusHistoryService statusHistoryService;
+
 
     public Document get(String id) {
         Optional<Document> document = repository.findByIdAndDeleted(id, false);
@@ -103,8 +105,11 @@ public class DocumentService {
 
     @Transactional
     public Document update(String id, Document newDocument) {
+        var oldDocument = get(id);
+        if (!oldDocument.getStatus().equals(newDocument.getStatus()))
+            oldDocument.getDocStatusHistory().add(statusHistoryService.addNewStatusHistory(id, newDocument.getStatus(), "system"));
 
-        newDocument = ObjectUtils.partialUpdate(get(id), newDocument);
+        newDocument = ObjectUtils.partialUpdate(oldDocument, newDocument);
         var newContract = newDocument.getContract();
 
         if (!repository.existsById(id)) throw new ResponseStatusException

@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntityUUID extends BaseUUID {
