@@ -252,9 +252,8 @@ public class Document extends BaseEntity implements Serializable {
 /*    @OneToOne
     @JoinColumn(name = "mtr_group_id")
     private NciMtrGroup mtrGroup;*/
-    /*      @OneToOne
-          @JoinColumn(name = "mtr_id")
-          private NciMtr mtr;*/
+    @Column(name = "mtr_id")
+    private String mtr;
     @Column(name = "date_supply")
     private LocalDate dateSupply;
     @Column(name = "date_specification")
@@ -356,6 +355,8 @@ public class Document extends BaseEntity implements Serializable {
     private String contractView;
     @Column(name = "frame_contract")
     private Boolean frameContract;
+    @Column(name = "request_number")
+    private String requestNumber;
 
     @OneToMany(mappedBy = "document", cascade = {CascadeType.REMOVE})
     @LazyCollection(LazyCollectionOption.FALSE)
