@@ -92,8 +92,8 @@ public class DocumentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Document> updateDocument(@PathVariable String id, @RequestBody Document document) {
-        return new ResponseEntity<>(service.update(id, document), HttpStatus.CREATED);
+    public ResponseEntity<DocumentDto> updateDocument(@PathVariable String id, @RequestBody DocumentDto docDto) {
+        return new ResponseEntity<>(service.update(id, docDto), HttpStatus.CREATED);
 
     }
 

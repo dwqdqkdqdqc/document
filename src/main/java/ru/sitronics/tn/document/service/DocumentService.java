@@ -113,7 +113,7 @@ public class DocumentService {
     }
 
     @Transactional
-    public Document update(String id, Document newDocument) {
+    public DocumentDto update(String id, DocumentDto docDto) {
 //        var oldDocument = get(id);
 //        if (!oldDocument.getStatus().equals(newDocument.getStatus()))
 //            oldDocument.getDocStatusHistory().add(statusHistoryService.addNewStatusHistory(id, newDocument.getStatus(), "system"));
@@ -152,7 +152,8 @@ public class DocumentService {
 //            }
 //        }
 
-        return repository.save(newDocument);
+        return docMapper.convertToDto(
+                repository.save(docMapper.convertToEntity(docDto)));
     }
 
 //    public Document createOrUpdate(Document document) {
