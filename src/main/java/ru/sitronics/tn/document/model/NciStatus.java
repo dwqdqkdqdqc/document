@@ -43,7 +43,8 @@ public enum NciStatus {
     APPROVAL_IN_PROGRESS_IN_SED("На согласовании в СЭД"),
     REMARKS_PREPARED("Сформированы замечания"),
     TO_BE_SIGNED_BY_UKEP(" на подписании УКЭП"),
-    TO_BE_FAMILIARIZED("На ознакомлении");
+    TO_BE_FAMILIARIZED("На ознакомлении"),
+    IN_ARCHIVED("В архиве");
 
     private final String translate;
 

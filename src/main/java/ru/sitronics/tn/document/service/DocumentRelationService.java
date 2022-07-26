@@ -28,12 +28,12 @@ public class DocumentRelationService {
 
         var documentId = relationDto.getDocumentId();
         var linkDocumentId = relationDto.getLinkDocument();
-        var typeLinkId = relationDto.getTypeRelation();
+        var typeRelation = relationDto.getTypeRelation();
 
 
         if ((StringUtils.isBlank(documentId))
                 || (StringUtils.isBlank(linkDocumentId))
-                || (StringUtils.isBlank(typeLinkId)))
+                || (StringUtils.isBlank(typeRelation)))
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "Parameters in the request body cannot be null.");
 
@@ -48,14 +48,8 @@ public class DocumentRelationService {
         var reverseDocumentRelationEntity = new DocumentRelation();
         reverseDocumentRelationEntity.setDocumentId(linkDocumentId);
         reverseDocumentRelationEntity.setLinkDocument(documentId);
-        reverseDocumentRelationEntity.setTypeRelation(typeLinkId);
+        reverseDocumentRelationEntity.setTypeRelation(typeRelation);
 
-
-//        var relationEntity = repository.findById(documentId)
-//                .orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + documentId));
-//
-//        var reverseRelationEntity = repository.findById(linkDocumentId)
-//                .orElseThrow(() -> new EntityNotFoundException("Can't found doc with id " + documentId));
 
         return  repository.saveAll(List.of(documentRelationEntity, reverseDocumentRelationEntity));
     }
