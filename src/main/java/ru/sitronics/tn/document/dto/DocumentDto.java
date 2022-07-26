@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DocumentDto implements HasId {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private String hello = "THIS is check DtoMApper";
     protected String id;
     private String type;
     private Document contract;

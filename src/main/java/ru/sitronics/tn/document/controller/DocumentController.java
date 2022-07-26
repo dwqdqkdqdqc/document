@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.DocumentDto;
 import ru.sitronics.tn.document.dto.DocumentRelationDto;
 import ru.sitronics.tn.document.dto.DocumentResponsibleDto;
 import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
@@ -58,7 +59,7 @@ public class DocumentController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Document> create(@RequestBody Document document) {
+    public ResponseEntity<DocumentDto> create(@RequestBody DocumentDto document) {
         log.info("creating document: {}", document.toString());
         return new ResponseEntity<>(service.create(document), HttpStatus.CREATED);
     }

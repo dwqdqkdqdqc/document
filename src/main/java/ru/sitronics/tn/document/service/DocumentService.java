@@ -24,8 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import ru.sitronics.tn.document.dto.DocumentDto;
 import ru.sitronics.tn.document.dto.DocumentRelationDto;
 import ru.sitronics.tn.document.dto.S3FileDto;
+import ru.sitronics.tn.document.mappers.DocumentMapper;
 import ru.sitronics.tn.document.model.Document;
 import ru.sitronics.tn.document.model.DocumentAttachment;
 import ru.sitronics.tn.document.model.NciDocumentType;
@@ -61,6 +63,7 @@ public class DocumentService {
     @Value("${rsql.defaultDeleted}")
     private String defaultDeleted;
 
+    private final DocumentMapper docMapper;
     private final DocumentRepository repository;
     private final DocumentAttachmentRepository documentAttachmentRepo;
 
@@ -70,25 +73,31 @@ public class DocumentService {
     private final DocStatusHistoryService statusHistoryService;
 
 
-    public Document get(String id) {
+//    public Document get(String id) {
+//        Optional<Document> document = repository.findByIdAndDeleted(id, false);
+//        return document.orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
+//    }
+
+    public DocumentDto get(String id) {
         Optional<Document> document = repository.findByIdAndDeleted(id, false);
-        return document.orElseThrow(() -> new NotFoundException("Document not found: id = " + id));
+        return docMapper.convertToDto(
+                document.orElseThrow(() -> new NotFoundException("Document not found: id = " + id)));
     }
 
     public List<Document> getAll() {
         return repository.findAll();
     }
 
-    public Document create(Document document) {
+    public DocumentDto create(DocumentDto docDto) {
 
-        var documentId = document.getId();
+        var documentId = docDto.getId();
         if (documentId != null)
             throw new ResponseStatusException
                     (HttpStatus.INTERNAL_SERVER_ERROR, "A new document cannot have an ID.");
 
-        var savedDocument = repository.save(document);
+        var savedDocument = repository.save(docMapper.convertToEntity(docDto));
 
-        var contract = document.getContract();
+        var contract = docDto.getContract();
         if (contract != null) {
 
             var savedDocumentId = savedDocument.getId();
@@ -100,20 +109,20 @@ public class DocumentService {
             relationService.create(documentRelationDto);
         }
 
-        return savedDocument;
+        return docMapper.convertToDto(savedDocument);
     }
 
     @Transactional
     public Document update(String id, Document newDocument) {
-        var oldDocument = get(id);
-        if (!oldDocument.getStatus().equals(newDocument.getStatus()))
-            oldDocument.getDocStatusHistory().add(statusHistoryService.addNewStatusHistory(id, newDocument.getStatus(), "system"));
-
-        newDocument = ObjectUtils.partialUpdate(oldDocument, newDocument);
-        var newContract = newDocument.getContract();
-
-        if (!repository.existsById(id)) throw new ResponseStatusException
-                (HttpStatus.INTERNAL_SERVER_ERROR, "A document with this ID was not found.");
+//        var oldDocument = get(id);
+//        if (!oldDocument.getStatus().equals(newDocument.getStatus()))
+//            oldDocument.getDocStatusHistory().add(statusHistoryService.addNewStatusHistory(id, newDocument.getStatus(), "system"));
+//
+//        newDocument = ObjectUtils.partialUpdate(oldDocument, newDocument);
+//        var newContract = newDocument.getContract();
+//
+//        if (!repository.existsById(id)) throw new ResponseStatusException
+//                (HttpStatus.INTERNAL_SERVER_ERROR, "A document with this ID was not found.");
 
 //        if (newContract != null) {
 //
