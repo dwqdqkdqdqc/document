@@ -51,7 +51,7 @@ public class Document extends BaseEntity implements Serializable {
     @OneToOne
     private Document specification;
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
-    @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
+    @Column(name = "serial_number", unique = true, nullable = false, updatable = false)
     private Long serialNumber;                       //2
     @CreatedDate
     @DateTimeFormat(pattern = "dd-MM-yyyy")

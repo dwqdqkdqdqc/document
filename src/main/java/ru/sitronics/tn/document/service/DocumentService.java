@@ -88,12 +88,18 @@ public class DocumentService {
         return repository.findAll();
     }
 
+
+
     public DocumentDto create(DocumentDto docDto) {
 
         var documentId = docDto.getId();
         if (documentId != null)
             throw new ResponseStatusException
                     (HttpStatus.INTERNAL_SERVER_ERROR, "A new document cannot have an ID.");
+        //нахождение последнего серийного номера по типу
+        if (docDto.getSerialNumber() == null || docDto.getSerialNumber() != 0){
+            docDto.setSerialNumber(repository.getMaxNumber(docDto.getType())+1);
+        }
 
         var savedDocument = repository.save(docMapper.convertToEntity(docDto));
 

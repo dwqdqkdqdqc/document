@@ -20,4 +20,6 @@ public interface DocumentRepository extends JpaRepository<Document, String>, Jpa
     @Query(value = "SELECT d.type FROM Document d WHERE d.id = ?1")
     String getDocumentTypeById(String docId);
 
+    @Query(value = "select max(d.serialNumber) from Document d where d.type = :type")
+    Long getMaxNumber(String type);
 }
