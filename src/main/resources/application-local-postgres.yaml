@@ -22,5 +22,5 @@ spring:
       ddl-auto: none
   sql:
     init:
-      mode: embedded  #script-based (data, schema) initialization is performed by default only for embedded databases
+      mode: never  #script-based (data, schema) initialization is performed by default only for embedded databases
 

@@ -15,7 +15,7 @@ import java.util.List;
 @Tag(name = "NciDocumentType controller")
 @RestController
 @RequestMapping(value = NciDocumentTypeController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class NciDocumentTypeController {
+public class  NciDocumentTypeController {
     static final String REST_URL = "/documentTypes";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
