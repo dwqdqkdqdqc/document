@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.sitronics.tn.document.model.Document;
+
 import java.util.Optional;
 
 @Repository
@@ -15,4 +16,10 @@ public interface DocumentRepository extends JpaRepository<Document, String>, Jpa
     void markDocumentAsDeletedById(String id);
 
     Optional<Document> findByIdAndDeleted(String id, boolean deleted);
+
+    @Query(value = "SELECT d.type FROM Document d WHERE d.id = ?1")
+    String getDocumentTypeById(String docId);
+
+    @Query(value = "select max(d.serialNumber) from Document d where d.type = :type")
+    Long getMaxNumber(String type);
 }

@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.sitronics.tn.document.model.base.BaseTableEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,7 +26,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
+//@ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Access(javax.persistence.AccessType.FIELD)  //https://stackoverflow.com/a/6084701/548473
@@ -43,13 +44,14 @@ public class Document extends BaseEntity implements Serializable {
     private String type;                              //1
     /*  @Column(name = "d_type", insertable = false, updatable = false)
       private String dType;*/
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn
     private Document contract;                           //4
     @OneToOne
     private Document specification;
     @Range(message = "value cannot be lower than 1 or higher than " + Long.MAX_VALUE + " !", min = 1)
-    @Column(name = "serial_number", unique = true, nullable = false, insertable = false, updatable = false)
+    @Column(name = "serial_number", unique = true, nullable = false, updatable = false)
     private Long serialNumber;                       //2
     @CreatedDate
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -68,37 +70,27 @@ public class Document extends BaseEntity implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "additional_agreement_date")
     private LocalDate additionalAgreementDate;
-    @OneToOne
-    @JoinColumn(name = "object_kis_up_id")
-    private NciObjectKisUp objectKisUp;
-    @CreatedBy
-    @ManyToOne
-    @JoinColumn
-    private NciUser author;
+    @Column(name = "object_kis_up_id")
+    private String objectKisUp;
+    @Column(name = "author_id")
+    private String author;
     @Column(name = "customer_id")
     private String customer;
-    @OneToOne
-    @JoinColumn
-    private NciOst ost;
-    @OneToOne
-    @JoinColumn(name = "access_limitation_id")
-    private NciAccessLimitation accessLimitation;
+    @Column(name = "ost_id")
+    private String ost;
+    @Column(name = "access_limitation_id")
+    private String accessLimitation;
     @Length(message = "a comment cannot be longer than 255 characters!", max = 255)
     @Column(name = "comment")
     private String comment;
-    // @NotNull(message = "Specify the status of the document.")
     @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private NciStatus status;
-    @OneToOne
-    @JoinColumn(name = "ost_agent_id")
-    private NciOstAgent ostAgent;
-    @OneToOne
-    @JoinColumn(name = "class_contract_id")
-    private NciClassContract classContract;
-    @OneToOne
-    @JoinColumn(name = "standard_form_id")
-    private NciStandardForm standardForm;
+    private String status;
+    @Column(name = "ost_agent_id")
+    private String ostAgent;
+    @Column(name = "class_contract_id")
+    private String classContract;
+    @Column(name = "standard_form_id")
+    private String standardForm;
     @Column(name = "framework_agreement")
     private Boolean frameworkAgreement;
     @Column(name = "subject_of_the_contract")
@@ -113,9 +105,8 @@ public class Document extends BaseEntity implements Serializable {
     private LocalDate endDateWork;
     @Column(name = "date_of_termination")
     private LocalDate dateOfTermination;
-    @OneToOne
-    @JoinColumn(name = "termination_code_id")
-    private NciTerminationCode terminationCode;
+    @Column(name = "termination_code_id")
+    private String terminationCode;
     @Column(name = "sum_no_vat")
     private BigDecimal sumNoVat;
     @Column(name = "sum_vat")
@@ -128,10 +119,16 @@ public class Document extends BaseEntity implements Serializable {
     // Nci_organization - непонятно, что это (Дог. МТР) //28      ???????????????????
 
     @Column(name = "role_id")
-    private String role;                   // (тип должен быть Role)
-    @ManyToOne
-    @JoinColumn(name = "responsible_id")
-    private NciUser responsible;
+    private String role;// (тип должен быть Role)
+
+
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+            orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    private List<DocumentResponsible> responsibles;
+
     @Column(name = "factory_number")
     private String factoryNumber;
     @Column(name = "pid_number")
@@ -153,6 +150,12 @@ public class Document extends BaseEntity implements Serializable {
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private List<DocumentRelation> relation;
 
+    @OneToMany(mappedBy = "docId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 20)
+    @OrderBy("createdAt")
+    private List<DocStatusHistory> docStatusHistory;
+
     @OneToMany(mappedBy = "documentId")
     @LazyCollection(LazyCollectionOption.FALSE)
     @BatchSize(size = 100)
@@ -166,9 +169,8 @@ public class Document extends BaseEntity implements Serializable {
     private String lotNumber;
     @Column(name = "status_contract")
     private String statusContract;
-    @ManyToOne
-    @JoinColumn(name = "nci_consignee_id")
-    private NciConsignee nciConsignee;
+    @Column(name = "nci_consignee_id")
+    private String nciConsignee;
     @Column(name = "shipping_details")
     private Integer shippingDetails;
     @Column(name = "position_number")
@@ -181,9 +183,8 @@ public class Document extends BaseEntity implements Serializable {
     private String gostOstTu;
     @Column(name = "code")
     private String code;
-    @ManyToOne
-    @JoinColumn(name = "unit_of_measurement_id")
-    private NciUnitsMeasurement unitsOfMeasurement;
+    @Column(name = "unit_of_measurement_id")
+    private String unitsOfMeasurement;
     @Column(name = "quantity")
     private Long quantity;
     @Column(name = "price_no_vat")
@@ -192,17 +193,15 @@ public class Document extends BaseEntity implements Serializable {
     private Double vat;
     @Column(name = "amount_with_vat")
     private BigDecimal amountWithVat;
-    @Column(name = "contractor_id")
+    @Column(name = "producer")
     private String producer;
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private NciCountry country;
+    @Column(name = "country_id")
+    private String country;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
-    @ManyToOne
-    @JoinColumn(name = "type_of_transport_id")
-    private NciTypeOfTransport typeOfTransport;
+    @Column(name = "type_of_transport_id")
+    private String typeOfTransport;
     @Column(name = "belonging_to_the_dsi")
     private String belongingToTheDSI;
     @Column(name = "note")
@@ -259,9 +258,8 @@ public class Document extends BaseEntity implements Serializable {
 /*    @OneToOne
     @JoinColumn(name = "mtr_group_id")
     private NciMtrGroup mtrGroup;*/
-    /*      @OneToOne
-          @JoinColumn(name = "mtr_id")
-          private NciMtr mtr;*/
+    @Column(name = "mtr_id")
+    private String mtr;
     @Column(name = "date_supply")
     private LocalDate dateSupply;
     @Column(name = "date_specification")
@@ -276,9 +274,8 @@ public class Document extends BaseEntity implements Serializable {
     private Integer productionPeriodDays;
     @Column(name = "set_delivery")
     private Boolean setDelivery;
-    @OneToOne
-    @JoinColumn(name = "phase_id")
-    private NciPhase phase;
+    @Column(name = "phase_id")
+    private String phase;
     @Column(name = "plan_date")
     private LocalDate planDate;
     @Column(name = "fact_date")
@@ -291,6 +288,9 @@ public class Document extends BaseEntity implements Serializable {
     private Long numberPhase;
     @Column(name = "carrier")
     private String carrier;
+    @Column(name = "date_card")
+    private LocalDate dateCard;
+
 
 /*    @Column(name = "")
     private String ;*/
@@ -364,9 +364,17 @@ public class Document extends BaseEntity implements Serializable {
     private String contractView;
     @Column(name = "frame_contract")
     private Boolean frameContract;
+    @Column(name = "request_number")
+    private String requestNumber;
 
     @OneToMany(mappedBy = "document", cascade = {CascadeType.REMOVE})
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<DocumentAttachment> attachmentFiles;
+
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @BatchSize(size = 100)
+    @JoinColumn(name = "doc_id", referencedColumnName = "id")
+    private List<BaseTableEntity> tableEntities;
 }

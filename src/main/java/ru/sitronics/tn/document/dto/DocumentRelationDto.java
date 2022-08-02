@@ -2,7 +2,6 @@ package ru.sitronics.tn.document.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.util.UUID;
 
 @Data
@@ -16,4 +15,10 @@ public class DocumentRelationDto {
 
     private String typeRelation;
 
+
+    public DocumentRelationDto(String documentId, String linkDocument, String typeRelation) {
+        this.documentId = documentId;
+        this.linkDocument = linkDocument;
+        this.typeRelation = typeRelation;
+    }
 }

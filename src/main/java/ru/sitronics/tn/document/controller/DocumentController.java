@@ -8,23 +8,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import ru.sitronics.tn.document.model.*;
+import ru.sitronics.tn.document.dto.DocumentDto;
+import ru.sitronics.tn.document.dto.DocumentRelationDto;
+import ru.sitronics.tn.document.dto.DocumentResponsibleDto;
+import ru.sitronics.tn.document.dto.base.BaseTableEntityDto;
+import ru.sitronics.tn.document.model.Document;
+import ru.sitronics.tn.document.model.NciDocumentType;
+import ru.sitronics.tn.document.service.DocumentRelationService;
+import ru.sitronics.tn.document.service.DocumentResponsibleService;
 import ru.sitronics.tn.document.service.DocumentService;
-import ru.sitronics.tn.document.service.NciDocumentTypeService;
+import ru.sitronics.tn.document.service.TableEntityService;
 import ru.sitronics.tn.document.util.exception.NotFoundException;
+
 import java.beans.FeatureDescriptor;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.ResponseEntity.noContent;
 
 @Tag(name = "Document controller")
 @RequiredArgsConstructor
@@ -34,10 +41,12 @@ public class DocumentController {
     static final String REST_URL = "/documents";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private DocumentService service;
-    @Autowired
-    private NciDocumentTypeService documentTypeService;
+    private final DocumentRelationService documentRelationService;
+    private final DocumentResponsibleService documentResponsibleService;
+    private final DocumentService service;
+
+    //private final NciDocumentTypeService documentTypeService;
+    private final TableEntityService tableEntityService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {
@@ -50,9 +59,9 @@ public class DocumentController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Document> create(@RequestBody Document document) {
+    public ResponseEntity<DocumentDto> create(@RequestBody DocumentDto document) {
         log.info("creating document: {}", document.toString());
-        return new ResponseEntity<>(service.createOrUpdate(document), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(document), HttpStatus.CREATED);
     }
 
  /*   @DeleteMapping("/{id}")
@@ -83,34 +92,17 @@ public class DocumentController {
     }
 
     @PatchMapping("/{id}")
-    public Document updateDocument(@PathVariable String id, @RequestBody Document document) {
-        Document currentDocument = service.get(id);
-        document = (Document) PersistenceUtils.partialUpdate(currentDocument, document);
-        return service.createOrUpdate(document);
+    public ResponseEntity<DocumentDto> updateDocument(@PathVariable String id, @RequestBody DocumentDto docDto) {
+        return new ResponseEntity<>(service.update(id, docDto), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDocument(@PathVariable String id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return noContent().build();
     }
 
-    public static class PersistenceUtils {
-        public static Object partialUpdate(Object dbObject, Object partialUpdateObject) {
-            String[] ignoredProperties = getNullPropertyNames(partialUpdateObject);
-            BeanUtils.copyProperties(partialUpdateObject, dbObject, ignoredProperties);
-            return dbObject;
-        }
-
-        private static String[] getNullPropertyNames(Object object) {
-            final BeanWrapper wrappedSource = new BeanWrapperImpl(object);
-            return Stream.of(wrappedSource.getPropertyDescriptors())
-                    .map(FeatureDescriptor::getName)
-                    .filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
-                    .toArray(String[]::new);
-        }
-    }
 
     @GetMapping("/types")
     public List<String> getDocumentTypes() {
@@ -123,10 +115,10 @@ public class DocumentController {
         return Stream.of(NciCustomer.values()).map(NciCustomer::name).toList();
     }*/
 
-    @GetMapping("/statuses")
+/*    @GetMapping("/statuses")
     public List<String> getStatuses() {
-        return Stream.of(NciStatus.values()).map(NciStatus::name).toList();
-    }
+        return Stream.of(NciStatusesDocument.values()).map(NciStatusesDocument::name).toList();
+    }*/
 
 /*    @GetMapping("/accessLimitations")
     public List<String> getAccessLimitations() {
@@ -153,5 +145,66 @@ public class DocumentController {
                                            @RequestPart MultipartFile[] files) {
 
         return service.addAttachmentsToDocument(docId, files, username);
+    }
+
+    @DeleteMapping("/attachments/{id}")
+    public ResponseEntity<?> deleteAttachment(@PathVariable("id") String attachId) {
+        service.deleteDocAttachment(attachId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(value = "/relation/create", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createLink(@RequestBody DocumentRelationDto relationDto) {
+
+        var relatedDocument = documentRelationService.create(relationDto);
+
+        return new ResponseEntity<>(relatedDocument, HttpStatus.CREATED);
+    }
+
+
+
+    @PostMapping(value = "/responsible/create", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createResponsible(@RequestBody DocumentResponsibleDto responsibleDto) {
+
+        var documentResponsible = documentResponsibleService.create(responsibleDto);
+
+        return new ResponseEntity<>(documentResponsible, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}/tableEntities")
+    public ResponseEntity<?> createTableEntity(@PathVariable("id") String docId,
+                                               @RequestBody BaseTableEntityDto tableEntityDto) {
+        return ResponseEntity.ok(tableEntityService.create(docId, tableEntityDto));
+    }
+
+    @PatchMapping("/tableEntities/{id}")
+    public ResponseEntity<?> updateTableEntity(@PathVariable("id") UUID tableEntityId,
+                                               @RequestBody BaseTableEntityDto tableEntityDto) {
+        return ResponseEntity.ok(tableEntityService.update(tableEntityId, tableEntityDto));
+    }
+
+    @DeleteMapping("/tableEntities/{id}")
+    public ResponseEntity<?> deleteTableEntity(@PathVariable("id") UUID tableEntityId) {
+        tableEntityService.delete(tableEntityId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/tableEntities/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAttachmentToTableEntity(@PathVariable("id") UUID tableEntityId,
+                                                        @RequestPart String username,
+                                                        @RequestPart MultipartFile[] files) {
+
+        return tableEntityService.addAttachments(tableEntityId, files, username);
+    }
+
+    @PostMapping("/mtrProductionAndShipmentPlanTableEntity/{id}/decomposePID")
+    public ResponseEntity<?> decomposePID(@PathVariable("id") UUID tableEntityId) {
+        return ResponseEntity.ok(tableEntityService.decomposePID(tableEntityId));
+    }
+
+    @DeleteMapping("/tableEntities/attachments/{id}")
+    public ResponseEntity<?> deleteTableEntityAttachment(@PathVariable("id") String attachId) {
+        tableEntityService.deleteAttachment(attachId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
